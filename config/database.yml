@@ -16,6 +16,4 @@ test:
 
 production:
   <<: *default
-  database: my_portfolio_production
-  username: my_portfolio
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  url: <%= ENV['JAWSDB_URL']&.sub('mysql://', 'mysql2://') %>
