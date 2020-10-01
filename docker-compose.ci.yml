@@ -21,7 +21,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_HOST: mysql
     depends_on:
-      - mysql
+      - db
     networks:
       - default
     command: bundle exec rails server -b 0.0.0.0
