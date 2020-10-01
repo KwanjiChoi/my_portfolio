@@ -16,7 +16,7 @@ jobs:
           command: |
             set -x
             docker-compose up -d
-            docker exec my_portfolio_app curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
+            docker exec web curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
       - run:
           name: Run rspec
           command: docker-compose exec my_portfolio rspec
