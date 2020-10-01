@@ -18,7 +18,7 @@ jobs:
             docker-compose up -d
       - run:
           name: Run rspec
-          command: docker-compose exec my_portfolio rspec
+          command: docker-compose exec web rspec
 
   rubocop:
     working_directory: ~/my_portfolio
