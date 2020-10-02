@@ -34,6 +34,7 @@ jobs:
             - gemfiles-{{ .Branch }}-
             - gemfiles-master-
       - run:
+          # https://haayaaa.hatenablog.com/entry/2019/10/05/223705
           name: setup bundler
           command: |
             sudo gem update --system

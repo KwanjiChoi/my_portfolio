@@ -16,8 +16,9 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/my_portfolio
+      # https://qiita.com/shotat/items/57d049793605ffc20135
       - bundle:/usr/local/bundle:cached
-      # 1. exclude volumes
+      - node_modules:/my_portfolio/node_modules
       - /my_portfolio/vendor
       - /my_portfolio/tmp
       - /my_portfolio/log
@@ -33,3 +34,4 @@ volumes:
     driver: local
   mysql-data:
     driver: local
+  node_modules:
