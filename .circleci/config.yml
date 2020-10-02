@@ -23,7 +23,9 @@ jobs:
   rubocop:
     working_directory: ~/my_portfolio
     docker:
-      - image: circleci/ruby:2.5.1
+      - image: circleci/ruby
+        environment:
+          BUNDLER_VERSION: 2.0.1
     steps:
       - checkout
       - restore_cache:
@@ -31,7 +33,14 @@ jobs:
             - gemfiles-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
             - gemfiles-{{ .Branch }}-
             - gemfiles-master-
-      - run: bundle config --local path vendor/bundle
+      - run:
+        name: setup bundler
+        command: |
+          sudo gem update --system
+          sudo gem uninstall bundler
+          sudo rm /usr/local/bin/bundle
+          sudo rm /usr/local/bin/bundler
+          sudo gem install bundler
       - run:
           name: bundle install
           command: bundle check || bundle install --jobs=8 --clean
@@ -80,7 +89,7 @@ orbs:
   jq: circleci/jq@1.9.1
 workflows:
   version: 2.1
-  buildddd:
+  build:
     jobs:
       - rspec
       - rubocop
