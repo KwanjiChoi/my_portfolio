@@ -34,13 +34,13 @@ jobs:
             - gemfiles-{{ .Branch }}-
             - gemfiles-master-
       - run:
-        name: setup bundler
-        command: |
-          sudo gem update --system
-          sudo gem uninstall bundler
-          sudo rm /usr/local/bin/bundle
-          sudo rm /usr/local/bin/bundler
-          sudo gem install bundler
+          name: setup bundler
+          command: |
+            sudo gem update --system
+            sudo gem uninstall bundler
+            sudo rm /usr/local/bin/bundle
+            sudo rm /usr/local/bin/bundler
+            sudo gem install bundler
       - run:
           name: bundle install
           command: bundle check || bundle install --jobs=8 --clean
