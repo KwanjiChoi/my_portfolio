@@ -65,7 +65,6 @@ Rails.application.configure do
     Bullet.alert = true
   end
 
-  config.webpacker.check_yarn_integrity = false
-
 end
+
 
