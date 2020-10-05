@@ -17,9 +17,9 @@ jobs:
             set -x
             docker-compose up -d
       - run:
-        name: Setup database
-        command: |
-          docker-compose exec web bash -c 'yes n | bundle exec rails db:migrate'
+          name: Setup database
+          command: |
+            docker-compose exec web bash -c 'yes n | bundle exec rails db:migrate'
       - run:
           name: Run rspec
           command: docker-compose exec web rspec
