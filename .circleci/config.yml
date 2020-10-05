@@ -23,7 +23,7 @@ jobs:
   rubocop:
     working_directory: ~/my_portfolio
     docker:
-      - image: circleci/ruby
+      - image: circleci/ruby:2.7.1-node-browsers
         environment:
           BUNDLER_VERSION: 2.0.1
     steps:
