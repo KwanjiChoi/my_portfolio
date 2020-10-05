@@ -18,7 +18,7 @@ jobs:
             docker-compose up -d
       - run:
           name: check yarn integrity
-          command: docker-compose exec potepanec bash | yarn install --check-files
+          command: docker-compose exec web bash | yarn install --check-files
       - run:
           name: Setup database
           command: |
