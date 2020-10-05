@@ -18,7 +18,9 @@ jobs:
             docker-compose up -d
       - run:
           name: Setup database
-          command: docker-compose exec web rails db:migrate
+          command: |
+          docker-compose exec web rails db:create
+          docker-compose exec web rails db:schema:load
       - run:
           name: Run rspec
           command: docker-compose exec web rspec
