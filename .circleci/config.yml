@@ -34,6 +34,10 @@ jobs:
           command: |
             bundle exec rails db:create
             bundle exec rails db:schema:load
+      # https://qiita.com/ashketcham/items/6ce1d0b5a46f177cf32a
+      - run:
+          name: yarn Install
+          command: yarn install
       - run:
           name: Run rspec
           command: bundle exec rspec
