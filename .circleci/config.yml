@@ -6,9 +6,9 @@ jobs:
       - image: circleci/ruby:2.7.1-node-browsers
         environment:
           RAILS_ENV: test
-          DB_HOST: 127.0.0.1
-          DB_USERNAME: 'root'
-          DB_PASSWORD: ''
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_USERNAME: 'root'
+          MYSQL_PASSWORD: ''
       - image: circleci/mysql:8.0
     steps:
       - checkout
