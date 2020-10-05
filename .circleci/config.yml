@@ -17,9 +17,6 @@ jobs:
             set -x
             docker-compose up -d
       - run:
-          name: check yarn integrity
-          command: docker-compose exec web bash | yarn install --check-files
-      - run:
           name: Setup database
           command: |
             docker-compose run web rails db:create
