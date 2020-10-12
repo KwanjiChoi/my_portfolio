@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "Home", type: :system do
-  it '2' do
-    expect(1 + 1).to eq 2
+  let!(:user) { create(:user) }
+  scenario 'user log in' do
+    visit root_path
+    within 'nav' do
+      expect(page).to have_link 'login', href: new_user_session_path, count: 1
+    end
   end
 end

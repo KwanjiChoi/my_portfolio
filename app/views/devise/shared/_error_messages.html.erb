@@ -1,11 +1,12 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation">
-    <h2>
+  <div id="error_explanation" class='alert alert-danger'>
+    <h5>
       <%= I18n.t("errors.messages.not_saved",
                  count: resource.errors.count,
                  resource: resource.class.model_name.human.downcase)
        %>
-    </h2>
+    </h4>
+    <hr>
     <ul>
       <% resource.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -13,3 +14,12 @@
     </ul>
   </div>
 <% end %>
+
+<% if flash.any? %>
+  <div id="error_explanation" class='alert alert-danger'>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+    <% end %> 
+  </div>
+<% end %>
+ 
