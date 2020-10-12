@@ -3,27 +3,50 @@ jobs:
   rspec:
     working_directory: ~/my_portfolio
     docker:
-      - image: circleci/ruby
+      - image: circleci/ruby:2.7.1-node-browsers
+        environment:
+          RAILS_ENV: test
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_USERNAME: 'root'
+          MYSQL_PASSWORD: ''
+      # https://stackoverflow.com/questions/49979089/authentication-plugin-caching-sha2-password-cannot-be-loaded-in-circleci-mysql
+      - image: circleci/mysql:8.0
+        command: |
+          mysqld --default-authentication-plugin=mysql_native_password
     steps:
       - checkout
-      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-
       - run:
-          name: Setup environment variable
+          name: install dependencies
           command: |
-            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
-          name: Start containers and verify it is working
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+      - run:
+          name: Setup database
           command: |
-            set -x
-            docker-compose up -d
+            bundle exec rails db:create
+            bundle exec rails db:schema:load
+      # https://qiita.com/ashketcham/items/6ce1d0b5a46f177cf32a
+      - run:
+          name: yarn Install
+          command: yarn install
       - run:
           name: Run rspec
-          command: docker-compose exec web rspec
+          command: bundle exec rspec
 
   rubocop:
     working_directory: ~/my_portfolio
     docker:
-      - image: circleci/ruby
+      - image: circleci/ruby:2.7.1-node-browsers
         environment:
           BUNDLER_VERSION: 2.0.1
     steps:

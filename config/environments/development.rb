@@ -53,10 +53,18 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  # Raises error for missing translations.
-  # config.action_view.raise_on_missing_translations = true
+  #https://qiita.com/Kiyo_Karl2/items/147d604e625b8a55e12e
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 
-  # Use an evented file watcher to asynchronously detect changes in source code,
-  # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  #mailer setting
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # bullet setting
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+  end
+
 end
+
+

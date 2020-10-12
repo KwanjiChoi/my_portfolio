@@ -1,0 +1,92 @@
+@import '~bootstrap/scss/bootstrap';
+
+/*=== static_page ===*/
+
+
+.navbar{
+  padding-top: 15px;
+  background-color: black;
+  .navbar-light{
+    background-color: black;
+  }
+
+  .navbar-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  .navbar-toggler{
+    border-color: rgba(0,0,0,0);
+  }
+  .h1{
+    font-size: 30px;
+    font-weight: 900;
+  }
+  a{
+    font-size: 20px;
+  }
+  .btn{
+    margin-left: 10px;
+  }
+}
+
+header.masthead {
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 4.5rem);
+  background-color: black;
+}
+
+header.masthead h1 {
+  font-size: 4.25rem;
+}
+
+@media (min-width: 992px) {
+  header.masthead {
+    height: 80vh;
+    min-height: 38rem;
+    padding-top: 4.5rem;
+    padding-bottom: 0;
+  }
+  header.masthead p {
+    font-size: 1.15rem;
+  }
+  header.masthead h1 {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  header.masthead h1 {
+    font-size: 3.5rem;
+  }
+}
+
+section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.lnr {
+  display: inline-block;
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.05em;
+  stroke-width: 1;
+}
+
+.services-icon {
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+bgc2, .vLine, .hLine {
+  background-color: #0F52BA;
+}
+
+.quote-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+.services-icon {
+  font-size: 60px;
+  margin-left: 2rem;
+}
+  
