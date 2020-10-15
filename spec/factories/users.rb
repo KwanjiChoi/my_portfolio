@@ -5,5 +5,9 @@ FactoryBot.define do
     password { 'password' }
     # https://qiita.com/xusaku_/items/018cf2cb9caae8b5fb8b
     confirmed_at { Date.today }
+
+    trait :sample_user do
+      email { 'tester@example.com' }
+    end
   end
 end

@@ -4,4 +4,6 @@ class User < ApplicationRecord
          :confirmable, :timeoutable
 
   validates :username, presence: true, length: { in: 2..20 }
+
+  has_many :projects
 end

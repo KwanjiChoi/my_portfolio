@@ -1,4 +1,22 @@
 @import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+/*=== flash message ===*/
+
+.notifications {
+  color: $white;
+  text-align: center;  
+
+  .notice {
+    background-color: lightBlue;
+  }
+
+  .alert {
+    background-color: alert_orange;
+  }
+}
+
+
 
 /*=== static_page ===*/
 
@@ -89,4 +107,3 @@ bgc2, .vLine, .hLine {
   font-size: 60px;
   margin-left: 2rem;
 }
-  
