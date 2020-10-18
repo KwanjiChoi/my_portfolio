@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Projects", type: :request do
+  let!(:user) { create(:user) }
 
   describe "GET /show" do
     it "returns http success" do
@@ -11,6 +12,7 @@ RSpec.describe "Projects", type: :request do
 
   describe "GET /edit" do
     it "returns http success" do
+      sign_in user
       get "/projects/edit"
       expect(response).to have_http_status(:success)
     end
@@ -18,6 +20,7 @@ RSpec.describe "Projects", type: :request do
 
   describe "GET /delete" do
     it "returns http success" do
+      sign_in user
       get "/projects/delete"
       expect(response).to have_http_status(:success)
     end
@@ -32,6 +35,7 @@ RSpec.describe "Projects", type: :request do
 
   describe "GET /new" do
     it "returns http success" do
+      sign_in user
       get "/projects/new"
       expect(response).to have_http_status(:success)
     end

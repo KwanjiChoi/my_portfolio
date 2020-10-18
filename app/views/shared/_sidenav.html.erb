@@ -1,3 +1,6 @@
+<%= javascript_pack_tag 'custom' %>
+<%= stylesheet_pack_tag 'custom' %>
+
 <nav class="navbar navbar-expand-md navbar-dark fixed-left">
   <a class="navbar-brand logo" href>My portfolio</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -20,6 +23,7 @@
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">account</a>
         <div class="dropdown-menu">
           <a class="dropdown-item">アカウント設定</a>
+          <%= link_to 'ワークスペース登録', user_addresses_path(current_user), class: 'dropdown-item' %>
           <a class="dropdown-item">支払い方法</a>
           <a class="dropdown-item">履歴</a>
           <a class="dropdown-item">通知</a>

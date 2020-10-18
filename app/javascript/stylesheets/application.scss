@@ -3,9 +3,11 @@
 
 /*=== flash message ===*/
 
+
 .notifications {
   color: $white;
-  text-align: center;  
+  text-align: center; 
+  z-index: 9999; 
 
   .notice {
     background-color: lightBlue;

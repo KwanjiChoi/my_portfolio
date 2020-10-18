@@ -1,0 +1,31 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <section id="project-form" class="padding-top-bottom">
+      <div class="container">
+        <div class="row">
+
+          <%= form_with model: [current_user, @address], local: true, id: 'Highlighted-form', class: 'col-9 mx-auto' do |f| %>
+
+            <%= render 'shared/error_messages', resource: @address %>
+
+            <div class="form-group">
+              <div class="controls">
+                <%= f.text_field :address , id: 'content-name', class: 'form-control requiredField Highlighted-label', placeholder: 'example) 東京都○○' %>
+              </div>
+            </div>
+            <p><%= f.submit 'create address', class: 'btn btn-info btn-block' %></p>
+          <% end %>
+          
+        </div>	
+      </div>	
+    </section>
+
+    <section>
+      <% @addresses&.each do |address| %>
+        <p> <%= address.address %> <span><%= link_to '削除', user_address_path(current_user, address), method: :delete %><span></p>
+      <% end %>
+    </section>
+  </div>
+</div>

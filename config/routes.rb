@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     sessions:      'users/sessions'
   }
   root 'static_pages#home'
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    resources :addresses, only: [:index, :create, :destroy]
+  end
   resources :projects
   get  '/dashboard', to: 'users#dashboard', as: :dashboard
 end

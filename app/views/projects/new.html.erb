@@ -1,64 +1,36 @@
-<%= javascript_pack_tag 'custom' %>
-<%= stylesheet_pack_tag 'custom' %>
-
 <%= render 'shared/sidenav' %>
 
 <div class="container">
   <div class="jumbotron">
-    <h1 class="display-4">
-      Bootstrap Navbar Sidebar
-      <br>
-      <small>Fixed to Left or Right</small>
-    </h1>
-    <p>
-      <strong>
-        Use classic Bootstrap navbar as sidebar, on left or right side.
-      </strong>
-    </p>
-    <p>
-      <a class="github-button" href="https://github.com/mladenplavsic/bootstrap-navbar-sidebar"
-        data-icon="octicon-star" data-show-count="true"
-        aria-label="Star mladenplavsic/bootstrap-navbar-sidebar on GitHub">Star</a>
-      <a class="github-button" href="https://github.com/mladenplavsic/bootstrap-navbar-sidebar/fork"
-        data-icon="octicon-repo-forked" data-show-count="true"
-        aria-label="Fork mladenplavsic/bootstrap-navbar-sidebar on GitHub">Fork</a>
-      <a class="github-button" href="https://github.com/mladenplavsic"
-        aria-label="Follow @mladenplavsic on GitHub">Follow @mladenplavsic</a>
-    </p>
-    <p>Same as when using <code>.fixed-top</code> for navbar - add class <code>.fixed-left</code> or <code>.fixed-right</code>
-        where needed.</p>
-    <p>Click buttons below, and appropriate class will be added to example navbar.</p>
-    <div class="btn-group" role="group">
-      <button type="button" data-class="fixed-left" class="btn btn-primary">
-          <i class="fa fa-arrow-left"></i>
-          Fixed Left
-      </button>
-      <button type="button" data-class="fixed-top" class="btn btn-primary">
-          <i class="fa fa-arrow-up"></i>
-          Fixed Top
-          <small>(original)</small>
-      </button>
-      <button type="button" data-class="fixed-right" class="btn btn-primary">
-          <i class="fa fa-arrow-right"></i>
-          Fixed Right
-      </button>
-    </div>
+    <section id="project-form" class="padding-top-bottom">
+      <div class="container">
+        <div class="row">
+          <form id="Highlighted-form" class="col-9 mx-auto">
+            <div class="form-group">
+              <label class="control-label" for="contact-name">Name</label>
+              <div class="controls">
+              <input id="contact-name" name="contactName" placeholder="title" class="form-control requiredField Highlighted-label" data-new-placeholder="Your name" type="text" data-error-empty="Please enter your name">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="control-label" for="contact-mail">Email</label>
+              <div class=" controls">
+              <input id="contact-mail" name="email" placeholder="Your email" class="form-control requiredField Highlighted-label" data-new-placeholder="Your email" type="email" data-error-empty="Please enter your email" data-error-invalid="Invalid email address">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="contact-message">Message</label>
+              <div class="controls">
+                <textarea id="contact-message" name="comments" placeholder="Your message" class="form-control requiredField Highlighted-label" data-new-placeholder="Your message" rows="6" data-error-empty="Please enter your message"></textarea>
+              </div>
+            </div>
+            <p><button name="submit" type="submit" class="btn btn-info btn-block" data-error-message="Error!" data-sending-message="Sending..." data-ok-message="Message Sent">create project</button></p>
+            <input type="hidden" name="submitted" id="submitted" value="true">	
+          </form>
+          
+        </div>	
+      </div>	
+    </section>
   </div>
-
-  <div class="card">
-    <div class="card-body">
-      <div class="form-group">
-        <label>
-          Select another bootstrap theme from
-          <a href="https://bootswatch.com/" target="_blank">Bootswatch</a>
-        </label>
-        <select class="form-control width-md" id="theme_select" onchange="selectTheme(value)"></select>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-      Repository maintained by <a href="https://github.com/mladenplavsic">mladenplavsic</a>
-  </footer>
-
 </div>
