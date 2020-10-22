@@ -12,7 +12,7 @@ RSpec.describe "User", type: :system do
     fill_in    'Email',    with: 'tester@example.com'
     fill_in    'Password', with: 'password'
     click_on   'Log in'
-    expect(page).to have_css     '.notifications'
+    expect(page).to have_css     '#notifications'
     expect(page).to have_content 'Signed in successfully.'
 
     click_link 'ログアウト'

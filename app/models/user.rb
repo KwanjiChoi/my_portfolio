@@ -10,6 +10,10 @@ class User < ApplicationRecord
   has_many :projects,  dependent: :destroy
   has_many :addresses, dependent: :destroy
 
+  def available_addresses
+    5 - addresses.count
+  end
+
   private
 
 end

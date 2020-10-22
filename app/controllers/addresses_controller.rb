@@ -9,8 +9,9 @@ class AddressesController < ApplicationController
   def create
     @address = current_user.addresses.build(address_params)
     if @address.save
-      redirect_to user_addresses_path(current_user), notice: '登録しました'
+      redirect_to user_addresses_path(current_user), notice: 'created successfully'
     else
+      @addresses = current_user.addresses.show_index
       render :index
     end
   end

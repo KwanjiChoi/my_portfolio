@@ -1,5 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+/* https://stackoverflow.com/questions/58939319/upgrading-to-actiontext-editor-not-working-appearing-properly */
+@import "trix/dist/trix.css";
 
 /*=== flash message ===*/
 
@@ -80,7 +82,7 @@ header.masthead h1 {
 }
 
 section {
-  padding-top: 5rem;
+  padding-top: 3rem;
   padding-bottom: 5rem;
 }
 
@@ -109,3 +111,4 @@ bgc2, .vLine, .hLine {
   font-size: 60px;
   margin-left: 2rem;
 }
+

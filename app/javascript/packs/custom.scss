@@ -2,6 +2,10 @@ body {
   padding-top: 90px;
 }
 
+section{
+  padding-bottom: 0;
+}
+
 a{
   cursor: pointer;
 }
@@ -122,7 +126,6 @@ a{
   height:52px;
   font-size:18px;
   line-height:32px;
-  color:#aaa;
   font-weight:400;
   vertical-align:top;
 }
@@ -134,10 +137,6 @@ a{
 
 #Highlighted-form .form-group{
   position:relative;
-}
-
-#Highlighted-form .form-group [class*=fa].active{
-  color:#ccc;
 }
 
 
@@ -157,14 +156,28 @@ a{
   box-shadow:0 4px 0 rgba(0,0,0,0.05);
 }
 
-#Highlighted-form .error-message {
-  padding:5px 0;
-  position:absolute;
-  top:-35px;
-  right:0;
-  font-size:15px;
-  line-height:24px;
-  font-weight:400;
-  color:#ff3345;
-  z-index:10;
+/*=== user-addresses-index ===*/
+
+.page-title{
+  margin-left: 15%;
+}
+
+
+.list-group-flush{
+  width: 80%;
+  margin: auto;
+  .list-group-item{
+    padding-top: 20px;
+    #map{
+      height: 300px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    p{
+      margin-top: 20px;
+    }
+    span{
+      float: right;
+    }
+  }
 }

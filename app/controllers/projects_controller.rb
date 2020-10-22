@@ -1,7 +1,12 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
+  def index
+    @projects = Project.all
+  end
+
   def new
+    @project = Project.new
   end
 
   def create
@@ -21,11 +26,8 @@ class ProjectsController < ApplicationController
   def destroy
   end
 
-  def index
-  end
-
   private
   def project_params
-    params.require(:project).permit(:title, :text)
+    params.require(:project).permit(:title, :text, :content)
   end
 end

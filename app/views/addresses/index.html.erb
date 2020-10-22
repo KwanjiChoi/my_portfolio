@@ -2,6 +2,10 @@
 
 <div class="container">
   <div class="jumbotron">
+    <div class='page-title'>
+      <h1>ワークスペースの登録</h1>
+      <p><%= left_count(current_user.available_addresses) %></p>
+    </div>
     <section id="project-form" class="padding-top-bottom">
       <div class="container">
         <div class="row">
@@ -9,6 +13,7 @@
           <%= form_with model: [current_user, @address], local: true, id: 'Highlighted-form', class: 'col-9 mx-auto' do |f| %>
 
             <%= render 'shared/error_messages', resource: @address %>
+            <%= render 'shared/notification' %>
 
             <div class="form-group">
               <div class="controls">
@@ -23,9 +28,19 @@
     </section>
 
     <section>
-      <% @addresses&.each do |address| %>
-        <p> <%= address.address %> <span><%= link_to '削除', user_address_path(current_user, address), method: :delete %><span></p>
-      <% end %>
+      <ul class="list-group list-group-flush">
+        <% @addresses&.each do |address| %>
+          <li class="list-group-item">
+            <%= render 'shared/google_map', resource: address %>
+            <p><%= address.address %></p>
+            <span class='text-right'><%= link_to '削除', user_address_path(current_user, address), method: :delete %></span>
+          </li>
+        <% end %>
+      </ul>
     </section>
   </div>
 </div>
+
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<%= ENV['GOOGLE_MAP_API_KEY'] %>&callback=initMap">
+</script>

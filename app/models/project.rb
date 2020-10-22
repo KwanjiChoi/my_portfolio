@@ -5,5 +5,5 @@ class Project < ApplicationRecord
   validates :text,  presence: true
 
 
-  has_rich_text :text
+  has_rich_text :content
 end
