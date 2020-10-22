@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Address model', type: :model do
   let(:user) { create(:user) }
+
   before do
     @address = build(:address)
     Geocoder.configure(:lookup => :test)
@@ -9,9 +10,9 @@ RSpec.describe 'Address model', type: :model do
     Geocoder::Lookup::Test.add_stub(
       "New York, NY", [
         {
-          'latitude'     => 40.7143528,
-          'longitude'    => -74.0059731
-        }
+          'latitude' => 40.7143528,
+          'longitude' => -74.0059731,
+        },
       ]
     )
     Geocoder::Lookup::Test.add_stub(
@@ -41,29 +42,28 @@ RSpec.describe 'Address model', type: :model do
       end
 
       it 'is invalid when user create 6 address(max is 5)' do
-        5.times do
-          create(:address, user: user)
-        end
+        create_list(:address, 5, user: user)
         @address.user = user
         @address.valid?
         expect(@address.errors[:address]).to include("の登録は最大5件までです")
       end
     end
+
     context 'using geocode' do
       it "is invalid when address doesn't make sence" do
         @address.address = 'no meaning'
         @address.valid?
         expect(@address.errors[:address]).to include("は無効な住所です")
       end
-    end   
+    end
   end
 
   describe 'scope' do
     context 'show_index' do
       subject { Address.show_index.to_sql }
+
       it { is_expected.to satisfy { |sql| sql.scan('ORDER BY `addresses`.`id` DESC').one? } }
       it { is_expected.to satisfy { |sql| sql.scan('DESC LIMIT 5').one? } }
     end
   end
-
 end

@@ -17,6 +17,6 @@ RSpec.describe "User", type: :system do
 
     click_link 'ログアウト'
     expect(page).to have_css     '.notifications'
-    expect(page).to have_content 'Signed out successfully.'   
+    expect(page).to have_content 'Signed out successfully.'
   end
 end

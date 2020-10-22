@@ -4,6 +4,5 @@ class Project < ApplicationRecord
   validates :title, presence: true, length: { in: 2..50 }
   validates :text,  presence: true
 
-
   has_rich_text :content
 end

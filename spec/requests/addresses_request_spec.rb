@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Addresses", type: :request do
   let!(:user)       { create(:user) }
-  let!(:other_user) { create(:user)}
+  let!(:other_user) { create(:user) }
 
   describe "GET /index" do
     it "returns http status 302 when user not logged in" do
@@ -26,32 +26,30 @@ RSpec.describe "Addresses", type: :request do
   describe 'POST /create' do
     it 'adds a address' do
       sign_in user
-      expect{
+      expect  do
         post user_addresses_path(user), params: { address: attributes_for(:address) }
-      }.to change(user.addresses, :count).by(1)
+      end.to change(user.addresses, :count).by(1)
     end
 
-   it 'does not add a address when user not logged in' do
-      expect{
+    it 'does not add a address when user not logged in' do
+      expect do
         post user_addresses_path(user), params: { address: attributes_for(:address) }
-      }.not_to change(user.addresses, :count)
-   end
+      end.not_to change(user.addresses, :count)
+    end
 
-   it 'does not add a address when params is nil' do
-     sign_in user
-     expect{
-      post user_addresses_path(user), params: { address: attributes_for(:address, :invalid) }
-    }.not_to change(user.addresses, :count)
-   end
+    it 'does not add a address when params is nil' do
+      sign_in user
+      expect  do
+        post user_addresses_path(user), params: { address: attributes_for(:address, :invalid) }
+      end.not_to change(user.addresses, :count)
+    end
 
     it 'does not add a address when user already has 5 addresses' do
-      5.times do
-        create(:address, user: user)
-      end
+      create_list(:address, 5, user: user)
       sign_in user
-      expect{
+      expect  do
         post user_addresses_path(user), params: { address: attributes_for(:address) }
-      }.not_to change(user.addresses, :count)
+      end.not_to change(user.addresses, :count)
     end
 
     it 'after create address redirect to address index path' do
@@ -67,22 +65,22 @@ RSpec.describe "Addresses", type: :request do
 
     it 'deletes address' do
       sign_in user
-      expect{
+      expect  do
         delete user_address_path(user, address)
-      }.to change(user.addresses, :count).by(-1)
+      end.to change(user.addresses, :count).by(-1)
     end
 
     it 'deos not delete address when user does not logged in' do
-      expect{
+      expect do
         delete user_address_path(user, address)
-      }.not_to change(user.addresses, :count)
+      end.not_to change(user.addresses, :count)
     end
 
     it 'does not delete other users address' do
       sign_in user
-      expect{
+      expect  do
         delete user_address_path(other_user, other_address)
-      }.not_to change(other_user.addresses, :count)
+      end.not_to change(other_user.addresses, :count)
     end
 
     it 'after create address redirect to address index path' do
@@ -90,6 +88,5 @@ RSpec.describe "Addresses", type: :request do
       delete user_address_path(user, address)
       expect(response).to redirect_to(user_addresses_path(user))
     end
-
   end
 end

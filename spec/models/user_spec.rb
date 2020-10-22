@@ -55,9 +55,7 @@ RSpec.describe User, type: :model do
   describe 'instance method' do
     it 'returns available number of addresses registrations' do
       expect(@user.available_addresses).to eq 5
-      3.times do
-        create(:address, user: @user)
-      end
+      create_list(:address, 3, user: @user)
       expect(@user.available_addresses).to eq 2
     end
   end

@@ -6,12 +6,10 @@ class Address < ApplicationRecord
 
   geocoded_by :address
 
-
   after_validation :geocode, if: :address_changed?
   after_validation :check_correct_address
   validates        :address, presence: true, length: { maximum: 75 }
   validate         :check_number_of_addresses
-
 
   scope :show_index, -> {
     order(id: :desc).limit(SHOW_INDEX_LENGTH)
@@ -26,9 +24,8 @@ class Address < ApplicationRecord
   end
 
   def check_correct_address
-    if latitude == nil || longitude == nil
+    if latitude.nil? || longitude.nil?
       errors.add(:address, 'は無効な住所です')
     end
   end
-
 end

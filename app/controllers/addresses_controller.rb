@@ -34,5 +34,4 @@ class AddressesController < ApplicationController
     user = User.find(params[:user_id])
     redirect_to dashboard_path unless user == current_user
   end
-
 end

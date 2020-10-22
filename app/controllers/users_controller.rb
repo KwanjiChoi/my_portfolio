@@ -9,6 +9,5 @@ class UsersController < ApplicationController
   end
 
   def dashboard
-
   end
 end

@@ -106,6 +106,7 @@ jobs:
           name: Run post-deploy tasks
           command: |
             heroku config:set AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY S3_HOST_NAME=$S3_HOST_NAME S3_BUCKET=$S3_BUCKET S3_REGION=$S3_REGION SUGGEST_API_KEY=$api123
+            heroku config:set GOOGLE_MAP_API_KEY=$GOOGLE_MAP_API_KEY
             heroku run bin/rails db:migrate
 
 orbs:

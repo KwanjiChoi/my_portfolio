@@ -20,13 +20,13 @@ class ProjectsController < ApplicationController
   end
 
   def update
-
   end
 
   def destroy
   end
 
   private
+
   def project_params
     params.require(:project).permit(:title, :text, :content)
   end

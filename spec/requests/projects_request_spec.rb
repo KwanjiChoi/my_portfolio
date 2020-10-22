@@ -40,5 +40,4 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
-
 end
