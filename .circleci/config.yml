@@ -11,8 +11,6 @@ jobs:
           MYSQL_PASSWORD: ''
       # https://stackoverflow.com/questions/49979089/authentication-plugin-caching-sha2-password-cannot-be-loaded-in-circleci-mysql
       - image: circleci/mysql:8.0
-        security_opt:
-          - seccomp:unconfined
         command: |
           mysqld --default-authentication-plugin=mysql_native_password
     steps:
