@@ -71,16 +71,29 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'POST /create' do
+    let!(:category)     { create(:project_category) }
+    let(:project_params) do
+      attributes_for(:project, title: 'Sample Title',
+                               main_image: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/test.jpg')),
+                               content: 'Sample Content',
+                               user: user,
+                               project_category_id: category.id)
+    end
     it 'adds a project' do
       sign_in user
-      puts attributes_for(:project)
       expect do
-        post projects_path, params: { project: attributes_for(:project, user: user) }
+        post projects_path, params: { project: project_params }
       end.to change(Project, :count).by(1)
+    end
+
+    it 'does not add a project when user not logged in' do
+      expect do
+        post projects_path, params: { project: project_params }
+      end.to change(Project, :count).by(0)
     end
   end
 
-  describe 'POST /update' do
+  describe 'PUT /update' do
   end
 
   describe "DELETE /destroy" do
