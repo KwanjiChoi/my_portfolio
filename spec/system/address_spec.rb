@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "Address", type: :system do
-  let!(:user_addresses) { create_list(:address, 3, user: user) }
-  let!(:tokyo)          { create(:address, :tokyo, user: user) }
-
   include_examples 'sign in'
   include_examples 'googlemap api'
+
+  let!(:user_addresses) { create_list(:address, 3, user: user) }
+  let!(:tokyo)          { create(:address, :tokyo, user: user) }
 
   scenario 'user creates addresses' do
     visit dashboard_path
