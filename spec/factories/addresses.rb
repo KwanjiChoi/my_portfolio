@@ -7,4 +7,8 @@ FactoryBot.define do
   trait :invalid do
     address { '' }
   end
+
+  trait :tokyo do
+    address { 'Tokyo' }
+  end
 end

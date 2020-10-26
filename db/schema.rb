@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_22_171432) do
+ActiveRecord::Schema.define(version: 2020_10_25_090501) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -53,12 +53,20 @@ ActiveRecord::Schema.define(version: 2020_10_22_171432) do
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
+  create_table "project_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
-    t.text "text", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "main_image", null: false
+    t.bigint "project_category_id"
+    t.index ["project_category_id"], name: "index_projects_on_project_category_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -84,5 +92,6 @@ ActiveRecord::Schema.define(version: 2020_10_22_171432) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
+  add_foreign_key "projects", "project_categories"
   add_foreign_key "projects", "users"
 end

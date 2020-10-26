@@ -26,7 +26,7 @@ RSpec.describe "Addresses", type: :request do
   describe 'POST /create' do
     it 'adds a address' do
       sign_in user
-      expect  do
+      expect do
         post user_addresses_path(user), params: { address: attributes_for(:address) }
       end.to change(user.addresses, :count).by(1)
     end
@@ -39,7 +39,7 @@ RSpec.describe "Addresses", type: :request do
 
     it 'does not add a address when params is nil' do
       sign_in user
-      expect  do
+      expect do
         post user_addresses_path(user), params: { address: attributes_for(:address, :invalid) }
       end.not_to change(user.addresses, :count)
     end

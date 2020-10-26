@@ -33,7 +33,7 @@
           <li class="list-group-item">
             <%= render 'shared/google_map', resource: address %>
             <p><%= address.address %></p>
-            <span class='text-right'><%= link_to '削除', user_address_path(current_user, address), method: :delete %></span>
+            <span class='text-right'><%= link_to '削除', user_address_path(current_user, address), method: :delete, id: "delete-#{address.id}" %></span>
           </li>
         <% end %>
       </ul>

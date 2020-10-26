@@ -5,33 +5,41 @@
     <section id="project-form" class="padding-top-bottom">
       <div class="container">
         <div class="row">
-          <%= form_with model: [current_user, @project], local: true, class: 'col-9 mx-auto' do |f| %>
+          <%= form_with model: @project, local: true, class: 'col-10 mx-auto' do |f| %>
+            
+            <%= render 'shared/error_messages', resource: @project %>
+
             <div class="form-group">
-              <label class="control-label" for="contact-name">Name</label>
+              <%= f.label :title, 'Title', class: 'control-label' %>
               <div class="controls">
-              <input id="contact-name" name="contactName" placeholder="title" class="form-control requiredField Highlighted-label" data-new-placeholder="Your name" type="text" data-error-empty="Please enter your name">
+                <%= f.text_field :title, class: 'form-control', placeholder: 'Title' %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :main_image, 'カテゴリー', class: 'control-label'%>
+              <div class="controls">
+                <%= f.collection_select :project_category_id, ProjectCategory.all, :id, :name,
+                                                     :include_blank => "カテゴリを選択してください" %>
               </div>
             </div>
             
             <div class="form-group">
-              <label class="control-label" for="contact-mail">Email</label>
-              <div class=" controls">
-              <input id="contact-mail" name="email" placeholder="Your email" class="form-control requiredField Highlighted-label" data-new-placeholder="Your email" type="email" data-error-empty="Please enter your email" data-error-invalid="Invalid email address">
+              <%= f.label :main_image, 'サムネイル画像', class: 'control-label'%>
+              <div class="controls">
+                <%= f.file_field :main_image %>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="control-label" for="contact-message">Message</label>
               <div class="field">
                 <%= f.label :content %>
                 <%= f.rich_text_area :content %>
               </div>
-              <%= @project.content %>
-
             </div>
 
-            <p><button name="submit" type="submit" class="btn btn-info btn-block" data-error-message="Error!" data-sending-message="Sending..." data-ok-message="Message Sent">create project</button></p>
-            <input type="hidden" name="submitted" id="submitted" value="true">	
+            <p><%= f.submit 'create project', class: 'btn btn-info btn-block' %></p>
+            	
           <% end %>
           
         </div>	
@@ -40,21 +48,3 @@
   </div>
 </div>
 
-<%= form_with(model: [current_user, @project], local: true) do |form| %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.rich_text_area :content %>
-  </div>
-
-  <%= @project.content %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
