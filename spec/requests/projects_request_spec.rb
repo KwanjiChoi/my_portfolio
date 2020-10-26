@@ -71,14 +71,17 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'POST /create' do
-    let!(:category)     { create(:project_category) }
+    let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'Sample Title',
-                               main_image: Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/test.jpg')),
+                               main_image: Rack::Test::UploadedFile.new(
+                                 File.join(Rails.root, 'spec/fixtures/test.jpg')
+                               ),
                                content: 'Sample Content',
                                user: user,
                                project_category_id: category.id)
     end
+
     it 'adds a project' do
       sign_in user
       expect do
@@ -94,6 +97,9 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'PUT /update' do
+    it do
+      expect(1 + 1).to eq 2
+    end
   end
 
   describe "DELETE /destroy" do

@@ -30,7 +30,7 @@
     <section>
       <ul class="list-group list-group-flush">
         <% @addresses&.each do |address| %>
-          <li class="list-group-item">
+          <li class="list-group-item <%= address.id %>">
             <%= render 'shared/google_map', resource: address %>
             <p><%= address.address %></p>
             <span class='text-right'><%= link_to '削除', user_address_path(current_user, address), method: :delete, id: "delete-#{address.id}" %></span>

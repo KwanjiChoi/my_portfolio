@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Address", type: :system do
-  let!(:tokyo)          { create(:address, :tokyo, user: user) }
   let!(:user_addresses) { create_list(:address, 3, user: user) }
+  let!(:tokyo)          { create(:address, :tokyo, user: user) }
 
   include_examples 'sign in'
   include_examples 'googlemap api'
