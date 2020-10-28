@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+  }
   root 'static_pages#home'
-  get  '/dashboard', to: 'users#show', as: :my_page
+  resources :users, only: [:show] do
+    resources :addresses, only: [:index, :create, :destroy]
+  end
+  resources :projects
+  get '/dashboard', to: 'users#dashboard', as: :dashboard
 end

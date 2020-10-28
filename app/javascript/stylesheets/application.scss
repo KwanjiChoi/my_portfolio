@@ -1,4 +1,31 @@
 @import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+/* https://stackoverflow.com/questions/58939319/upgrading-to-actiontext-editor-not-working-appearing-properly */
+@import "trix/dist/trix.css";
+
+
+trix-editor{
+  background-color: white;
+}
+
+/*=== flash message ===*/
+
+
+.notifications {
+  color: $white;
+  text-align: center; 
+  z-index: 9999; 
+
+  .notice {
+    background-color: lightBlue;
+  }
+
+  .alert {
+    background-color: alert_orange;
+  }
+}
+
+
 
 /*=== static_page ===*/
 
@@ -29,7 +56,7 @@
 }
 
 header.masthead {
-  padding-top: 10rem;
+  padding-top: 5rem;
   padding-bottom: calc(10rem - 4.5rem);
   background-color: black;
 }
@@ -43,7 +70,6 @@ header.masthead h1 {
     height: 80vh;
     min-height: 38rem;
     padding-top: 4.5rem;
-    padding-bottom: 0;
   }
   header.masthead p {
     font-size: 1.15rem;
@@ -60,7 +86,7 @@ header.masthead h1 {
 }
 
 section {
-  padding-top: 5rem;
+  padding-top: 3rem;
   padding-bottom: 5rem;
 }
 
@@ -89,4 +115,4 @@ bgc2, .vLine, .hLine {
   font-size: 60px;
   margin-left: 2rem;
 }
-  
+

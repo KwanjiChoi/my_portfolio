@@ -51,4 +51,12 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'instance method' do
+    it 'returns available number of addresses registrations' do
+      expect(@user.available_addresses).to eq 5
+      create_list(:address, 3, user: @user)
+      expect(@user.available_addresses).to eq 2
+    end
+  end
 end

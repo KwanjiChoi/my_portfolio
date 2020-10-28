@@ -1,0 +1,50 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <section id="project-form" class="padding-top-bottom">
+      <div class="container">
+        <div class="row">
+          <%= form_with model: @project, local: true, class: 'col-10 mx-auto' do |f| %>
+            
+            <%= render 'shared/error_messages', resource: @project %>
+
+            <div class="form-group">
+              <%= f.label :title, 'Title', class: 'control-label' %>
+              <div class="controls">
+                <%= f.text_field :title, class: 'form-control', placeholder: 'Title' %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :main_image, 'カテゴリー', class: 'control-label'%>
+              <div class="controls">
+                <%= f.collection_select :project_category_id, ProjectCategory.all, :id, :name,
+                                                     :include_blank => "カテゴリを選択してください" %>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <%= f.label :main_image, 'サムネイル画像', class: 'control-label'%>
+              <div class="controls">
+                <%= f.file_field :main_image %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="field">
+                <%= f.label :content %>
+                <%= f.rich_text_area :content %>
+              </div>
+            </div>
+
+            <p><%= f.submit 'create project', class: 'btn btn-info btn-block' %></p>
+            	
+          <% end %>
+          
+        </div>	
+      </div>	
+    </section>
+  </div>
+</div>
+

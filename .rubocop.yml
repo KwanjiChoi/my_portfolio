@@ -15,3 +15,4 @@ AllCops:
     - 'node_modules/**/*'
     - 'tmp/**/*'
     - '.git/**/*'
+    - 'spec/system/address_spec.rb'
