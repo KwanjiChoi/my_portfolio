@@ -33,6 +33,9 @@ RSpec.configure do |config|
   end
 
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  OmniAuth.config.test_mode = true
+  config.include OmniauthMacros
 end
 
 Shoulda::Matchers.configure do |config|
