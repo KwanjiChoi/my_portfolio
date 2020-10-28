@@ -3,9 +3,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :timeoutable, :omniauthable
 
-  validates :username, presence: true, 
-            uniqueness: { case_sensitive: :false },
-            length: { in: 2..20 }
+  validates :username, presence: true,
+                       uniqueness: { case_sensitive: :false },
+                       length: { in: 2..20 }
 
   has_many :projects,  dependent: :destroy
   has_many :addresses, dependent: :destroy
@@ -21,7 +21,7 @@ class User < ApplicationRecord
       user = User.new(
         uid: auth.uid,
         provider: auth.provider,
-        email:    User.dummy_email(auth),
+        email: User.dummy_email(auth),
         username: auth.info.name,
         password: Devise.friendly_token[0, 20],
         # image:  auth.info.image
