@@ -15,8 +15,16 @@
   </div>
 <% end %>
 
-<% if flash.any? %>
+<% if flash[:alert] %>
   <div id="notification" class='alert alert-danger'>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+    <% end %> 
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <div id="notification" class='alert alert-success'>
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
     <% end %> 

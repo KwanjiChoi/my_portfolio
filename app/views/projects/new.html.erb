@@ -17,7 +17,7 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :main_image, 'カテゴリー', class: 'control-label'%>
+              <%= f.label :project_category_id, 'カテゴリー', class: 'control-label'%>
               <div class="controls">
                 <%= f.collection_select :project_category_id, ProjectCategory.all, :id, :name,
                                                      :include_blank => "カテゴリを選択してください" %>

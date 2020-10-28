@@ -11,6 +11,22 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+Capybara.register_driver :remote_chrome do |app|
+  url = "http://chrome:4444/wd/hub"
+  caps = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+    "goog:chromeOptions" => {
+      "args" => [
+        "no-sandbox",
+        "headless",
+        "disable-gpu",
+        "window-size=1680,1050",
+      ],
+    }
+  )
+  Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: caps)
+end
+
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryBot::Syntax::Methods
@@ -22,20 +38,23 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   # https://commis.hatenablog.com/entry/2018/11/16/171608
-  config.before(:each) do |example|
-    if example.metadata[:type] == :system
-      if example.metadata[:js]
-        driven_by :selenium_chrome_headless, screen_size: [1400, 1400]
-      else
-        driven_by :rack_test
-      end
-    end
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  # https://qiita.com/at-946/items/e96eaf3f91a39d180eb3
+  config.before(:each, type: :system, js: true) do
+    driven_by :remote_chrome
+    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+    Capybara.server_port = 3001
+    Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
   end
 
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   OmniAuth.config.test_mode = true
   config.include OmniauthMacros
+  config.include ActionTextHelper, type: :system
 end
 
 Shoulda::Matchers.configure do |config|

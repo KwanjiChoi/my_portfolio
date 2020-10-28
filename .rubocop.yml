@@ -16,3 +16,4 @@ AllCops:
     - 'tmp/**/*'
     - '.git/**/*'
     - 'spec/system/address_spec.rb'
+    - 'spec/support/action_text_helper.rb'
