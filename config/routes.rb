@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   end
   resources :projects
   get '/dashboard', to: 'users#dashboard', as: :dashboard
+
+  if Rails.env.development?  
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"  
+  end  
 end

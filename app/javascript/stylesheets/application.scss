@@ -3,6 +3,10 @@
 /* https://stackoverflow.com/questions/58939319/upgrading-to-actiontext-editor-not-working-appearing-properly */
 @import "trix/dist/trix.css";
 
+.debug_dump{
+  background-color:gray;
+}
+
 
 trix-editor{
   background-color: white;
