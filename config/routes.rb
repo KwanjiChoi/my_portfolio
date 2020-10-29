@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   resources :users, only: [:show] do
     resources :addresses, only: [:index, :create, :destroy]
+    member do
+      get 'activate_teacher'
+    end
+    collection do
+      get 'apply_teacher'
+    end
   end
   resources :projects
   get '/dashboard', to: 'users#dashboard', as: :dashboard

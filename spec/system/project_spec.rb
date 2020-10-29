@@ -4,7 +4,7 @@ RSpec.describe "Project", type: :system, js: true do
   let!(:category2) { create(:project_category, name: 'category2') }
   let!(:category1) { create(:project_category, name: 'category1') }
 
-  include_examples 'sign in'
+  include_examples 'sign in with teacher account'
 
   scenario 'user post projects' do
     visit dashboard_path
@@ -14,5 +14,6 @@ RSpec.describe "Project", type: :system, js: true do
     attach_file "project[main_image]", "#{Rails.root}/spec/fixtures/test.jpg"
     fill_in_rich_text_area 'project_content', with: 'sample content'
     click_on 'create project'
+    expect(page).to have_content 'created successfully'
   end
 end

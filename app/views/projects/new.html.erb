@@ -32,6 +32,13 @@
             </div>
 
             <div class="form-group">
+              <%= f.label :phone_reservation, '電話予約を許可しますか？', class: 'control-label'%>
+              <div class="controls">
+                <%= f.check_box :phone_reservation %>
+              </div>
+            </div>
+
+            <div class="form-group">
               <div class="field">
                 <%= f.label :content %>
                 <%= f.rich_text_area :content %>

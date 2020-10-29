@@ -3,13 +3,12 @@
 <div class="container">
   <div class="jumbotron">
     <%= render 'shared/notification' %>
-    <% if current_user.teacher? %>
-      <div class="btn-toolbar mb-2 mb-md-0">
-        <%= link_to new_project_path do %>
-          <button type="button" class="btn btn-info mr-3">new project</button>
-        <% end %>
-      </div>
-    <% end %>
+
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <%= link_to activate_teacher_user_path(current_user) do %>
+        <button type="button" class="btn btn-info btn-lg mr-3">apply teacher account</button>
+      <% end %>
+    </div>
     <h1 class="display-4">
       Bootstrap Navbar Sidebar
       <br>

@@ -9,5 +9,16 @@ FactoryBot.define do
     trait :sample_user do
       email { 'tester@example.com' }
     end
+
+    trait :system_user do
+      username  { 'SampleUser' }
+      email     { 'sample@example.com'}
+    end
+
+    trait :teacher_account do
+      username  { 'SampleUser' }
+      email     { 'sample@example.com'}
+      teacher { true }
+    end
   end
 end
