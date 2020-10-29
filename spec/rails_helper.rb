@@ -12,7 +12,6 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryBot::Syntax::Methods
@@ -22,17 +21,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.filter_rails_from_backtrace!
-
-  RSpec.configure do |config|
-    config.before(:each, type: :system) do
-      driven_by :rack_test
-    end
-  
-    config.before(:each, type: :system, js: true) do
-      driven_by :selenium_chrome_headless
-    end
-  end
-
 
   config.include Devise::Test::IntegrationHelpers, type: :request
 
