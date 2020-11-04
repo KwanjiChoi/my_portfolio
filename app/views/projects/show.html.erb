@@ -4,8 +4,20 @@
 
 <div class="container">
   <div class="jumbotron">
+    <%= render 'shared/notification' %>
     <section id="project-show" class="padding-top-bottom">
-      <%= render 'shared/notification' %>
+      <h1> <%= @project.title%> </h1>
+      <p> <%= link_to @project.category_name, '#' %> </p>
+      <p> project by <%= link_to @project.owner, user_path(@project.user) %></p>
+      <%= image_tag @project.main_image.to_s %>
+      <%= @project.content %>
+
+
+      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
     </section>
   </div>
 </div>
+
+
+<%= render 'modal' %>
+

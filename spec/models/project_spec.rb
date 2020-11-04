@@ -65,11 +65,19 @@ RSpec.describe Project, type: :model do
         expect(@project.errors[:content]).to include "can't be blank"
       end
 
-      it 'is invalid when title is over 1000 characters' do
-        @project.content = 'a' * 1001
+      it 'is invalid when title is over 2000 characters' do
+        @project.content = 'a' * 2001
         @project.valid?
-        expect(@project.errors[:content]).to include "is too long (maximum is 1000 characters)"
+        expect(@project.errors[:content]).to include "is too long (maximum is 2000 characters)"
       end
+    end
+  end
+
+  describe 'relation' do
+    it 'dependent destroy' do
+      user = create(:user)
+      project = create(:project, user: user)
+      expect { user.destroy }.to change(Project, :count)
     end
   end
 end

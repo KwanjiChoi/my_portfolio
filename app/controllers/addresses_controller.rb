@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :authenticate_user!
+  before_action :authenticate_teacher_account!
   before_action :correct_user
   def index
     @address = Address.new

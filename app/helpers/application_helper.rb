@@ -6,4 +6,8 @@ module ApplicationHelper
       "#{title} - #{Constants::BASE_TITLE}"
     end
   end
+
+  def unconfirmed?(user)
+    user.unconfirmed_email.present?
+  end
 end

@@ -58,12 +58,26 @@ Rails.application.configure do
 
   #mailer setting
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => 'smtp.gmail.com',
+    :user_name => ENV['MAIL_ADDRESS'],
+    :password =>  ENV['MAIL_PASSWORD'],
+    :authentication => 'login',
+  }
 
   # bullet setting
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true
   end
+
+  # https://qiita.com/terufumi1122/items/73da039e6fc90ee0a63f for letter_opener
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
 
 end
 

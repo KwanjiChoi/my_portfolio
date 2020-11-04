@@ -3,10 +3,19 @@
 <div class="container">
   <div class="jumbotron">
     <%= render 'shared/notification' %>
-    <% if current_user.teacher? %>
+    <% if unconfirmed?(current_user) %>
       <div class="btn-toolbar mb-2 mb-md-0">
-        <%= link_to new_project_path do %>
-          <button type="button" class="btn btn-info mr-3">new project</button>
+        <p>
+          <%= link_to "#", style: 'pointer-events: none;' do %>
+            <button type="button" class="btn btn-secondary btn-lg mr-3">teacherアカウントの登録にはメール認証が必要です</button>
+          <% end %>
+        </p>
+        <p><%= link_to 'メール認証をする', edit_user_registration_path %></p>
+      </div>
+    <% else %>
+      <div class="btn-toolbar mb-2 mb-md-0">
+        <%= link_to activate_teacher_user_path(current_user) do %>
+          <button type="button" class="btn btn-info btn-lg mr-3">apply teacher account</button>
         <% end %>
       </div>
     <% end %>

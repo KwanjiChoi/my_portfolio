@@ -11,8 +11,7 @@
   <div class="col-md-8 col-sm-12">
     <div class="form-container">
       <p>
-        <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
-        <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
+        <%= render 'devise/shared/omniauth_login' %>
       </p>
       <p class="divider-text">
         <span class="bg-light">OR</span>
@@ -40,7 +39,9 @@
           <%= f.submit "Log in", class: 'btn btn-black' %>
         </div>
       <% end %>
-      <%= render "devise/shared/links" %>
+      <div class='option-links'>
+        <%= render "devise/shared/links" %>
+      </div>
     </div>
   </div>
 </div>

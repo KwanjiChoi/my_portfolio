@@ -17,13 +17,19 @@
         <%= link_to 'ダッシュボード', dashboard_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">
-        <a class="nav-link">プロジェクト</a>
+        <% if current_user.teacher? %>
+          <a class="nav-link">プロジェクト</a>
+        <% else %>
+          <%= link_to '人に教える', apply_teacher_users_path, class: 'nav-link' %>
+        <% end %>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">account</a>
         <div class="dropdown-menu">
           <a class="dropdown-item">アカウント設定</a>
-          <%= link_to 'ワークスペース登録', user_addresses_path(current_user), class: 'dropdown-item' %>
+          <% if current_user.teacher? %>
+            <%= link_to 'ワークスペース登録', user_addresses_path(current_user), class: 'dropdown-item' %>
+          <% end %>
           <a class="dropdown-item">支払い方法</a>
           <a class="dropdown-item">履歴</a>
           <a class="dropdown-item">通知</a>

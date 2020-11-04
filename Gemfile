@@ -55,6 +55,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'bullet'
   gem 'dotenv-rails'
+  gem 'letter_opener_web'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -64,3 +65,10 @@ gem 'geocoder'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'fog-aws'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'redis'
+gem 'redis-namespace'
