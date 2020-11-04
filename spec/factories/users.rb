@@ -12,12 +12,12 @@ FactoryBot.define do
 
     trait :system_user do
       username  { 'SampleUser' }
-      email     { 'sample@example.com'}
+      email     { 'sample@example.com' }
     end
 
     trait :teacher_account do
       username  { 'SampleUser' }
-      email     { 'sample@example.com'}
+      email     { 'sample@example.com' }
       teacher { true }
     end
   end

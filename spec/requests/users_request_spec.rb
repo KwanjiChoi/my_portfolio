@@ -48,5 +48,12 @@ RSpec.describe "Users", type: :request do
       get activate_teacher_user_path(other_user)
       expect(response).to have_http_status(302)
     end
+
+    it 'returns response code 302 when user has unconfirmed email' do
+      sign_in user
+      user.unconfirmed_email = 'sample@sample.com'
+      get activate_teacher_user_path(user)
+      expect(response).to have_http_status(302)
+    end
   end
 end

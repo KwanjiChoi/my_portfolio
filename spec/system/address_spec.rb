@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Address", type: :system do
-  include_examples 'sign in'
+  include_examples 'sign in with teacher account'
   include_examples 'googlemap api'
 
   let!(:user_addresses) { create_list(:address, 3, user: user) }

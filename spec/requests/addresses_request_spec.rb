@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Addresses", type: :request do
-  let!(:user)       { create(:user) }
   let!(:other_user) { create(:user) }
+  let!(:user)       { create(:user, teacher: true) }
+
+  include_examples 'googlemap api'
 
   describe "GET /index" do
     it "returns http status 302 when user not logged in" do
@@ -19,6 +21,13 @@ RSpec.describe "Addresses", type: :request do
     it "returns http status 302 when get other user's address index page" do
       sign_in user
       get user_addresses_path(other_user)
+      expect(response.code).to eq '302'
+    end
+
+    it "returns http status 302 when user does not activate teacher account" do
+      user.teacher = false
+      sign_in user
+      get user_addresses_path(user)
       expect(response.code).to eq '302'
     end
   end
@@ -57,6 +66,14 @@ RSpec.describe "Addresses", type: :request do
       post user_addresses_path(user), params: { address: attributes_for(:address) }
       expect(response).to redirect_to(user_addresses_path(user))
     end
+
+    it 'does not add addresses when user does not activate teacher account' do
+      user.teacher = false
+      sign_in user
+      expect  do
+        post user_addresses_path(user), params: { address: attributes_for(:address) }
+      end.not_to change(user.addresses, :count)
+    end
   end
 
   describe 'DELETE /destroy' do
@@ -87,6 +104,14 @@ RSpec.describe "Addresses", type: :request do
       sign_in user
       delete user_address_path(user, address)
       expect(response).to redirect_to(user_addresses_path(user))
+    end
+
+    it 'does not delete address when user does not activate teacher account' do
+      user.teacher = false
+      sign_in user
+      expect  do
+        delete user_address_path(user, address)
+      end.not_to change(user.addresses, :count)
     end
   end
 end

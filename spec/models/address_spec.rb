@@ -66,4 +66,12 @@ RSpec.describe 'Address model', type: :model do
       it { is_expected.to satisfy { |sql| sql.scan('DESC LIMIT 5').one? } }
     end
   end
+
+  describe 'relation' do
+    it 'dependent destroy' do
+      user = create(:user)
+      address = create(:address, user: user)
+      expect { user.destroy }.to change(Address, :count)
+    end
+  end
 end

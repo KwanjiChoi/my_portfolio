@@ -17,4 +17,3 @@ shared_examples 'sign in with teacher account' do
     sign_in user
   end
 end
-

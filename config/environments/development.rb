@@ -76,6 +76,9 @@ Rails.application.configure do
     Bullet.alert = true
   end
 
+  # https://qiita.com/terufumi1122/items/73da039e6fc90ee0a63f for letter_opener
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
+
 end
 
 

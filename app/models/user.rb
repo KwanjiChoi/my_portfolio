@@ -1,16 +1,16 @@
 class User < ApplicationRecord
-  VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/
+  VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/.freeze
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :timeoutable, :omniauthable
 
-  validates :username, presence:   true,
+  validates :username, presence: true,
                        uniqueness: { case_sensitive: :false },
-                       length:     { in: 2..20 }
+                       length: { in: 2..20 }
 
-  validates :phone_number, uniqueness:  { case_sensitive: :false },
-                           allow_nil:   true
+  validates :phone_number, uniqueness: { case_sensitive: :false },
+                           allow_nil: true
 
   after_validation :check_correct_number
 
@@ -25,13 +25,15 @@ class User < ApplicationRecord
     user = User.where(uid: auth.uid, provider: auth.provider).first
 
     unless user
+      mail = User.dummy_email(auth)
       user = User.new(
         uid: auth.uid,
         provider: auth.provider,
-        email: User.dummy_email(auth),
+        email: mail,
         username: auth.info.name,
         password: Devise.friendly_token[0, 20],
         # image:  auth.info.image
+        unconfirmed_email: mail
       )
       user.skip_confirmation!
       user.save
@@ -52,7 +54,7 @@ class User < ApplicationRecord
   def check_correct_number
     return if phone_number.nil?
     unless phone_number.match VALID_PHONE_REGEX
-      errors.add(:phone_number, 'type correct phone number' )
+      errors.add(:phone_number, 'type correct phone number')
     end
   end
 end

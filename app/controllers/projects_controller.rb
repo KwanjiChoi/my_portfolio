@@ -35,10 +35,10 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, 
-                                    :content, 
-                                    :main_image, 
-                                    :project_category_id, 
+    params.require(:project).permit(:title,
+                                    :content,
+                                    :main_image,
+                                    :project_category_id,
                                     :phone_reservation)
   end
 

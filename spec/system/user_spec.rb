@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "User", type: :system do
-
   describe 'account service' do
     include_examples 'sign in'
     scenario 'user activate teacher account' do

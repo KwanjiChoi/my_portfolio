@@ -68,3 +68,7 @@ gem 'fog-aws'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'redis'
+gem 'redis-namespace'

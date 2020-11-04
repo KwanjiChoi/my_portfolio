@@ -72,4 +72,12 @@ RSpec.describe Project, type: :model do
       end
     end
   end
+
+  describe 'relation' do
+    it 'dependent destroy' do
+      user = create(:user)
+      project = create(:project, user: user)
+      expect { user.destroy }.to change(Project, :count)
+    end
+  end
 end
