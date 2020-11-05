@@ -99,7 +99,7 @@ jobs:
           command: timestamp=`date +%Y%m%d%H%M%S` && echo "export HEROKU_APP_NAME=my-portfolio-$timestamp" >> $BASH_ENV
       - run:
           name: Create fresh Heroku app
-          command: heroku apps:create $HEROKU_APP_NAME --addons=jawsdb:kitefin heroku-redis:hobby-dev
+          command: heroku apps:create $HEROKU_APP_NAME --addons=jawsdb:kitefin
       - run:
           name: Add heroku redis
           command: heroku addons:create heroku-redis:hobby-dev
