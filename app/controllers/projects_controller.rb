@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
   before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_teacher_account!, except: [:show, :index]
 
   def index
     @projects = Project.all

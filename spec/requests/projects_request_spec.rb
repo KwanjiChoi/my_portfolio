@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Projects", type: :request do
-  let!(:user)         { create(:user) }
+  let!(:user)         { create(:user, teacher: true) }
   let!(:project)      { create(:project, user: user) }
   let!(:other_user)   { create(:user) }
   let(:other_project) { create(:project) }
@@ -29,6 +29,13 @@ RSpec.describe "Projects", type: :request do
     it "returns http status code 302 when user doesn't sign in" do
       get new_project_path
       expect(response.code).to eq('302')
+    end
+
+    it "returns http status code 302 when user does not activate teacher account" do
+      user.teacher = false
+      sign_in user
+      get new_project_path
+      expect(response.code).to eq '302'
     end
   end
 
@@ -93,6 +100,14 @@ RSpec.describe "Projects", type: :request do
       expect do
         post projects_path, params: { project: project_params }
       end.to change(Project, :count).by(0)
+    end
+
+    it "does not add a project when user does not activate teacher account" do
+      user.teacher = false
+      sign_in user
+      expect do
+        post projects_path, params: { project: project_params }
+      end.not_to change(Project, :count)
     end
   end
 

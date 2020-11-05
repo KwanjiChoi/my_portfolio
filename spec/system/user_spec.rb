@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "User", type: :system do
   describe 'account service' do
     include_examples 'sign in'
+
     scenario 'user activate teacher account' do
       visit root_path
       within 'nav' do
@@ -10,9 +11,7 @@ RSpec.describe "User", type: :system do
         expect(page).to have_content    '人に教える'
       end
 
-      click_link '人に教える'
-      click_link 'apply teacher account'
-      expect(page).to have_http_status '200'
+      user.activate_teacher
 
       visit root_path
       within 'nav' do
