@@ -101,6 +101,9 @@ jobs:
           name: Create fresh Heroku app
           command: heroku apps:create $HEROKU_APP_NAME --addons=jawsdb:kitefin heroku-redis:hobby-dev
       - run:
+          name: Add heroku redis
+          command: heroku addons:create heroku-redis:hobby-dev
+      - run:
           name: Create worker dyno
           command: heroku ps:scale web=1 worker=1
       - run:
