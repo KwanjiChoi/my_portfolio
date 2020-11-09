@@ -7,7 +7,7 @@ RSpec.describe "User", type: :system do
     scenario 'user activate teacher account' do
       visit root_path
       within 'nav' do
-        expect(page).to have_no_content 'プロジェクト'
+        expect(page).to have_no_content 'MYプロジェクト'
         expect(page).to have_content    '人に教える'
       end
 
@@ -15,7 +15,7 @@ RSpec.describe "User", type: :system do
 
       visit root_path
       within 'nav' do
-        expect(page).to have_content    'プロジェクト'
+        expect(page).to have_content    'MYプロジェクト'
         expect(page).to have_no_content '人に教える'
       end
     end

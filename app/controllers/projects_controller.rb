@@ -1,10 +1,10 @@
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
+  before_action :authenticate_user!
   before_action :correct_user, only: [:edit, :update, :destroy]
-  before_action :authenticate_teacher_account!, except: [:show, :index]
+  before_action :authenticate_teacher_account!
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects.includes([:rich_text_content])
   end
 
   def new
@@ -31,6 +31,12 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    project = Project.find(params[:id])
+    if project.destroy
+      redirect_to projects_path, notice: 'deleted successfully'
+    else
+      render :show
+    end
   end
 
   private

@@ -70,6 +70,12 @@ RSpec.describe Project, type: :model do
         @project.valid?
         expect(@project.errors[:content]).to include "is too long (maximum is 2000 characters)"
       end
+
+      it 'is invalid when title is within 100 characters' do
+        @project.content = 'a' * 1
+        @project.valid?
+        expect(@project.errors[:content]).to include "is too short (minimum is 100 characters)"
+      end
     end
   end
 
@@ -79,6 +85,18 @@ RSpec.describe Project, type: :model do
 
     it 'dependent destroy' do
       expect { user.destroy }.to change(Project, :count)
+    end
+  end
+
+  describe 'instance mothod' do
+    file = File.open 'spec/fixtures/sample_content.txt'
+    content = file.read
+    let!(:sample_project) { create(:project, content: content) }
+
+    context 'short_content' do
+      it 'returns only 30 characters' do
+        expect(sample_project.short_content).to eq '昔の人々は、明るい星を結んで星座を思い描きました。星座を作っ...'
+      end
     end
   end
 end

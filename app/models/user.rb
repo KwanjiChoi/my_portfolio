@@ -49,6 +49,10 @@ class User < ApplicationRecord
     update_attribute(:teacher, true)
   end
 
+  def project_owner?(project)
+    true if user = project.owner
+  end
+
   private
 
   def check_correct_number

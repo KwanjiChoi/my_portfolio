@@ -13,9 +13,9 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns http success with not sign in user" do
+    it "returns http status 302 with not sign in user" do
       get projects_path
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq('302')
     end
   end
 
@@ -40,9 +40,9 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe "GET /show" do
-    it "returns http success with not sign in user" do
+    it "returns http status 302 with not sign in user" do
       get project_path(project)
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq '302'
     end
 
     it 'returns http success with sign in user' do
@@ -84,7 +84,7 @@ RSpec.describe "Projects", type: :request do
                                main_image: Rack::Test::UploadedFile.new(
                                  File.join(Rails.root, 'spec/fixtures/test.jpg')
                                ),
-                               content: 'Sample Content',
+                               content: 'a' * 101,
                                user: user,
                                project_category_id: category.id)
     end
