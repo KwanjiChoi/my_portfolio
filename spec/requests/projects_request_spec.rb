@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Projects", type: :request do
-  let!(:user)         { create(:user, teacher: true) }
-  let!(:project)      { create(:project, user: user) }
-  let!(:other_user)   { create(:user) }
-  let(:other_project) { create(:project) }
+  let!(:user)          { create(:user, teacher: true) }
+  let!(:project)       { create(:project, user: user) }
+  let!(:other_user)    { create(:user) }
+  let!(:other_project) { create(:project, user: other_user) }
 
   describe "GET /index" do
     it "returns http success with sign in user" do
@@ -118,21 +118,49 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe "DELETE /destroy" do
-    it "returns http success with sign in user" do
+    it "is deleted with sign in user" do
       sign_in user
-      delete project_path(project)
-      expect(response).to have_http_status(:success)
+      expect{
+        delete project_path(project)
+      }.to change(Project, :count)
     end
 
-    it "returns http status code 302 with not sign in user" do
-      delete project_path(project)
-      expect(response.code).to eq('302')
+    it "does not delete project with not sign in user" do
+      expect{
+        delete project_path(project)
+      }.not_to change(Project, :count)
     end
 
-    it "returns http status code 302 when deleting other users project" do
+    it "does not delete project when deleting other users project" do
       sign_in user
-      delete project_path(other_project)
-      expect(response.code).to eq('302')
+      expect{
+        delete project_path(other_project)
+      }.not_to change(Project, :count)
     end
   end
+
+  describe 'GET #feed', focus: true do
+    it 'whoever can get Project#feed' do
+      get feed_projects_path
+      expect(response).to have_http_status(:success)
+
+      sign_in user
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'GET #detail', focus: true do
+    it 'whoever cat get Project#detail' do
+      get detail_project_path(project)
+      expect(response).to have_http_status(:success)
+
+      sign_in user
+      get detail_project_path(project)
+      expect(response).to have_http_status(:success)
+
+      get detail_project_path(other_project)
+      expect(response).to have_http_status(:success)
+    end
+  end
+
 end

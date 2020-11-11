@@ -44,9 +44,20 @@
 <!-- Page Content -->
 <section class="py-5 text-center">
   <div class="container"> 
-    <h2 class="text-center">Luckmoshy`s Services</h2>
+    <h2 class="text-center">Recent Projects</h2>
     <p class="text-muted mb-5 text-center">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
     <div class="row">
+      <% Project.recent_projects.each do |project| %>
+        <div class="col-sm-6 col-lg-4 mb-3">
+
+            <%= image_tag project.main_image.index_thumb.url, class: 'rounded-top' %>
+
+          <h6><%= project.title %></h6>
+          <small class="text-muted"> projected by <%= project.owner %></small>
+          <p class="display-30"><%= project.short_content %></p>
+          <%= link_to '続きを読む', '#' %>
+        </div>
+      <% end %>
       <div class="col-sm-6 col-lg-4 mb-3">
         <svg class="lnr text-primary services-icon">
           <use xlink:href="#lnr-magic-wand"></use>
@@ -96,7 +107,7 @@
    <!-- Header -->
 <header class="bg-dark text-center py-5 mb-4">
   <div class="container">
-    <h1 class="font-weight-light text-white">Meet the Team</h1>
+    <h1 class="font-weight-light text-white">Popular projects</h1>
   </div>
 </header>
 

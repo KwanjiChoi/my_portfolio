@@ -77,6 +77,15 @@ RSpec.describe Project, type: :model do
         expect(@project.errors[:content]).to include "is too short (minimum is 100 characters)"
       end
     end
+
+    context 'phone_reservation' do
+      it 'is invalid when user did not registrate phone number' do
+        @project.user.phone_number = nil
+        @project.phone_reservation = true
+        @project.valid?
+        expect(@project.errors[:phone_reservation]).to include "電話予約を設定するには電話番号の登録が必要です"
+      end
+    end
   end
 
   describe 'relation' do
