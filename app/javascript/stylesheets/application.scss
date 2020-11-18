@@ -12,6 +12,10 @@ trix-editor{
   background-color: white;
 }
 
+.body-static_pages{
+  margin-left: 0;
+}
+
 /*=== flash message ===*/
 
 
@@ -118,5 +122,12 @@ bgc2, .vLine, .hLine {
 .services-icon {
   font-size: 60px;
   margin-left: 2rem;
+}
+
+.recent-project-box{
+  padding-top: 10px;
+  .recent-project-title{
+    padding-top: 10px;
+  }
 }
 

@@ -73,3 +73,4 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'redis'
 gem 'redis-namespace'
+gem 'faker'

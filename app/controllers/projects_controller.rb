@@ -1,11 +1,11 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:detail, :feed]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy, :show]
   before_action :authenticate_teacher_account!, except: [:detail, :feed]
   before_action :set_project, only: [:show, :destroy, :detail]
 
   def index
-    @projects = current_user.projects.includes([:rich_text_content])
+    @projects = current_user.projects.includes(:rich_text_content)
   end
 
   def new
@@ -21,7 +21,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def show;end
+  def show; end
 
   def edit
   end
@@ -38,10 +38,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def detail;end
+  def detail; end
 
   def feed
-
   end
 
   private

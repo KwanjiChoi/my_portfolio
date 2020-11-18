@@ -103,8 +103,10 @@ RSpec.describe Project, type: :model do
     let!(:sample_project) { create(:project, content: content) }
 
     context 'short_content' do
-      it 'returns only 30 characters' do
-        expect(sample_project.short_content).to eq '昔の人々は、明るい星を結んで星座を思い描きました。星座を作っ...'
+      expected = "昔の人々は、明るい星を結んで星座を思い描きました。星座を作ったのは、シュメール人という説もありますが、
+      一般的には、約五千年前、バビロニアの羊飼いたちによ...".gsub(/[\r\n[:space:]]/, "")
+      it 'returns only 75 characters' do
+        expect(sample_project.short_content).to eq(expected)
       end
     end
   end

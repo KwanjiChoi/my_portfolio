@@ -6,7 +6,7 @@ RSpec.describe "Projects", type: :request do
   let!(:other_user)    { create(:user) }
   let!(:other_project) { create(:project, user: other_user) }
 
-  describe "GET /index" do
+  describe "GET #index" do
     it "returns http success with sign in user" do
       sign_in user
       get projects_path
@@ -19,7 +19,7 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe "GET /new" do
+  describe "GET #new" do
     it "returns http success with sign in user" do
       sign_in user
       get new_project_path
@@ -39,7 +39,7 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe "GET /show" do
+  describe "GET #show" do
     it "returns http status 302 with not sign in user" do
       get project_path(project)
       expect(response.code).to eq '302'
@@ -51,14 +51,14 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'returns http success when getting project show page related other user' do
+    it 'returns status code 302 when getting other user`s project show page' do
       sign_in user
       get project_path(other_project)
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq '302'
     end
   end
 
-  describe "GET /edit" do
+  describe "GET #edit" do
     it "returns http success" do
       sign_in user
       get edit_project_path(project)
@@ -77,7 +77,7 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe 'POST /create' do
+  describe 'POST #create' do
     let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'Sample Title',
@@ -111,35 +111,35 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe 'PUT /update' do
+  describe 'PUT #update' do
     it do
       expect(1 + 1).to eq 2
     end
   end
 
-  describe "DELETE /destroy" do
+  describe "DELETE #destroy" do
     it "is deleted with sign in user" do
       sign_in user
-      expect{
+      expect  do
         delete project_path(project)
-      }.to change(Project, :count)
+      end.to change(Project, :count)
     end
 
     it "does not delete project with not sign in user" do
-      expect{
+      expect do
         delete project_path(project)
-      }.not_to change(Project, :count)
+      end.not_to change(Project, :count)
     end
 
     it "does not delete project when deleting other users project" do
       sign_in user
-      expect{
+      expect  do
         delete project_path(other_project)
-      }.not_to change(Project, :count)
+      end.not_to change(Project, :count)
     end
   end
 
-  describe 'GET #feed', focus: true do
+  describe 'GET #feed' do
     it 'whoever can get Project#feed' do
       get feed_projects_path
       expect(response).to have_http_status(:success)
@@ -149,8 +149,8 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe 'GET #detail', focus: true do
-    it 'whoever cat get Project#detail' do
+  describe 'GET #detail' do
+    it 'whoever can get Project#detail' do
       get detail_project_path(project)
       expect(response).to have_http_status(:success)
 
@@ -162,5 +162,4 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
-
 end

@@ -1,0 +1,5 @@
+<% if current_user %>
+  <%= render 'shared/sidenav' %>
+<% else %>
+  <%= render 'shared/not_sign_in_sidenav' %>
+<% end %>

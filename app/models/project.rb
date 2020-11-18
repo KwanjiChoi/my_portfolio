@@ -11,13 +11,11 @@ class Project < ApplicationRecord
   validates :content,    presence: true, length: { in: 100..2000 }
   validate  :check_phone_reservation
 
-
   has_rich_text :content
 
   scope :recent_projects, -> {
     order(id: :desc).limit(RECENT_COUNT)
   }
-
 
   # https://qiita.com/QUANON/items/ae47ae23c572d498050d
   delegate :strip_tags, to: 'ApplicationController.helpers'
@@ -31,18 +29,17 @@ class Project < ApplicationRecord
   end
 
   def short_content
-    strip_tags(content.to_s).gsub(/[\n]/,"").strip[0..29] + '...'
+    # .includes([:rich_text_content])
+    strip_tags(content.to_s).gsub(/[\n]/, "").strip[0..75] + '...'
   end
-
 
   private
 
   def check_phone_reservation
     if phone_reservation == true
-      if user.phone_number == nil
+      if user.phone_number.nil?
         errors.add(:phone_reservation, "電話予約を設定するには電話番号の登録が必要です")
       end
     end
   end
-
 end

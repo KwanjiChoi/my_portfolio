@@ -117,6 +117,7 @@ jobs:
             heroku config:set FACEBOOK_ID=$FACEBOOK_ID FACEBOOK_SECRET_KEY=$FACEBOOK_SECRET_KEY TWITTER_API_KEY=$TWITTER_API_KEY TWITTER_API_SECRET=$TWITTER_API_SECRET
             heroku config:set MAIL_ADDRESS=$MAIL_ADDRESS MAIL_PASSWORD=$MAIL_PASSWORD APP_DOMAIN=$HEROKU_APP_NAME.herokuapp.com
             heroku run bin/rails db:migrate
+            heroku run bin/rails db:seed
 
 orbs:
   build-tools: circleci/build-tools@2.6.3
