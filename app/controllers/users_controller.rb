@@ -18,9 +18,9 @@ class UsersController < ApplicationController
   def activate_teacher
     user = User.find(params[:id])
     if user == current_user
-      current_user.activate_teacher
-      ActivateMailer.send_activate_teacher_account(user).deliver
-      flash[:notice] = 'activate your teacher account'
+      ActivateMailer.apply_teacher_account(user).deliver_now
+      ActivateTeacherJob.set(wait: 30.seconds).perform_later user
+      flash[:notice] = 'teacheraccountの申請を受け付けました、メールをご確認ください'
       redirect_to root_path, status: 200
     else
       redirect_to root_path

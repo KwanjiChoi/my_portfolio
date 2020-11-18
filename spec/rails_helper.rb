@@ -28,6 +28,11 @@ RSpec.configure do |config|
   OmniAuth.config.test_mode = true
   config.include OmniauthMacros
   config.include ActionTextHelper, type: :system
+  config.after(:all) do
+    if Rails.env.test?
+      FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads_#{Rails.env}/"])
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|

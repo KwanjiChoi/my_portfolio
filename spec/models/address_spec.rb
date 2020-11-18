@@ -68,9 +68,10 @@ RSpec.describe 'Address model', type: :model do
   end
 
   describe 'relation' do
+    let!(:user)    { create(:user) }
+    let!(:address) { create(:address, user: user) }
+
     it 'dependent destroy' do
-      user = create(:user)
-      address = create(:address, user: user)
       expect { user.destroy }.to change(Address, :count)
     end
   end

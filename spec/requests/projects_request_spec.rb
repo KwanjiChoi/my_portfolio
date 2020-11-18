@@ -1,25 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe "Projects", type: :request do
-  let!(:user)         { create(:user) }
-  let!(:project)      { create(:project, user: user) }
-  let!(:other_user)   { create(:user) }
-  let(:other_project) { create(:project) }
+  let!(:user)          { create(:user, teacher: true) }
+  let!(:project)       { create(:project, user: user) }
+  let!(:other_user)    { create(:user) }
+  let!(:other_project) { create(:project, user: other_user) }
 
-  describe "GET /index" do
+  describe "GET #index" do
     it "returns http success with sign in user" do
       sign_in user
       get projects_path
       expect(response).to have_http_status(:success)
     end
 
-    it "returns http success with not sign in user" do
+    it "returns http status 302 with not sign in user" do
       get projects_path
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq('302')
     end
   end
 
-  describe "GET /new" do
+  describe "GET #new" do
     it "returns http success with sign in user" do
       sign_in user
       get new_project_path
@@ -30,12 +30,19 @@ RSpec.describe "Projects", type: :request do
       get new_project_path
       expect(response.code).to eq('302')
     end
+
+    it "returns http status code 302 when user does not activate teacher account" do
+      user.teacher = false
+      sign_in user
+      get new_project_path
+      expect(response.code).to eq '302'
+    end
   end
 
-  describe "GET /show" do
-    it "returns http success with not sign in user" do
+  describe "GET #show" do
+    it "returns http status 302 with not sign in user" do
       get project_path(project)
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq '302'
     end
 
     it 'returns http success with sign in user' do
@@ -44,14 +51,14 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it 'returns http success when getting project show page related other user' do
+    it 'returns status code 302 when getting other user`s project show page' do
       sign_in user
       get project_path(other_project)
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq '302'
     end
   end
 
-  describe "GET /edit" do
+  describe "GET #edit" do
     it "returns http success" do
       sign_in user
       get edit_project_path(project)
@@ -70,14 +77,14 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe 'POST /create' do
+  describe 'POST #create' do
     let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'Sample Title',
                                main_image: Rack::Test::UploadedFile.new(
                                  File.join(Rails.root, 'spec/fixtures/test.jpg')
                                ),
-                               content: 'Sample Content',
+                               content: 'a' * 101,
                                user: user,
                                project_category_id: category.id)
     end
@@ -94,30 +101,65 @@ RSpec.describe "Projects", type: :request do
         post projects_path, params: { project: project_params }
       end.to change(Project, :count).by(0)
     end
+
+    it "does not add a project when user does not activate teacher account" do
+      user.teacher = false
+      sign_in user
+      expect do
+        post projects_path, params: { project: project_params }
+      end.not_to change(Project, :count)
+    end
   end
 
-  describe 'PUT /update' do
+  describe 'PUT #update' do
     it do
       expect(1 + 1).to eq 2
     end
   end
 
-  describe "DELETE /destroy" do
-    it "returns http success with sign in user" do
+  describe "DELETE #destroy" do
+    it "is deleted with sign in user" do
       sign_in user
-      delete project_path(project)
+      expect  do
+        delete project_path(project)
+      end.to change(Project, :count)
+    end
+
+    it "does not delete project with not sign in user" do
+      expect do
+        delete project_path(project)
+      end.not_to change(Project, :count)
+    end
+
+    it "does not delete project when deleting other users project" do
+      sign_in user
+      expect  do
+        delete project_path(other_project)
+      end.not_to change(Project, :count)
+    end
+  end
+
+  describe 'GET #feed' do
+    it 'whoever can get Project#feed' do
+      get feed_projects_path
+      expect(response).to have_http_status(:success)
+
+      sign_in user
       expect(response).to have_http_status(:success)
     end
+  end
 
-    it "returns http status code 302 with not sign in user" do
-      delete project_path(project)
-      expect(response.code).to eq('302')
-    end
+  describe 'GET #detail' do
+    it 'whoever can get Project#detail' do
+      get detail_project_path(project)
+      expect(response).to have_http_status(:success)
 
-    it "returns http status code 302 when deleting other users project" do
       sign_in user
-      delete project_path(other_project)
-      expect(response.code).to eq('302')
+      get detail_project_path(project)
+      expect(response).to have_http_status(:success)
+
+      get detail_project_path(other_project)
+      expect(response).to have_http_status(:success)
     end
   end
 end

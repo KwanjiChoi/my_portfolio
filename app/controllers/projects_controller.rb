@@ -1,9 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :authenticate_user!, except: [:show, :index]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:detail, :feed]
+  before_action :correct_user, only: [:edit, :update, :destroy, :show]
+  before_action :authenticate_teacher_account!, except: [:detail, :feed]
+  before_action :set_project, only: [:show, :destroy, :detail]
 
   def index
-    @projects = Project.all
+    @projects = current_user.projects.includes(:rich_text_content)
   end
 
   def new
@@ -19,9 +21,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def show
-    @project = Project.find(params[:id])
-  end
+  def show; end
 
   def edit
   end
@@ -30,6 +30,17 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    project = Project.find(params[:id])
+    if project.destroy
+      redirect_to projects_path, notice: 'deleted successfully'
+    else
+      render :show
+    end
+  end
+
+  def detail; end
+
+  def feed
   end
 
   private
@@ -45,5 +56,9 @@ class ProjectsController < ApplicationController
   def correct_user
     project = Project.find(params[:id])
     redirect_to dashboard_path unless project.user == current_user
+  end
+
+  def set_project
+    @project = Project.find(params[:id])
   end
 end

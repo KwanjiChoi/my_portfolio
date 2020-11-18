@@ -16,7 +16,15 @@ Rails.application.routes.draw do
       get 'apply_teacher'
     end
   end
-  resources :projects
+  resources :projects do
+    member do
+      get 'detail'
+    end
+
+    collection do
+      get 'feed'
+    end
+  end
   get '/dashboard', to: 'users#dashboard', as: :dashboard
 
   if Rails.env.development?

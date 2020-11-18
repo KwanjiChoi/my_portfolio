@@ -2,6 +2,7 @@ class StaticPagesController < ApplicationController
   before_action :sign_in_user
 
   def home
+    @recent_projects = Project.recent_projects.includes([:user, :rich_text_content])
   end
 
   private

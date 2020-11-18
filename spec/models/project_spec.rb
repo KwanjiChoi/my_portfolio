@@ -70,14 +70,44 @@ RSpec.describe Project, type: :model do
         @project.valid?
         expect(@project.errors[:content]).to include "is too long (maximum is 2000 characters)"
       end
+
+      it 'is invalid when title is within 100 characters' do
+        @project.content = 'a' * 1
+        @project.valid?
+        expect(@project.errors[:content]).to include "is too short (minimum is 100 characters)"
+      end
+    end
+
+    context 'phone_reservation' do
+      it 'is invalid when user did not registrate phone number' do
+        @project.user.phone_number = nil
+        @project.phone_reservation = true
+        @project.valid?
+        expect(@project.errors[:phone_reservation]).to include "電話予約を設定するには電話番号の登録が必要です"
+      end
     end
   end
 
   describe 'relation' do
+    let!(:user)    { create(:user) }
+    let!(:project) { create(:project, user: user) }
+
     it 'dependent destroy' do
-      user = create(:user)
-      project = create(:project, user: user)
       expect { user.destroy }.to change(Project, :count)
+    end
+  end
+
+  describe 'instance mothod' do
+    file = File.open 'spec/fixtures/sample_content.txt'
+    content = file.read
+    let!(:sample_project) { create(:project, content: content) }
+
+    context 'short_content' do
+      expected = "昔の人々は、明るい星を結んで星座を思い描きました。星座を作ったのは、シュメール人という説もありますが、
+      一般的には、約五千年前、バビロニアの羊飼いたちによ...".gsub(/[\r\n[:space:]]/, "")
+      it 'returns only 75 characters' do
+        expect(sample_project.short_content).to eq(expected)
+      end
     end
   end
 end

@@ -23,10 +23,10 @@ RSpec.describe User, type: :model do
         expect(@user.errors[:username]).to include("is too short (minimum is 2 characters)")
       end
 
-      it 'is invalid when username length is over 20 characters' do
-        @user.username = 'a' * 21
+      it 'is invalid when username length is over 50 characters' do
+        @user.username = 'a' * 51
         @user.valid?
-        expect(@user.errors[:username]).to include("is too long (maximum is 20 characters)")
+        expect(@user.errors[:username]).to include("is too long (maximum is 50 characters)")
       end
 
       it 'is invalid with a not unique username' do
@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
       # Validate length of username.
       it do
         expect(@user).to validate_length_of(:username).
-          is_at_least(2).is_at_most(20)
+          is_at_least(2).is_at_most(50)
       end
     end
 

@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   validates :username, presence: true,
                        uniqueness: { case_sensitive: :false },
-                       length: { in: 2..20 }
+                       length: { in: 2..50 }
 
   validates :phone_number, uniqueness: { case_sensitive: :false },
                            allow_nil: true
@@ -47,6 +47,10 @@ class User < ApplicationRecord
 
   def activate_teacher
     update_attribute(:teacher, true)
+  end
+
+  def project_owner?(project)
+    true if project.user == project.owner
   end
 
   private

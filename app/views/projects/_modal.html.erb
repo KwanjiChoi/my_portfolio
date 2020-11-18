@@ -1,20 +1,35 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Reservation!!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary btn-lg">このまま予約する</button>
-        <% if @project.phone_reservation? %>
-          <button type="button" class="btn btn-primary btn-lg">電話で予約する</button>
-        <% else %>
-          <button type="button" class="btn btn-secondary btn-lg" style='pointer-events: none;'>このプロジェクトは電話予約できません</button>
-        <% end %>
-      </div>
+      <% if current_user %>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Reservation!!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-lg">このまま予約する</button>
+          <% if @project.phone_reservation? %>
+            <button type="button" class="btn btn-primary btn-lg">電話で予約する</button>
+          <% else %>
+            <button type="button" class="btn btn-secondary btn-lg" style='pointer-events: none;'>このプロジェクトは電話予約できません</button>
+          <% end %>
+        </div>
+      <% else %>
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Reservation!!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <%= link_to new_user_session_path, data: { "turbolinks" => false } do %>
+            <button type="button" class="btn btn-primary btn-lg">ログインして予約する</button>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
