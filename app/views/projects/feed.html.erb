@@ -3,3 +3,20 @@
 <% else %>
   <%= render 'shared/not_sign_in_sidenav' %>
 <% end %>
+
+<div class="container">
+  <div class="jumbotron">
+
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-20 display-md-18 display-lg-16">Most recent our blog</h2>
+      </div>
+      <%= render 'feed', projects: @projects, detail: true %>
+    </div>
+  </div>
+
+  <footer>
+      Repository maintained by <a href="https://github.com/mladenplavsic">mladenplavsic</a>
+  </footer>
+
+</div>

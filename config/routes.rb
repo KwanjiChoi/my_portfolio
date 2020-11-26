@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :addresses, only: [:index, :create, :destroy]
     member do
       get 'activate_teacher'
+      get 'projects'
     end
     collection do
       get 'apply_teacher'
@@ -24,6 +25,8 @@ Rails.application.routes.draw do
     collection do
       get 'feed'
     end
+
+    resources :reservations
   end
   get '/dashboard', to: 'users#dashboard', as: :dashboard
 

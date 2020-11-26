@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/.freeze
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable,   :registerable,
          :recoverable, :rememberable, :validatable,
-         :confirmable, :timeoutable, :omniauthable
+         :confirmable, :timeoutable,  :omniauthable
 
   validates :username, presence: true,
                        uniqueness: { case_sensitive: :false },
@@ -16,6 +16,10 @@ class User < ApplicationRecord
 
   has_many :projects,  dependent: :destroy
   has_many :addresses, dependent: :destroy
+  has_many :active_reservations,  class_name: 'Reservation',
+                                  foreign_key: 'requester_id',
+                                  dependent: :destroy
+  has_many :passive_reservations, through: :projects, foreign_key: 'project_id'
 
   def available_addresses
     5 - addresses.count

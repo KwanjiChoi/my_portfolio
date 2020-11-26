@@ -81,6 +81,7 @@ RSpec.describe "Projects", type: :request do
     let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'Sample Title',
+                               location_attributes: attributes_for(:project_location),
                                main_image: Rack::Test::UploadedFile.new(
                                  File.join(Rails.root, 'spec/fixtures/test.jpg')
                                ),

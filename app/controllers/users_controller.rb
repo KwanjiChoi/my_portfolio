@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:projects]
   before_action :authenticate_nonteacher, only: [:apply_teacher, :activate_teacher]
   before_action :unconfirmed?, only: :activate_teacher
 
@@ -25,6 +25,11 @@ class UsersController < ApplicationController
     else
       redirect_to root_path
     end
+  end
+
+  def projects
+    @user = User.find(params[:id])
+    @projects = @user.projects.includes(:rich_text_content)
   end
 
   private

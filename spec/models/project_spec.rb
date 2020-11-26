@@ -97,7 +97,7 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  describe 'instance mothod' do
+  describe 'instance method' do
     file = File.open 'spec/fixtures/sample_content.txt'
     content = file.read
     let!(:sample_project) { create(:project, content: content) }

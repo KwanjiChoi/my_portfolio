@@ -1,24 +1,12 @@
-# README
+## 実装予定
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- ツリー構造のカテゴリ(隣接リストモデルかな) *SQLアンチパターン参照
+- 支払い機能
+- teacher accountをactivateする際のチェック機能
+- リアルタイムチャット
+- treacherのスケジュール共有
+- いいね
+- follow
+- 通知機能
+- 友達紹介
+- オンラインレッスン
