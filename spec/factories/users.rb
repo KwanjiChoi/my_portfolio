@@ -19,7 +19,7 @@ FactoryBot.define do
     trait :teacher_account do
       username  { 'SampleUser' }
       email     { 'sample@example.com' }
-      teacher { true }
+      teacher   { true }
     end
   end
 end

@@ -292,3 +292,15 @@ a{
   }
 }
 
+/*=== dash-board ===*/
+
+.dashboard-container{
+    .jumbotron{
+      padding: 2rem;
+      .reservation-card{
+        background-color: white;
+      }
+    }
+}
+
+

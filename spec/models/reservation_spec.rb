@@ -5,8 +5,6 @@ RSpec.describe Reservation, type: :model do
     let(:reservation) { build(:reservation) }
 
     it 'has valid factory' do
-      puts reservation.requester.username
-      puts reservation.project.title
       expect(reservation).to be_valid
     end
 
@@ -70,6 +68,32 @@ RSpec.describe Reservation, type: :model do
     context 'project_id' do
       it 'dependent destroy' do
         expect { project.destroy }.to change(Reservation, :count)
+      end
+    end
+  end
+
+  describe 'scope' do
+    let!(:owner)       { create(:user, :teacher_account) }
+    let!(:requester)   { create(:user) }
+    let!(:project)     { create(:project, user: owner) }
+    let!(:reservation) { create(:reservation, requester: requester, project: project) }
+    context 'sort_reservations_by_status' do
+      context 'from requester' do
+        subject { Reservation.sort_reservations_by_status(requester, requester: true, status: 'reserved') }
+        it { is_expected.to include reservation }
+        it do
+          reservation.update_attributes(status: 'checked')
+          is_expected.not_to include reservation
+        end
+      end
+
+      context 'from project owner' do
+        subject { Reservation.sort_reservations_by_status(owner, owner: true, status: 'reserved') }
+        it { is_expected.to include reservation }
+        it do
+          reservation.update_attributes(status: 'checked')
+          is_expected.not_to include reservation
+        end
       end
     end
   end

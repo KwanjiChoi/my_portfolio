@@ -13,12 +13,25 @@ class Reservation < ApplicationRecord
 
   before_validation :set_end_at
 
+  scope :sort_reservations_by_status, -> (user, requester: nil, owner: nil, status: nil) {
+    if requester == true
+      order(created_at: :asc).where(requester_id: user.id, status: status).includes(project: :user)
+    elsif owner == true
+      user.passive_reservations.order(created_at: :asc).where(status: status)
+    end
+  }
+
+
   enum status: {
     reserved: 0,
     checked: 1,
     finished: 2,
     cancelled: 3,
   }
+
+  def owner_name
+    project.owner
+  end
 
   private
 
