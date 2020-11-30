@@ -19,6 +19,12 @@ RSpec.describe "User", type: :system do
         expect(page).to have_no_content '人に教える'
       end
     end
+
+    scenario 'unconfirmed user should not apply teacher account' do
+      user.update_attribute(:unconfirmed_email, 'example@example.com')
+      visit apply_teacher_users_path
+      expect(page).to have_content 'teacherアカウントの登録にはメール認証が必要です'
+    end
   end
 
   describe 'omniauth sign in' do

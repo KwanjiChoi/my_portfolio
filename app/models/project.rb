@@ -35,6 +35,10 @@ class Project < ApplicationRecord
     user.username
   end
 
+  def supplier
+    user
+  end
+
   def short_content
     # .includes([:rich_text_content])
     strip_tags(content.to_s).gsub(/[\n]/, "").strip[0..75] + '...'

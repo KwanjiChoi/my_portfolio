@@ -37,9 +37,17 @@ class ReservationsController < ApplicationController
     @reservation ||= Reservation.find(params[:id])
   end
 
-  helper_method :reservation
+  def requester
+    @requester ||= reservation.requester
+  end
 
-  STATUS = ['unchecked', 'checked', 'finished'].freeze
+  def supplier
+    @supplier ||= reservation.supplier
+  end
+
+  helper_method :reservation, :requester, :supplier
+
+  STATUS = Reservation.statuses.keys.freeze
 
   STATUS.each do |status|
     method_name = "#{status}_active_reservations"
@@ -63,6 +71,6 @@ class ReservationsController < ApplicationController
     redirect_to root_path unless reservation.requester == current_user
   end
 
-  def correct_owner
+  def correct_supplier
   end
 end

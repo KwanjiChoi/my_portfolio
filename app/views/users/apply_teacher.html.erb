@@ -3,6 +3,11 @@
 <div class="container">
   <div class="jumbotron">
     <%= render 'shared/notification' %>
+    <h1 class="display-4">
+      あなたのスキルを使って、<br> 困っている人を助けよう！
+      <br>
+    </h1>
+    <p>些細なことで困っている人がたくさんいます</p>
     <% if unconfirmed?(current_user) %>
       <div class="btn-toolbar mb-2 mb-md-0">
         <p>
@@ -19,11 +24,6 @@
         <% end %>
       </div>
     <% end %>
-    <h1 class="display-4">
-      あなたのスキルを使って、困っている人を助けよう！
-      <br>
-      <small>Fixed to Left or Right</small>
-    </h1>
     <p>
       <strong>
         Use classic Bootstrap navbar as sidebar, on left or right side.
@@ -48,21 +48,5 @@
       </button>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-body">
-      <div class="form-group">
-        <label>
-          Select another bootstrap theme from
-          <a href="https://bootswatch.com/" target="_blank">Bootswatch</a>
-        </label>
-        <select class="form-control width-md" id="theme_select" onchange="selectTheme(value)"></select>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-      Repository maintained by <a href="https://github.com/mladenplavsic">mladenplavsic</a>
-  </footer>
 
 </div>

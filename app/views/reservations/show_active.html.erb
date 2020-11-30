@@ -1,0 +1,53 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= render 'shared/notification' %>
+
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="card m-b-30">
+          <div class="card-body py-5">
+            <div class="row">
+              <div class="col-lg-3 text-center">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid mb-3" alt="user" />
+              </div>
+              <div class="col-lg-9">
+                <h4><%= reservation.project.title %> </h4>
+                <p>projected by <%= supplier.username %></p>
+                <div class="button-list mt-4 mb-3">
+                  <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>Message</button>
+                  <button type="button" class="btn btn-success-rgba"><i class="feather icon-phone mr-2"></i>Call Now</button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0">
+                    <tbody>
+                      <tr>
+                        <th scope="row" class="p-1">Category :</th>
+                        <td class="p-1">Web Development</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="p-1">Work Hrs :</th>
+                        <td class="p-1">58</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="p-1">Country :</th>
+                        <td class="p-1">Italy</td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="p-1">Email ID :</th>
+                        <td class="p-1">demo@mail.com</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

@@ -6,6 +6,8 @@ class Reservation < ApplicationRecord
   belongs_to :requester, class_name: 'User'
   belongs_to :project
 
+  delegate :supplier, to: :project
+
   validates :start_at,     presence: true
   validates :reserve_time, presence: true
 
@@ -22,10 +24,10 @@ class Reservation < ApplicationRecord
   }
 
   enum status: {
-    reserved: 0,
+    unchecked: 0,
     checked: 1,
     finished: 2,
-    cancelled: 3,
+    canceled: 3,
   }
 
   def owner_name

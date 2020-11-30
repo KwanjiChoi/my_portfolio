@@ -40,7 +40,12 @@ class ProjectsController < ApplicationController
   def detail; end
 
   def feed
-    @projects = Project.all.includes(:rich_text_content)
+    @category = ProjectCategory.find(params[:category_id])
+    if @category.present?
+      @projects = Project.where(project_category_id: @category.id).includes(:rich_text_content)
+    else
+      @projects = Project.all.includes(:rich_text_content)
+    end
   end
 
   private
