@@ -7,16 +7,26 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks',
   }
   root 'static_pages#home'
+  get '/dashboard',                          to: 'users#dashboard',           as: :dashboard
+  get '/users/:user_id/reservations/:id',    to: 'reservations#show_active',  as: :user_reservation
+  get '/users/:project_id/reservations/:id',
+      to: 'reservations#show_passive',
+      as: :project_reservation
+
   resources :users, only: [:show] do
-    resources :addresses, only: [:index, :create, :destroy]
+    resources :addresses,    only: [:index, :create, :destroy]
+    resources :reservations, only: [:index]
+
     member do
       get 'activate_teacher'
       get 'projects'
     end
+
     collection do
       get 'apply_teacher'
     end
   end
+
   resources :projects do
     member do
       get 'detail'
@@ -26,9 +36,12 @@ Rails.application.routes.draw do
       get 'feed'
     end
 
-    resources :reservations
+    resources :reservations, except: [:show] do
+      member do
+        get 'show', to: 'reservations#show_passive'
+      end
+    end
   end
-  get '/dashboard', to: 'users#dashboard', as: :dashboard
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

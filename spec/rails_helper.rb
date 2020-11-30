@@ -24,6 +24,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :system
 
   OmniAuth.config.test_mode = true
   config.include OmniauthMacros

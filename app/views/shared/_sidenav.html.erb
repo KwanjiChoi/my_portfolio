@@ -20,6 +20,9 @@
         <%= link_to 'ダッシュボード', dashboard_path, class: 'nav-link' %>
       </li>
       <li class="nav-item">
+        <%= link_to '予約管理', user_reservations_path(current_user), class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
         <% if current_user.teacher? %>
           <%= link_to 'MYプロジェクト', projects_path, class: 'nav-link' %>
         <% else %>

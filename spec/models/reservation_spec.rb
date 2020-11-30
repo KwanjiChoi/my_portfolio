@@ -77,9 +77,15 @@ RSpec.describe Reservation, type: :model do
     let!(:requester)   { create(:user) }
     let!(:project)     { create(:project, user: owner) }
     let!(:reservation) { create(:reservation, requester: requester, project: project) }
+
     context 'sort_reservations_by_status' do
       context 'from requester' do
-        subject { Reservation.sort_reservations_by_status(requester, requester: true, status: 'reserved') }
+        subject do
+          Reservation.sort_reservations_by_status(
+            requester, requester: true, status: 'reserved'
+          )
+        end
+
         it { is_expected.to include reservation }
         it do
           reservation.update_attributes(status: 'checked')
@@ -89,6 +95,7 @@ RSpec.describe Reservation, type: :model do
 
       context 'from project owner' do
         subject { Reservation.sort_reservations_by_status(owner, owner: true, status: 'reserved') }
+
         it { is_expected.to include reservation }
         it do
           reservation.update_attributes(status: 'checked')

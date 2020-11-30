@@ -11,7 +11,9 @@ class UsersController < ApplicationController
   end
 
   def dashboard
-    @my_reservations = Reservation.sort_reservations_by_status(current_user, requester: true, status: 'reserved')
+    @checked_active_reservations = Reservation.sort_reservations_by_status(
+      current_user, requester: true, status: 'checked'
+    )
   end
 
   def apply_teacher; end

@@ -1,0 +1,40 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container dashboard-container">
+  <div class="jumbotron">
+    <%= render 'shared/notification' %>
+
+    <div class="container">
+      <div class="mt-5 unchecked-reservations">
+        <h2> 確認待ちのProject </h2>
+        <small>オーナーの確認をお待ちください</small>
+        <%= render 'reservations/feed', reservations: unchecked_active_reservations(current_user) %>
+      </div>
+
+      <div class="mt-5 checked-reservations">
+        <h2> 実行予定のProject </h2>
+        <% if checked_active_reservations(current_user).present? %>
+          <small>日時をお間違えのないようご確認ください</small>
+          <%= render 'reservations/feed', reservations: checked_active_reservations(current_user) %>
+        <% else %>
+          <p>実行予定のProjectはございません</p>
+        <% end %>
+      </div>
+
+      <div class="mt-5 finished-reservations">
+          <h2> 終了したProject </h2>
+          <% if finished_active_reservations(current_user).present? %>
+            <%= render 'reservations/feed', reservations: finished_active_reservations(current_user) %>
+          <% else %>
+            <p>終了したProjectはございません</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+        Repository maintained by <a href="https://github.com/mladenplavsic">mladenplavsic</a>
+    </footer>
+  </div>
+
+</div>
