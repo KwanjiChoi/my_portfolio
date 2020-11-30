@@ -8,10 +8,7 @@ Rails.application.routes.draw do
   }
   root 'static_pages#home'
   get '/dashboard',                          to: 'users#dashboard',           as: :dashboard
-  get '/users/:user_id/reservations/:id',    to: 'reservations#show_active',  as: :user_reservation
-  get '/users/:project_id/reservations/:id',
-      to: 'reservations#show_passive',
-      as: :project_reservation
+  get '/users/:user_id/reservations/:id',    to: 'reservations#show_active',  as: :active_reservation
 
   resources :users, only: [:show] do
     resources :addresses,    only: [:index, :create, :destroy]
@@ -36,12 +33,11 @@ Rails.application.routes.draw do
       get 'feed'
     end
 
-    resources :reservations, except: [:show] do
-      member do
-        get 'show', to: 'reservations#show_passive'
-      end
-    end
+    resources :reservations, except: [:show]
   end
+
+  get '/projects/:project_id/reservations/:id', to: 'reservations#show_passive', as: :passive_reservation
+
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

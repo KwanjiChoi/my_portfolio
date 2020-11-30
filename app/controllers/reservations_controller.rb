@@ -2,7 +2,21 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_requester, only: [:show_active]
   before_action :correct_supplier,  only: [:show_passive]
+  before_action :correct_user,      only: [:create]
   before_action :authenticate_only_requester_and_supplier, only: [:edit, :update, :destroy]
+
+
+  # define helper method from
+
+  STATUS = Reservation.statuses.keys.freeze
+
+  STATUS.each do |status|
+    method_name = "#{status}_active_reservations"
+    define_method method_name do |user|
+      Reservation.sort_reservations_by_status(user, requester: true, status: status)
+    end
+    helper_method method_name.to_sym
+  end
 
   def reservation
     @reservation ||= Reservation.find(params[:id])
@@ -20,7 +34,16 @@ class ReservationsController < ApplicationController
     @project ||= Project.find(params[:project_id])
   end
 
-  helper_method :reservation, :requester, :supplier, :project
+  def new_reservation
+    @new_reservation ||= Reservation.new
+  end
+
+  helper_method :reservation, :requester, :supplier, :project, :new_reservation
+
+  # define helper method end
+
+
+  def new;          end
 
   def index;        end
 
@@ -28,38 +51,34 @@ class ReservationsController < ApplicationController
 
   def show_passive; end
 
-  def new
-    @reservation = Reservation.new
-  end
+  def edit;         end
 
+  
+  
   def create
-    @reservation = project.passive_reservations.build(reservation_params)
-    if @reservation.save
+    reservation = project.passive_reservations.build(reservation_params)
+    if reservation.save
       redirect_to user_reservations_path(current_user), notice: '予約が完了いたました'
     else
-      render :new
+      render :new, locals: { new_reservation: reservation }
     end
   end
 
   def destroy
   end
 
-  def edit; end
-
   def update
-  end
-
-  # メタプログラミングっぽく
-
-  STATUS = Reservation.statuses.keys.freeze
-
-  STATUS.each do |status|
-    method_name = "#{status}_active_reservations"
-    define_method method_name do |user|
-      Reservation.sort_reservations_by_status(user, requester: true, status: status)
+    if reservation.update(reservation_params)
+      if reservation.requester == current_user
+        redirect_to active_reservation_path(current_user, reservation)
+      elsif reservation.supplier == current_user
+        redirect_to passive_reservation_path(project, reservation)
+      end
+    else
+      render :edit
     end
-    helper_method method_name.to_sym
   end
+
 
   private
 
@@ -67,16 +86,20 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(:start_at, :reserve_time, :requester_id, :request_text)
   end
 
+  def correct_user
+    redirect_to root_path unless current_user.id == params[:reservation][:requester_id].to_i
+  end
+
   def correct_requester
     redirect_to root_path unless reservation.requester == current_user
   end
 
   def correct_supplier
-    redirect_to root_path unless reservation.supplier  == project.user
+    redirect_to root_path unless reservation.supplier  == current_user
   end
 
   def authenticate_only_requester_and_supplier
-    if reservation.requester != current_user && reservation.supplier != project.user
+    if reservation.requester != current_user && reservation.supplier != current_user
       redirect_to root_path
     end
   end
