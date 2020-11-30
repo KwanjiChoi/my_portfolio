@@ -19,6 +19,9 @@ RSpec.describe "Reservations", type: :request do
     end
   end
 
+  describe 'POST #create' do
+  end
+
   describe 'GET #show_active' do
     it 'http code 302 when user does not singned in' do
       get user_reservation_path(requester, reservation)
@@ -36,5 +39,17 @@ RSpec.describe "Reservations", type: :request do
       get user_reservation_path(requester, reservation)
       expect(response.code).to eq '302'
     end
+  end
+
+  describe 'GET #show_active' do
+  end
+
+  describe 'GET #show_passive' do
+  end
+
+  describe 'GET #edit' do
+  end
+
+  descrbe 'GET #update' do
   end
 end

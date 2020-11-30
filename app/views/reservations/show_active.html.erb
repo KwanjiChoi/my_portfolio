@@ -13,22 +13,20 @@
                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid mb-3" alt="user" />
               </div>
               <div class="col-lg-9">
-                <h4><%= reservation.project.title %> </h4>
+                <h4> <%= link_to reservation.project.title, detail_project_path(reservation.project) %> </h4>
                 <p>projected by <%= supplier.username %></p>
                 <div class="button-list mt-4 mb-3">
-                  <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>Message</button>
-                  <button type="button" class="btn btn-success-rgba"><i class="feather icon-phone mr-2"></i>Call Now</button>
+                  <h4> Reservation message</h4>
+                  <p>
+                    <%= reservation.request_text %>
+                  </p>
                 </div>
                 <div class="table-responsive">
                   <table class="table table-borderless mb-0">
                     <tbody>
                       <tr>
-                        <th scope="row" class="p-1">Category :</th>
-                        <td class="p-1">Web Development</td>
-                      </tr>
-                      <tr>
-                        <th scope="row" class="p-1">Work Hrs :</th>
-                        <td class="p-1">58</td>
+                        <th scope="row" class="p-1">予約完了日時 :</th>
+                        <td class="p-1"><%= reservation.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
                       </tr>
                       <tr>
                         <th scope="row" class="p-1">Country :</th>
@@ -38,9 +36,20 @@
                         <th scope="row" class="p-1">Email ID :</th>
                         <td class="p-1">demo@mail.com</td>
                       </tr>
+                      <tr>
+                        <th scope="row" class="p-1">状態 :</th>
+                        <td class="p-1"><%= show_status(reservation) %></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
+                <div class="button-list mt-4 mb-3">
+                  <button type="button" class="btn btn-primary">Message</button>
+                  <%= link_to edit_project_reservation_path(reservation.project, reservation) do %>
+                    <button type="button" class="btn btn-secondary">Edit Reservation</button>
+                  <% end %>
+                </div>
+
               </div>
             </div>
           </div>

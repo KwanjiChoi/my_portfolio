@@ -86,7 +86,7 @@ helperメソッドにしたことで
 viewでは
 
 ```
-<%= unchecked_active_reservations.each do |reservation| %>
+<%= unchecked_active_reservations(current_user).each do |reservation| %>
  ・
  ・
  ・

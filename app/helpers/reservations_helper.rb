@@ -1,9 +1,15 @@
 module ReservationsHelper
-  def reservations(user, is_owner: false, is_requester: false, status:)
-    if is_requester == true
-      Reservation.sort_reservations_by_status(user, requester: true, status: status)
-    elsif is_owner == true
-      Reservation.sort_reservations_by_status(user, owner: true, status: status)
+  def show_status(reservation)
+    case reservation.status
+
+    when 'unchecked'
+      '確認待ちです'
+    when 'checked'
+      '予定日までお待ちください'
+    when 'finished'
+      '終了しました'
+    when 'canceled'
+      'キャンセルしました'
     end
   end
 end

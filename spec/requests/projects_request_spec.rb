@@ -142,10 +142,11 @@ RSpec.describe "Projects", type: :request do
 
   describe 'GET #feed' do
     it 'whoever can get Project#feed' do
-      get feed_projects_path
+      get feed_projects_path(category_id: project.project_category_id)
       expect(response).to have_http_status(:success)
 
       sign_in user
+      get feed_projects_path(category_id: project.project_category_id)
       expect(response).to have_http_status(:success)
     end
   end
