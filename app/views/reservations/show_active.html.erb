@@ -25,8 +25,8 @@
                   <table class="table table-borderless mb-0">
                     <tbody>
                       <tr>
-                        <th scope="row" class="p-1">予約完了日時 :</th>
-                        <td class="p-1"><%= reservation.created_at.strftime('%Y/%m/%d %H:%M:%S') %></td>
+                        <th scope="row" class="p-1">実行予定日時 :</th>
+                        <td class="p-1"><%= reservation.start_at.strftime('%Y/%m/%d %H:%M') %><br> から <%= reservation.show_reserve_time %></td>
                       </tr>
                       <tr>
                         <th scope="row" class="p-1">Country :</th>
@@ -44,7 +44,9 @@
                   </table>
                 </div>
                 <div class="button-list mt-4 mb-3">
-                  <button type="button" class="btn btn-primary">Message</button>
+                  <%= link_to room_path(message_room) do %>
+                    <button type="button" class="btn btn-primary">Message</button>
+                  <% end %>
                   <%= link_to edit_project_reservation_path(reservation.project, reservation) do %>
                     <button type="button" class="btn btn-secondary">Edit Reservation</button>
                   <% end %>

@@ -5,10 +5,10 @@ class ReservationsController < ApplicationController
   before_action :correct_user,      only: [:create]
   before_action :authenticate_only_requester_and_supplier, only: [:edit, :update, :destroy]
 
-
-  # define helper method from
+  # define helper methods
 
   STATUS = Reservation.statuses.keys.freeze
+  # ['reserved', 'checked', 'finished', 'canceled']
 
   STATUS.each do |status|
     method_name = "#{status}_active_reservations"
@@ -38,10 +38,14 @@ class ReservationsController < ApplicationController
     @new_reservation ||= Reservation.new
   end
 
-  helper_method :reservation, :requester, :supplier, :project, :new_reservation
+  def message_room
+    @message_room ||= Room.find_by(reservation: reservation)
+  end
 
-  # define helper method end
+  helper_method :reservation, :requester, :supplier,
+                :project, :new_reservation, :message_room
 
+  # get actions
 
   def new;          end
 
@@ -53,12 +57,13 @@ class ReservationsController < ApplicationController
 
   def edit;         end
 
-  
-  
+  # post put delete actions
+
   def create
     reservation = project.passive_reservations.build(reservation_params)
     if reservation.save
-      redirect_to user_reservations_path(current_user), notice: '予約が完了いたました'
+      reservation.create_chat_room
+      redirect_to user_reservations_path(current_user), notice: '予約が完了いたしました'
     else
       render :new, locals: { new_reservation: reservation }
     end
@@ -75,10 +80,9 @@ class ReservationsController < ApplicationController
         redirect_to passive_reservation_path(project, reservation)
       end
     else
-      render :edit
+      render :edit, locals: { new_reservation: reservation }
     end
   end
-
 
   private
 

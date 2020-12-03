@@ -12,4 +12,8 @@ module ReservationsHelper
       'キャンセルしました'
     end
   end
+
+  def show_minutes(sec)
+    (sec / 60).to_i
+  end
 end

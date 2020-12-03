@@ -7,8 +7,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks',
   }
   root 'static_pages#home'
-  get '/dashboard',                          to: 'users#dashboard',           as: :dashboard
-  get '/users/:user_id/reservations/:id',    to: 'reservations#show_active',  as: :active_reservation
+  get '/dashboard',                       to: 'users#dashboard',          as: :dashboard
+  get '/users/:user_id/reservations/:id', to: 'reservations#show_active', as: :active_reservation
 
   resources :users, only: [:show] do
     resources :addresses,    only: [:index, :create, :destroy]
@@ -36,8 +36,11 @@ Rails.application.routes.draw do
     resources :reservations, except: [:show]
   end
 
-  get '/projects/:project_id/reservations/:id', to: 'reservations#show_passive', as: :passive_reservation
+  get '/projects/:project_id/reservations/:id',
+      to: 'reservations#show_passive', as: :passive_reservation
 
+  resources :messages, only: [:create]
+  resources :rooms,    only: [:show, :index]
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

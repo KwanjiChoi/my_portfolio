@@ -6,6 +6,8 @@ class Reservation < ApplicationRecord
   belongs_to :requester, class_name: 'User'
   belongs_to :project
 
+  has_many :rooms, dependent: :destroy
+
   delegate :supplier, to: :project
 
   validates :start_at,     presence: true
@@ -32,6 +34,17 @@ class Reservation < ApplicationRecord
 
   def owner_name
     project.owner
+  end
+
+  def show_reserve_time
+    "#{((end_at - start_at) / 60).to_i}分"
+  end
+
+  def create_chat_room
+    room = rooms.create
+    room.entries.create(user: requester)
+    room.entries.create(user: supplier)
+    room.messages.create(user: supplier, content: '予約を受け付けました！ 確認まで少々お待ちください。')
   end
 
   private

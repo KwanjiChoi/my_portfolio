@@ -1,0 +1,55 @@
+<%= render 'shared/sidenav' %>
+
+<div class='container chat-room'>
+  <div class='jumbotron'>
+  <div class='row gutters'>
+    <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 col-10 mx-auto">
+      <div class="selected-user">
+        <span>To: <span class="name"><%= room.opponent(current_user) %></span></span>
+      </div>
+      <div class="chat-container">
+        <ul class="chat-box chatContainerScroll">
+          <% messages.each do |message| %>
+            <% if current_user == message.user %>
+              <li class="chat-left">
+                <div class="chat-avatar">
+                  <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+                  <div class="chat-name"><%= message.user.username %></div>
+                </div>
+                <div class="chat-text"><%= message.content %></div>
+                  <div class="chat-hour">08:55</span>
+                </div>
+              </li>
+            <% else %>
+              <li class="chat-right">
+                <div class="chat-hour">08:56</div>
+                <div class="chat-text"><%= message.content %></div>
+                <div class="chat-avatar">
+                  <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+                  <div class="chat-name"><%= message.user.username %></div>
+                </div>
+              </li>
+            <% end %>
+          <% end %>
+
+          <li class="chat-left">
+            <div class="chat-avatar">
+              <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+              <div class="chat-name">Russell</div>
+            </div>
+            <div class="chat-text">Hello, I'm Russell.
+              <br>How can I help you today?</div>
+              <div class="chat-hour">08:55</span>
+            </div>
+          </li>
+        
+        </ul>
+        <div class="form-group mt-3 mb-0">
+          <textarea class="form-control" rows="3" placeholder="Type your message here..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div>

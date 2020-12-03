@@ -29,7 +29,7 @@ RSpec.describe "Project", type: :system, js: true do
     end
   end
 
-  describe 'not sign in user', focus: true do
+  describe 'not sign in user' do
     file = File.open 'spec/fixtures/sample_content.txt'
     content = file.read
 

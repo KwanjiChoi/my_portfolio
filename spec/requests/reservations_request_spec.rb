@@ -22,15 +22,16 @@ RSpec.describe "Reservations", type: :request do
 
   describe 'POST #create' do
     let(:reservation_params) do
-      attributes_for(:reservation, 
-        project: project,
-        #ストロングパラメーターで設定した属性にしないと弾かれる ✖︎requester ○requester_id
-        requester_id: requester.id,
-        request_text: 'よろしくお願いいたします',
-        start_at: Time.now.tomorrow,
-        reserve_time: 60
-        )
+      attributes_for(:reservation,
+                     project: project,
+                     # ストロングパラメーターで設定した属性にしないと弾かれる ✖︎requester ○requester_id
+                     requester_id: requester.id,
+                     request_text: 'よろしくお願いいたします',
+                     start_at: Time.now.tomorrow,
+                     reserve_time: 60)
     end
+
+    let!(:other_user) { create(:user) }
 
     it 'adds a reservation' do
       sign_in requester
@@ -45,8 +46,6 @@ RSpec.describe "Reservations", type: :request do
       end.not_to change(Reservation, :count)
     end
 
-    let!(:other_user) { create(:user) }
-
     it 'does not add a reservation when requester is other user' do
       sign_in other_user
       expect do
@@ -56,6 +55,8 @@ RSpec.describe "Reservations", type: :request do
   end
 
   describe 'GET #show_active' do
+    let!(:room) { create(:room, reservation: reservation) }
+
     it 'http code 302 when user does not singned in' do
       get active_reservation_path(requester, reservation)
       expect(response.code).to eq '302'
@@ -99,13 +100,13 @@ RSpec.describe "Reservations", type: :request do
       expect(response.code).to eq '302'
     end
 
-    it 'should get by project owner' do
+    it 'gets by project owner' do
       sign_in owner
       get edit_project_reservation_path(project, reservation)
       expect(response).to have_http_status(:success)
     end
 
-    it 'should get by requester' do
+    it 'gets by requester' do
       sign_in requester
       get edit_project_reservation_path(project, reservation)
       expect(response).to have_http_status(:success)
@@ -117,7 +118,6 @@ RSpec.describe "Reservations", type: :request do
       expect(response.code).to eq '302'
     end
   end
-
 
   describe 'PATCH #update' do
     it do
