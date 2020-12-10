@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:detail, :feed]
-  before_action :correct_user, only: [:edit, :update, :destroy, :show]
+  before_action :correct_project_supplier, only: [:edit, :update, :destroy, :show]
   before_action :authenticate_teacher_account!, except: [:detail, :feed]
   before_action :set_project, only: [:show, :destroy, :detail]
 
@@ -42,9 +42,11 @@ class ProjectsController < ApplicationController
   def feed
     @category = ProjectCategory.find(params[:category_id])
     if @category.present?
-      @projects = Project.where(project_category_id: @category.id).includes(:rich_text_content)
+      @projects = Project.where(
+        project_category_id: @category.id
+      ).includes([:rich_text_content, :user])
     else
-      @projects = Project.all.includes(:rich_text_content)
+      @projects = Project.all.includes([:rich_text_content, :user])
     end
   end
 
@@ -59,7 +61,7 @@ class ProjectsController < ApplicationController
                                     location_attributes: [:prefecture_id, :id])
   end
 
-  def correct_user
+  def correct_project_supplier
     project = Project.find(params[:id])
     redirect_to dashboard_path unless project.user == current_user
   end

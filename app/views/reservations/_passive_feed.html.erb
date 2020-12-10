@@ -1,0 +1,41 @@
+<% reservations.each do |reservation| %>
+  <div class="d-style btn btn-brc-tp border-2 bgc-white btn-outline-blue btn-h-outline-blue btn-a-outline-blue w-100 my-2 py-3 shadow-sm reservation-card">
+
+    <div class="row align-items-center">
+      <div class="col-12 col-md-4">
+        <h4 class="pt-3 text-170 text-600 text-primary-d1 letter-spacing">
+          <%= reservation.requester.username %>
+        </h4>
+
+        <div class="text-secondary-d1">
+          <small>予約日: <%= reservation.created_at.strftime('%Y/%m/%d %H:%M') %></small>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <ul class="list-unstyled text-dark-l1 text-90 my-4 my-md-0">
+          <li>
+            <h4> <%= link_to reservation.project.title, project_path(reservation.project) %> </h4>
+          </li>
+
+          <li class="mt-25">
+            <span class="text-110">
+              Placerat duis
+            </span>
+          </li>
+
+          <li class="mt-25">
+            <span class="text-110">
+              status: <%= reservation.status %>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-12 col-md-4 text-center">
+        <%= link_to '詳しくみる', passive_reservation_path(reservation.project, reservation), class: 'f-n-hover btn btn-info btn-raised px-4 py-25 w-75 text-600' %>
+      </div>
+    </div>
+
+  </div>
+<% end %>

@@ -17,11 +17,12 @@ class Reservation < ApplicationRecord
 
   before_validation :set_end_at
 
-  scope :sort_reservations_by_status, -> (user, requester: false, owner: false, status:) {
+  scope :sort_reservations_by_status, -> (user, requester: false, supplier: false, status:) {
     if requester == true
       order(created_at: :asc).where(requester_id: user.id, status: status).includes(project: :user)
-    elsif owner == true
-      user.passive_reservations.order(created_at: :asc).where(status: status)
+    elsif supplier == true
+      user.passive_reservations.order(created_at: :asc).
+        where(status: status).includes([:requester, :project])
     end
   }
 

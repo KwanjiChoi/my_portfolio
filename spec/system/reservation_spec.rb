@@ -22,7 +22,7 @@ RSpec.describe "Reservation", type: :system do
     sign_in user
     visit user_reservations_path(user)
     within '.unchecked-reservations' do
-      expect(page).to have_content reservation.created_at.strftime('%Y/%m/%d %H:%M:%S')
+      expect(page).to have_content reservation.created_at.strftime('%Y/%m/%d %H:%M')
     end
   end
 

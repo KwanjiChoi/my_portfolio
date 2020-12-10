@@ -5,7 +5,7 @@
         
         <%= render 'shared/error_messages', resource: reservation %>
 
-        <%= f.hidden_field :requester_id, :value => current_user.id %>
+        <%= f.hidden_field :requester_id, value: requester&.id || current_user.id %>
 
         <div class="form-group">
           <%= f.label :start_at, '開始日時', class: 'control-label' %>
@@ -18,6 +18,14 @@
           <%= f.label :reserve_time, '予約時間', class: 'control-label'%>
           <div class="controls">
             <%=  f.select :reserve_time, Reservation::RESERVE_TIME, {include_blank: "選択してください"}, {class: ""} %>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <%= f.label :address, 'Address', class: 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :address, class: 'form-control', placeholder: 'Address' %>
           </div>
         </div>
 

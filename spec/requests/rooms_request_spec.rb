@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Rooms", type: :request do
-
   include_examples 'make reservation'
-
 
   describe 'GET #show' do
     it 'requester should get chat room' do
@@ -12,7 +10,7 @@ RSpec.describe "Rooms", type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it 'returns http code 302 when requester not signed in' do
+    it 'returns http code 302 when user not signed in' do
       get room_path(room)
       expect(response).to have_http_status(302)
     end
@@ -23,16 +21,10 @@ RSpec.describe "Rooms", type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it 'returns http code 302 when supplier not signed in' do
-      get room_path(room)
-      expect(response).to have_http_status(302)
-    end
-
     it 'returns http code 302 when other user get chat room' do
       sign_in other_user
       get room_path(room)
       expect(response).to have_http_status(302)
     end
   end
-
 end

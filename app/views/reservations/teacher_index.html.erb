@@ -1,0 +1,23 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= render 'shared/notification' %>
+
+    <h2 class='heading'><span>Teacher ダッシュボード</span></h2>
+
+    <div class="col-10 mx-auto">
+
+      <div class="mt-5 checked-projects">
+        <h2> 未確認のReservation </h2>
+        <% if unchecked_passive_reservations(current_user).present? %>
+          <small>メッセージにて詳細をお決めください</small>
+          <%= render 'reservations/passive_feed', reservations: unchecked_passive_reservations(current_user) %>
+        <% else %>
+          <p>未確認のReservationはございません</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

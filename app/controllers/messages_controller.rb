@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
     @message = Message.create(message_params)
     respond_to do |format|
       if @message.save
-        format.js       
+        format.js
       else
         room = @message.room
         messages = Message.where(room: room).includes([:user])

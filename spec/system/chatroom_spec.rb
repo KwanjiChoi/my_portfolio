@@ -1,9 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "Chat room", type: :system do
+RSpec.describe "Chat room", type: :system, js: true do
   include_examples 'make reservation'
 
-  scenario 'have talk in chat room' do
+  def chat(message)
+    fill_in 'message[content]', with: message
+    click_button 'Send'
+  end
+
+  scenario 'user have talk in chat room' do
     sign_in requester
     visit detail_project_path(project)
     click_button 'reservation now!!'
@@ -17,5 +22,8 @@ RSpec.describe "Chat room", type: :system do
     expect(page).to have_content '予約が完了いたしました'
     click_link 'Message'
     expect(page).to have_content '予約を受け付けました！ 確認まで少々お待ちください。'
+    expect(page).to have_selector '.chat-right', count: 0
+    chat 'こんにちは'
+    expect(page).to have_selector '.chat-right', count: 1
   end
 end

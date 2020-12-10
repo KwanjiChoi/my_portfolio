@@ -7,28 +7,30 @@
           <%= reservation.owner_name %>
         </h4>
 
-        <div class="text-secondary-d1 text-120">
-          <span class="text-180">予約日: <%= reservation.created_at.strftime('%Y/%m/%d %H:%M:%S') %></span>
+        <div class="text-secondary-d1">
+          <small>予約日: <%= reservation.created_at.strftime('%Y/%m/%d %H:%M') %></small>
         </div>
       </div>
 
-      <ul class="list-unstyled mb-0 col-12 col-md-4 text-dark-l1 text-90 text-left my-4 my-md-0">
-        <li>
-          <h4> <%= reservation.project.title %> </h4>
-        </li>
+      <div class="col-12 col-md-4">
+        <ul class="list-unstyled text-dark-l1 text-90 my-4 my-md-0">
+          <li>
+            <h4> <%= link_to reservation.project.title, project_path(reservation.project) %> </h4>
+          </li>
 
-        <li class="mt-25">
-          <span class="text-110">
-            Placerat duis
-          </span>
-        </li>
+          <li class="mt-25">
+            <span class="text-110">
+              Placerat duis
+            </span>
+          </li>
 
-        <li class="mt-25">
-          <span class="text-110">
-            status: <%= reservation.status %>
-          </span>
-        </li>
-      </ul>
+          <li class="mt-25">
+            <span class="text-110">
+              status: <%= reservation.status %>
+            </span>
+          </li>
+        </ul>
+      </div>
 
       <div class="col-12 col-md-4 text-center">
         <%= link_to '詳しくみる', active_reservation_path(current_user, reservation), class: 'f-n-hover btn btn-info btn-raised px-4 py-25 w-75 text-600' %>

@@ -73,9 +73,9 @@ RSpec.describe Reservation, type: :model do
   end
 
   describe 'scope' do
-    let!(:owner)       { create(:user, :teacher_account) }
+    let!(:supplier)    { create(:user, :teacher_account) }
     let!(:requester)   { create(:user) }
-    let!(:project)     { create(:project, user: owner) }
+    let!(:project)     { create(:project, user: supplier) }
     let!(:reservation) { create(:reservation, requester: requester, project: project) }
 
     context 'sort_reservations_by_status' do
@@ -94,7 +94,9 @@ RSpec.describe Reservation, type: :model do
       end
 
       context 'from project owner' do
-        subject { Reservation.sort_reservations_by_status(owner, owner: true, status: 'reserved') }
+        subject do
+          Reservation.sort_reservations_by_status(supplier, supplier: true, status: 'reserved')
+        end
 
         it { is_expected.to include reservation }
         it do

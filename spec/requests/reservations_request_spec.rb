@@ -68,7 +68,6 @@ RSpec.describe "Reservations", type: :request do
         post project_reservations_path(project), params: { reservation: invalid_reservation_params }
       end.not_to change(Reservation, :count)
     end
-
   end
 
   describe 'GET #show_active' do
@@ -93,6 +92,8 @@ RSpec.describe "Reservations", type: :request do
   end
 
   describe 'GET #show_passive' do
+    let!(:room) { create(:room, reservation: reservation) }
+
     it 'http code 302 when user does not singned in' do
       get passive_reservation_path(project, reservation)
       expect(response.code).to eq '302'

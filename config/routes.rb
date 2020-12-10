@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     member do
       get 'activate_teacher'
       get 'projects'
+      get 'teacher', to: 'reservations#teacher_index'
     end
 
     collection do

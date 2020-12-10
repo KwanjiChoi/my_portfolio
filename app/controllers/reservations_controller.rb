@@ -2,13 +2,14 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_requester, only: [:show_active]
   before_action :correct_supplier,  only: [:show_passive]
-  before_action :correct_user,      only: [:create]
+  before_action :correct_user, only: [:teacher_index]
+  before_action :correct_user_reservation, only: [:create]
   before_action :authenticate_only_requester_and_supplier, only: [:edit, :update, :destroy]
+  before_action :authenticate_teacher_account!, only: [:teacher_index]
 
   # define helper methods
 
-  STATUS = Reservation.statuses.keys.freeze
-  # ['reserved', 'checked', 'finished', 'canceled']
+  STATUS = Reservation.statuses.keys.freeze # ['unchecked', 'checked', 'finished', 'canceled']
 
   STATUS.each do |status|
     method_name = "#{status}_active_reservations"
@@ -18,12 +19,21 @@ class ReservationsController < ApplicationController
     helper_method method_name.to_sym
   end
 
+  STATUS.each do |status|
+    method_name = "#{status}_passive_reservations"
+    define_method method_name do |user|
+      Reservation.sort_reservations_by_status(user, supplier: true, status: status)
+    end
+    helper_method method_name.to_sym
+  end
+
   def reservation
+    return nil if params[:id].blank?
     @reservation ||= Reservation.find(params[:id])
   end
 
   def requester
-    @requester ||= reservation.requester
+    @requester ||= reservation&.requester
   end
 
   def supplier
@@ -47,15 +57,17 @@ class ReservationsController < ApplicationController
 
   # get actions
 
-  def new;          end
+  def new;           end
 
-  def index;        end
+  def index;         end
 
-  def show_active;  end
+  def show_active;   end
 
-  def show_passive; end
+  def show_passive;  end
 
-  def edit;         end
+  def edit;          end
+
+  def teacher_index; end
 
   # post put delete actions
 
@@ -87,10 +99,18 @@ class ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:start_at, :reserve_time, :requester_id, :request_text)
+    params.require(:reservation).permit(:start_at,
+                                        :reserve_time,
+                                        :address,
+                                        :requester_id,
+                                        :request_text)
   end
 
   def correct_user
+    redirect_to root_path unless current_user == User.find(params[:id])
+  end
+
+  def correct_user_reservation
     redirect_to root_path unless current_user.id == params[:reservation][:requester_id].to_i
     redirect_to root_path if project.user == current_user
   end

@@ -29,12 +29,8 @@
                         <td class="p-1"><%= reservation.start_at.strftime('%Y/%m/%d %H:%M') %><br> から <%= reservation.show_reserve_time %></td>
                       </tr>
                       <tr>
-                        <th scope="row" class="p-1">Country :</th>
-                        <td class="p-1">Italy</td>
-                      </tr>
-                      <tr>
-                        <th scope="row" class="p-1">Email ID :</th>
-                        <td class="p-1">demo@mail.com</td>
+                        <th scope="row" class="p-1">場所 :</th>
+                        <td class="p-1"><%= reservation.address %></td>
                       </tr>
                       <tr>
                         <th scope="row" class="p-1">状態 :</th>
