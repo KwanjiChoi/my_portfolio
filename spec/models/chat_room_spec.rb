@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Room, type: :model, focus: true do
+RSpec.describe Room, type: :model do
   describe 'relation' do
     let!(:requester) { create(:user) }
     let!(:supplier)  { create(:user, teacher: true) }

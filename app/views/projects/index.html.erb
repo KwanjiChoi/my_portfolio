@@ -5,16 +5,15 @@
 
     <%= render 'shared/notification' %>
 
-    <div class="btn-toolbar mb-2 mb-md-0">
+    <h2 class='heading'><span>My プロジェクト</span></h2>
+
+    <div class="btn-toolbar mb-2 mb-md-0 pt-5 ml-3">
       <%= link_to new_project_path do %>
-        <button type="button" class="btn btn-info mr-3">new project</button>
+        <button type="button" class="btn btn-info">new project</button>
       <% end %>
     </div>
 
-    <div class="container">
-      <div class="text-center mb-5">
-        <h2 class="display-20 display-md-18 display-lg-16">Most recent our blog</h2>
-      </div>
+    <div class="container pt-5">
       <%= render 'feed', projects: @projects, detail: false %>
     </div>
   </div>

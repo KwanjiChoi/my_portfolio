@@ -105,7 +105,7 @@ RSpec.describe Reservation, type: :model do
     end
   end
 
-  describe 'instance method', focus: true do
+  describe 'instance method' do
     start = Time.now.tomorrow
     let!(:reservation) { create(:reservation, start_at: start, reserve_time: 30) }
 

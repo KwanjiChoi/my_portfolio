@@ -7,12 +7,14 @@ class RoomsController < ApplicationController
   end
 
   def messages
-    Message.where(room: room)
+    Message.where(room: room).includes([:user])
   end
 
   helper_method :room, :messages
 
-  def show; end
+  def show
+    @message = Message.new
+  end
 
   def index
   end
@@ -20,6 +22,6 @@ class RoomsController < ApplicationController
   private
 
   def correct_users
-    redirect_to root_path if room.mate?(current_user)
+    redirect_to root_path unless room.mate?(current_user)
   end
 end

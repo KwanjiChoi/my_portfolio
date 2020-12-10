@@ -81,6 +81,32 @@ a{
   }
 }
 
+/*=== heading ===*/
+
+.heading {
+  font-size: 30px;
+  font-size: 3rem;
+  position: relative;
+  padding: 1.5rem;
+  text-align: center;
+  span {
+    font-size: 18px;
+    font-size: 1.8rem;
+    display: block;
+  }
+}
+
+.heading:before {
+  position: absolute;
+  bottom: -10px;
+  left: calc(50% - 30px);
+  width: 60px;
+  height: 5px;
+  content: '';
+  border-radius: 3px;
+  background: #fa4141;
+}
+
 /*=== project-form ===*/
 
 #project-form #reservation-form{
@@ -294,7 +320,7 @@ a{
 
 /*=== dash-board ===*/
 
-.dashboard-container{
+.container{
     .jumbotron{
       padding: 2rem;
       .reservation-card{
@@ -331,7 +357,7 @@ a{
       display: flex;
       flex: 1;
       flex-direction: row;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     img{
@@ -340,6 +366,7 @@ a{
       -webkit-border-radius: 30px;
       -moz-border-radius: 30px;
       border-radius: 30px;
+      margin: 10px;
     }
 
     .chat-avatar{
@@ -370,6 +397,7 @@ a{
       font-weight: 300;
       line-height: 150%;
       position: relative;
+      margin-top: 15px;
     }
 
     .chat-text:before {
@@ -383,35 +411,50 @@ a{
       border-color: transparent #ffffff transparent transparent;
     }
 
-    .chat-right > .chat-text {
-      text-align: right;
+
+    .chat-right {
+      .chat-text{
+        background-color: #546de5;
+        color: white;
+      }
+      .chat-text:before {
+        right: -20px;
+        border-color: transparent transparent transparent #546de5;
+        left: inherit;
+      }
     }
 
-    .chat-right > .chat-text:before {
-      right: -20px;
-      border-color: transparent transparent transparent #ffffff;
-      left: inherit;
-    }
-
-    .chat-hour {
-      padding: 0;
-      margin-bottom: 10px;
-      font-size: .75rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      margin: 0 0 0 15px;
-    }
-
-    .chat-hour > span {
-      font-size: 16px;
-      color: #9ec94a;
+    .chat-hour{
+      float: right;
+      padding-top: 5px;
     }
 
     .chat-right > .chat-hour {
       margin: 0 15px 0 0;
     }
   }
+
+  .message-write {
+    background: #f5f3f3 none repeat scroll 0 0;
+    float: left;
+    padding: 15px;
+    width: 100%;
+    
+    .form-control {
+      height: 70px;
+      padding: 10px;
+    }
+
+    .chat-button {
+      float: left;
+      margin-top: 13px;
+      width: 100%;
+
+      button{
+        float: right;
+      }
+    }
+  }
+  
 }
 

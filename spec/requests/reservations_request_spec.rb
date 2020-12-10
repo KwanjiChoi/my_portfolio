@@ -31,6 +31,15 @@ RSpec.describe "Reservations", type: :request do
                      reserve_time: 60)
     end
 
+    let(:invalid_reservation_params) do
+      attributes_for(:reservation,
+                     project: project,
+                     requester_id: owner.id,
+                     request_text: 'よろしくお願いいたします',
+                     start_at: Time.now.tomorrow,
+                     reserve_time: 60)
+    end
+
     let!(:other_user) { create(:user) }
 
     it 'adds a reservation' do
@@ -52,6 +61,14 @@ RSpec.describe "Reservations", type: :request do
         post project_reservations_path(project), params: { reservation: reservation_params }
       end.not_to change(Reservation, :count)
     end
+
+    it "user should not make reservation for his project", focus: true do
+      sign_in owner
+      expect do
+        post project_reservations_path(project), params: { reservation: invalid_reservation_params }
+      end.not_to change(Reservation, :count)
+    end
+
   end
 
   describe 'GET #show_active' do

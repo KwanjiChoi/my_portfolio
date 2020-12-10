@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
     reservation = project.passive_reservations.build(reservation_params)
     if reservation.save
       reservation.create_chat_room
-      redirect_to user_reservations_path(current_user), notice: '予約が完了いたしました'
+      redirect_to active_reservation_path(current_user, reservation), notice: '予約が完了いたしました'
     else
       render :new, locals: { new_reservation: reservation }
     end
@@ -92,6 +92,7 @@ class ReservationsController < ApplicationController
 
   def correct_user
     redirect_to root_path unless current_user.id == params[:reservation][:requester_id].to_i
+    redirect_to root_path if project.user == current_user
   end
 
   def correct_requester

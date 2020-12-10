@@ -5,12 +5,10 @@ class Room < ApplicationRecord
   belongs_to :reservation
 
   def mate?(user)
-    if user != reservation.supplier && user != reservation.requester
-      false
-    end
+    user == reservation.supplier || user == reservation.requester
   end
 
   def opponent(user)
-    user == reservation.requester ? reservation.supplier.username : reservation.requeser.username
+    user == reservation.requester ? reservation.supplier.username : reservation.requester.username
   end
 end
