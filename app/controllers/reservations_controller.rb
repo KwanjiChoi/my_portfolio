@@ -1,4 +1,5 @@
 class ReservationsController < ApplicationController
+
   before_action :authenticate_user!
   before_action :correct_requester, only: [:show_active]
   before_action :correct_supplier,  only: [:show_passive, :confirm]
@@ -6,6 +7,9 @@ class ReservationsController < ApplicationController
   before_action :correct_user_reservation, only: [:create]
   before_action :authenticate_only_requester_and_supplier, only: [:edit, :update, :destroy]
   before_action :authenticate_teacher_account!, only: [:teacher_index]
+
+
+
 
   # define helper methods
 
@@ -55,6 +59,9 @@ class ReservationsController < ApplicationController
   helper_method :reservation, :requester, :supplier,
                 :project, :new_reservation, :message_room
 
+
+
+
   # get actions
 
   def new;           end
@@ -68,6 +75,9 @@ class ReservationsController < ApplicationController
   def edit;          end
 
   def teacher_index; end
+
+
+
 
   # post put delete actions
 
@@ -100,6 +110,9 @@ class ReservationsController < ApplicationController
     reservation.update_status('checked')
     redirect_to passive_reservation_path(project, reservation), notice: '承認いたしました'
   end
+
+
+
 
   private
 

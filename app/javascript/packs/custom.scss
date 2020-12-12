@@ -292,6 +292,10 @@ a{
         justify-content: space-between;
         list-style: none;
         margin-bottom: 0;
+
+        .user-name{
+          margin-left: -30px;
+        }
   
         li{
           font-size: 15px;

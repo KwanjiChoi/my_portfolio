@@ -15,12 +15,17 @@
           <% else %>
             <h3 class="h5"><%= link_to "#{project.title}", project_path(project) %></h3>
           <% end %>
+          <div class="mb-4">
+            <span class="small lh-120"><i class="fas fa-map-marker-alt mr-2"></i>Los-Angeles, Hollywood, USA</span>
+          </div>
           <p class="display-30"><%= project.short_content %></p>
         </div>
         <div class="card-footer">
           <ul>
-            <li><a href="#!"><i class="fas fa-user"></i><%= project.owner %></a></li>
-            <li><a href="#!"><i class="far fa-comment-dots"></i><span>11</span></a></li>
+            <%= link_to user_path(project.user) do %>
+              <li class='user-name'><i class="fas fa-user"></i><span class='ml-2'><%= project.owner %></span></li>
+            <% end %>
+            <li class='mr-2'><a href="#!"><i class="far fa-comment-dots"></i><span class='ml-1'>11</span></a></li>
           </ul>
         </div>
       </article>
