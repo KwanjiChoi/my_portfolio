@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "Reservations", type: :request do
-  let!(:owner)       { create(:user, :teacher_account) }
+  let!(:supplier)    { create(:user, :teacher_account) }
   let!(:requester)   { create(:user) }
-  let!(:project)     { create(:project, user: owner) }
+  let!(:project)     { create(:project, user: supplier) }
   let!(:reservation) { create(:reservation, project: project, requester: requester) }
   let(:other_user)   { create(:user) }
 
@@ -34,7 +34,7 @@ RSpec.describe "Reservations", type: :request do
     let(:invalid_reservation_params) do
       attributes_for(:reservation,
                      project: project,
-                     requester_id: owner.id,
+                     requester_id: supplier.id,
                      request_text: 'よろしくお願いいたします',
                      start_at: Time.now.tomorrow,
                      reserve_time: 60)
@@ -62,8 +62,8 @@ RSpec.describe "Reservations", type: :request do
       end.not_to change(Reservation, :count)
     end
 
-    it "user should not make reservation for his project", focus: true do
-      sign_in owner
+    it "user should not make reservation for his project" do
+      sign_in supplier
       expect do
         post project_reservations_path(project), params: { reservation: invalid_reservation_params }
       end.not_to change(Reservation, :count)
@@ -73,7 +73,7 @@ RSpec.describe "Reservations", type: :request do
   describe 'GET #show_active' do
     let!(:room) { create(:room, reservation: reservation) }
 
-    it 'http code 302 when user does not singned in' do
+    it 'http code 302 when user does not singn in' do
       get active_reservation_path(requester, reservation)
       expect(response.code).to eq '302'
     end
@@ -85,7 +85,7 @@ RSpec.describe "Reservations", type: :request do
     end
 
     it 'http code 302 when user get other users show_acive page' do
-      sign_in owner
+      sign_in supplier
       get active_reservation_path(requester, reservation)
       expect(response.code).to eq '302'
     end
@@ -94,13 +94,13 @@ RSpec.describe "Reservations", type: :request do
   describe 'GET #show_passive' do
     let!(:room) { create(:room, reservation: reservation) }
 
-    it 'http code 302 when user does not singned in' do
+    it 'http code 302 when user does not sign in' do
       get passive_reservation_path(project, reservation)
       expect(response.code).to eq '302'
     end
 
     it 'http success when correct user' do
-      sign_in owner
+      sign_in supplier
       get passive_reservation_path(project, reservation)
       expect(response).to have_http_status(:success)
     end
@@ -113,13 +113,13 @@ RSpec.describe "Reservations", type: :request do
   end
 
   describe 'GET #edit' do
-    it 'http code 302 when user does not singned in' do
+    it 'http code 302 when user does not sign in' do
       get edit_project_reservation_path(project, reservation)
       expect(response.code).to eq '302'
     end
 
-    it 'gets by project owner' do
-      sign_in owner
+    it 'gets by project supplier' do
+      sign_in supplier
       get edit_project_reservation_path(project, reservation)
       expect(response).to have_http_status(:success)
     end
@@ -134,6 +134,25 @@ RSpec.describe "Reservations", type: :request do
       sign_in other_user
       get edit_project_reservation_path(project, reservation)
       expect(response.code).to eq '302'
+    end
+  end
+
+  describe '#PUT confirm', focus: true do
+    it 'does not confirm reservation when user does not sign in' do
+      put confirm_project_reservation_path(project, reservation)
+      expect(reservation.reload.status).to eq 'unchecked'
+    end
+
+    it 'does not confirm reservation when user is requester' do
+      sign_in requester
+      put confirm_project_reservation_path(project, reservation)
+      expect(reservation.reload.status).to eq 'unchecked'
+    end
+
+    it 'should confirm reservation when user is supplier' do
+      sign_in supplier
+      put confirm_project_reservation_path(project, reservation)
+      expect(reservation.reload.status).to eq 'checked'
     end
   end
 

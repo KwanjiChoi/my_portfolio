@@ -1,27 +1,27 @@
 <%= render 'shared/sidenav' %>
 
 <div class="container dashboard-container">
-    <div class="jumbotron">
-      <%= render 'shared/notification' %>
+  <div class="jumbotron">
+    <%= render 'shared/notification' %>
 
-      <h2 class='heading'><span>ダッシュボード</span></h2>
+    <h2 class='heading'><span>ダッシュボード</span></h2>
 
-      <div class="col-10">
+    <div class="col-10 mx-auto">
 
-        <div class="mt-5 checked-projects">
-          <h2> 実行予定のProject </h2>
-          <% if @checked_active_reservations.present? %>
-            <small>日時をお間違えのないようご確認ください</small>
-            <%= render 'reservations/feed', reservations: @checked_active_reservations %>
-          <% else %>
-            <p>実行予定のProjectはございません</p>
-          <% end %>
-        </div>
+      <div class="mt-5 checked-projects">
+        <h2> 実行予定のProject </h2>
+        <% if @checked_active_reservations.present? %>
+          <small>日時をお間違えのないようご確認ください</small>
+          <%= render 'reservations/active_feed', reservations: @checked_active_reservations %>
+        <% else %>
+          <p>実行予定のProjectはございません</p>
+        <% end %>
       </div>
     </div>
+  </div>
 
-  <footer>
-      Repository maintained by <%= link_to 'Kwanji Choi', 'https://github.com/KwanjiChoi/my_portfolio', target: :_blank %>
-  </footer>
+<footer>
+    Repository maintained by <%= link_to 'Kwanji Choi', 'https://github.com/KwanjiChoi/my_portfolio', target: :_blank %>
+</footer>
 
 </div>

@@ -34,7 +34,11 @@ Rails.application.routes.draw do
       get 'feed'
     end
 
-    resources :reservations, except: [:show]
+    resources :reservations, except: [:show] do
+      member do
+        put 'confirm'
+      end
+    end
   end
 
   get '/projects/:project_id/reservations/:id',

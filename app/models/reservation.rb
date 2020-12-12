@@ -48,6 +48,11 @@ class Reservation < ApplicationRecord
     room.messages.create(user: supplier, content: '予約を受け付けました！ 確認まで少々お待ちください。')
   end
 
+  def update_status(status)
+    update_attribute(:status, status)
+  end
+
+
   private
 
   def set_end_at

@@ -9,12 +9,12 @@
     <div class="col-10 mx-auto">
 
       <div class="mt-5 checked-projects">
-        <h2> 未確認のReservation </h2>
+        <h2> 未承認のReservation </h2>
         <% if unchecked_passive_reservations(current_user).present? %>
-          <small>メッセージにて詳細をお決めください</small>
+          <small>詳細が決まり次第、承認してください</small>
           <%= render 'reservations/passive_feed', reservations: unchecked_passive_reservations(current_user) %>
         <% else %>
-          <p>未確認のReservationはございません</p>
+          <p>未承認のReservationはございません</p>
         <% end %>
       </div>
     </div>

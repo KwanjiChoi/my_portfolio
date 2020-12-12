@@ -1,10 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Reservation", type: :system do
-  let!(:teacher)     { create(:user, :teacher_account) }
-  let!(:project)     { create(:project, user: teacher) }
-  let!(:user)        { create(:user) }
-  let!(:reservation) { create(:reservation, requester: user, project: project) }
+
+  include_examples 'make reservation'
 
   def reservation_count(unchecked:, checked:, finished:)
     within '.unchecked-reservations' do
@@ -19,24 +17,29 @@ RSpec.describe "Reservation", type: :system do
   end
 
   scenario 'reservation card' do
-    sign_in user
-    visit user_reservations_path(user)
+    sign_in requester
+    visit user_reservations_path(requester)
     within '.unchecked-reservations' do
       expect(page).to have_content reservation.created_at.strftime('%Y/%m/%d %H:%M')
     end
   end
 
   scenario 'user has reservation' do
-    sign_in user
-    visit user_reservations_path(user)
+    sign_in requester
+    visit user_reservations_path(requester)
     reservation_count(unchecked: 1, checked: 0, finished: 0)
 
     reservation.update_attribute(:status, 'checked')
-    visit user_reservations_path(user)
+    visit user_reservations_path(requester)
     reservation_count(unchecked: 0, checked: 1, finished: 0)
 
     reservation.update_attribute(:status, 'finished')
-    visit user_reservations_path(user)
+    visit user_reservations_path(requester)
     reservation_count(unchecked: 0, checked: 0, finished: 1)
+  end
+
+  scenario 'supplier confirm resevation', focus: true do
+    sign_in requester
+    visit teacher_user_path(requester)
   end
 end
