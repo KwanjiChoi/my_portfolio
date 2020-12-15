@@ -9,5 +9,4 @@ class ApplicationController < ActionController::Base
     @categolies ||= ProjectCategory.all
   end
   helper_method :category_list
-
 end

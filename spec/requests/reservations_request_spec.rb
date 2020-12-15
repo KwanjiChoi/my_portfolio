@@ -149,7 +149,7 @@ RSpec.describe "Reservations", type: :request do
       expect(reservation.reload.status).to eq 'unchecked'
     end
 
-    it 'should confirm reservation when user is supplier' do
+    it 'confirms reservation when user is supplier' do
       sign_in supplier
       put confirm_project_reservation_path(project, reservation)
       expect(reservation.reload.status).to eq 'checked'

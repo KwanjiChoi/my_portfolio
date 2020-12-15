@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Reservation", type: :system do
-
   include_examples 'make reservation'
 
   def reservation_count(unchecked:, checked:, finished:)

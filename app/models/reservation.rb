@@ -52,7 +52,6 @@ class Reservation < ApplicationRecord
     update_attribute(:status, status)
   end
 
-
   private
 
   def set_end_at

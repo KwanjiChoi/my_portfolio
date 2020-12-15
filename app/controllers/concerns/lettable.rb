@@ -1,5 +1,4 @@
 module Lettable
-
   extend ActiveSupport::Concern
 
   class_methods do
@@ -10,12 +9,11 @@ module Lettable
         instance_variable_set(variable, instance_eval(&blk))
       end
       helper_method name
-  
+
       define_method :"#{name}=" do |value|
         instance_variable_set(variable, value)
       end
       private :"#{name}="
     end
   end
-
 end

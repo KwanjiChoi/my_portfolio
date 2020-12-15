@@ -1,4 +1,5 @@
 class ReservationsController < ApplicationController
+  include DefineMethod::ReservationMethods
 
   before_action :authenticate_user!
   before_action :correct_requester, only: [:show_active]
@@ -7,60 +8,6 @@ class ReservationsController < ApplicationController
   before_action :correct_user_reservation, only: [:create]
   before_action :authenticate_only_requester_and_supplier, only: [:edit, :update, :destroy]
   before_action :authenticate_teacher_account!, only: [:teacher_index]
-
-
-
-
-  # define helper methods
-
-  STATUS = Reservation.statuses.keys.freeze # ['unchecked', 'checked', 'finished', 'canceled']
-
-  STATUS.each do |status|
-    method_name = "#{status}_active_reservations"
-    define_method method_name do |user|
-      instance_variable_set("@#{method_name}", Reservation.sort_reservations_by_status(user, requester: true, status: status))
-    end
-    helper_method method_name.to_sym
-  end
-
-  STATUS.each do |status|
-    method_name = "#{status}_passive_reservations"
-    define_method method_name do |user|
-      instance_variable_set("@#{method_name}", Reservation.sort_reservations_by_status(user, supplier: true, status: status))
-    end
-    helper_method method_name.to_sym
-  end
-
-  def reservation
-    return nil if params[:id].blank?
-    @reservation ||= Reservation.find(params[:id])
-  end
-
-  def requester
-    @requester ||= reservation&.requester
-  end
-
-  def supplier
-    @supplier ||= reservation.supplier
-  end
-
-  def project
-    @project ||= Project.find(params[:project_id])
-  end
-
-  def new_reservation
-    @new_reservation ||= Reservation.new
-  end
-
-  def message_room
-    @message_room ||= Room.find_by(reservation: reservation)
-  end
-
-  helper_method :reservation, :requester, :supplier,
-                :project, :new_reservation, :message_room
-
-
-
 
   # get actions
 
@@ -75,9 +22,6 @@ class ReservationsController < ApplicationController
   def edit;          end
 
   def teacher_index; end
-
-
-
 
   # post put delete actions
 
@@ -110,9 +54,6 @@ class ReservationsController < ApplicationController
     reservation.update_status('checked')
     redirect_to passive_reservation_path(project, reservation), notice: '承認いたしました'
   end
-
-
-
 
   private
 
