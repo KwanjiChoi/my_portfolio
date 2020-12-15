@@ -1,0 +1,3 @@
+$('.chat-box').append("<%= escape_javascript(render partial: 'rooms/chat', locals: { message: @message }) %>");
+$('.js-form')[0].reset();
+$(".chat-btn").prop('disabled', true);

@@ -74,3 +74,4 @@ gem 'sinatra', require: false
 gem 'redis'
 gem 'redis-namespace'
 gem 'faker'
+gem 'active_hash'

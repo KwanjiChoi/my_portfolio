@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :user, aliases: [:owner] do
     sequence(:username) { |n| "Testuser#{n}" }
-    sequence(:email) { |n| "tester#{n}@example.com" }
-    password { 'password' }
-    phone_number { "0#{rand(0..9)}0#{rand(1_000_000..99_999_999)}" }
+    sequence(:email)    { |n| "tester#{n}@example.com" }
+    password            { 'password' }
+    phone_number        { "0#{rand(0..9)}0#{rand(1_000_000..99_999_999)}" }
     # https://qiita.com/xusaku_/items/018cf2cb9caae8b5fb8b
-    confirmed_at { Date.today }
+    confirmed_at        { Date.today }
 
     trait :sample_user do
       email { 'tester@example.com' }
@@ -19,7 +19,7 @@ FactoryBot.define do
     trait :teacher_account do
       username  { 'SampleUser' }
       email     { 'sample@example.com' }
-      teacher { true }
+      teacher   { true }
     end
   end
 end

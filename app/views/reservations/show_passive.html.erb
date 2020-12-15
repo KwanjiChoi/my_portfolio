@@ -1,0 +1,62 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= render 'shared/notification' %>
+
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="card m-b-30">
+          <div class="card-body py-5">
+            <div class="row">
+              <div class="col-lg-3 text-center">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid mb-3" alt="user" />
+              </div>
+              <div class="col-lg-9">
+                <h4> <%= link_to reservation.project.title, detail_project_path(reservation.project) %> </h4>
+                <p>reserved by <%= requester.username %></p>
+                <div class="button-list mt-4 mb-3">
+                  <h4> Reservation message</h4>
+                  <p>
+                    <%= reservation.request_text %>
+                  </p>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0">
+                    <tbody>
+                      <tr>
+                        <th scope="row" class="p-1">実行予定日時 :</th>
+                        <td class="p-1"><%= reservation.start_at.strftime('%Y/%m/%d %H:%M') %><br> から <%= reservation.show_reserve_time %></td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="p-1">場所 :</th>
+                        <td class="p-1"><%= reservation.address %></td>
+                      </tr>
+                      <tr>
+                        <th scope="row" class="p-1">状態 :</th>
+                        <td class="p-1"><%= show_status(reservation) %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="button-list mt-4 mb-3">
+                  <%= link_to room_path(message_room) do %>
+                    <button type="button" class="btn btn-primary">Message</button>
+                  <% end %>
+                  <%= link_to edit_project_reservation_path(project, reservation) do %>
+                    <button type="button" class="btn btn-secondary">Edit Reservation</button>
+                  <% end %>
+                  <%= link_to confirm_project_reservation_path(project, reservation), method: :put do %>
+                    <button type="button" class="btn btn-success">Confirm</button>
+                  <% end %>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

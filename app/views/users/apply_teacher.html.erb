@@ -3,6 +3,11 @@
 <div class="container">
   <div class="jumbotron">
     <%= render 'shared/notification' %>
+    <h1 class="display-4">
+      あなたのスキルを使って、<br> 困っている人を助けよう！
+      <br>
+    </h1>
+    <p>些細なことで困っている人がたくさんいます</p>
     <% if unconfirmed?(current_user) %>
       <div class="btn-toolbar mb-2 mb-md-0">
         <p>
@@ -19,25 +24,10 @@
         <% end %>
       </div>
     <% end %>
-    <h1 class="display-4">
-      Bootstrap Navbar Sidebar
-      <br>
-      <small>Fixed to Left or Right</small>
-    </h1>
     <p>
       <strong>
         Use classic Bootstrap navbar as sidebar, on left or right side.
       </strong>
-    </p>
-    <p>
-      <a class="github-button" href="https://github.com/mladenplavsic/bootstrap-navbar-sidebar"
-        data-icon="octicon-star" data-show-count="true"
-        aria-label="Star mladenplavsic/bootstrap-navbar-sidebar on GitHub">Star</a>
-      <a class="github-button" href="https://github.com/mladenplavsic/bootstrap-navbar-sidebar/fork"
-        data-icon="octicon-repo-forked" data-show-count="true"
-        aria-label="Fork mladenplavsic/bootstrap-navbar-sidebar on GitHub">Fork</a>
-      <a class="github-button" href="https://github.com/mladenplavsic"
-        aria-label="Follow @mladenplavsic on GitHub">Follow @mladenplavsic</a>
     </p>
     <p>Same as when using <code>.fixed-top</code> for navbar - add class <code>.fixed-left</code> or <code>.fixed-right</code>
         where needed.</p>
@@ -58,21 +48,5 @@
       </button>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-body">
-      <div class="form-group">
-        <label>
-          Select another bootstrap theme from
-          <a href="https://bootswatch.com/" target="_blank">Bootswatch</a>
-        </label>
-        <select class="form-control width-md" id="theme_select" onchange="selectTheme(value)"></select>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-      Repository maintained by <a href="https://github.com/mladenplavsic">mladenplavsic</a>
-  </footer>
 
 </div>

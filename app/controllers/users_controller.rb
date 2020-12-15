@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:projects]
   before_action :authenticate_nonteacher, only: [:apply_teacher, :activate_teacher]
   before_action :unconfirmed?, only: :activate_teacher
 
@@ -11,6 +11,9 @@ class UsersController < ApplicationController
   end
 
   def dashboard
+    @checked_active_reservations = Reservation.sort_reservations_by_status(
+      current_user, requester: true, status: 'checked'
+    )
   end
 
   def apply_teacher; end
@@ -25,6 +28,11 @@ class UsersController < ApplicationController
     else
       redirect_to root_path
     end
+  end
+
+  def projects
+    @user = User.find(params[:id])
+    @projects = @user.projects.includes(:rich_text_content)
   end
 
   private

@@ -23,7 +23,16 @@
                                                      :include_blank => "カテゴリを選択してください" %>
               </div>
             </div>
-            
+
+            <%= f.fields_for :location do |ff| %>
+              <div calss="form-group">
+                <%= ff.label :prefecture_id, '都道府県', class: 'control-label'%>
+                <div class="controls">
+                  <%=  ff.collection_select :prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"}, {class: ""} %>
+                </div>
+              </div>
+            <% end %>
+
             <div class="form-group">
               <%= f.label :main_image, 'サムネイル画像', class: 'control-label'%>
               <div class="controls">

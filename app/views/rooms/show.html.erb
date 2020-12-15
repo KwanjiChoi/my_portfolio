@@ -1,0 +1,56 @@
+
+<%= render 'shared/sidenav' %>
+
+<div class='container chat-room'>
+  <div class='jumbotron'>
+    <div class='row gutters'>
+      <div class="col-xl-9 col-lg-9 col-md-9 col-sm-11 col-11 mx-auto">
+        <div class="selected-user">
+          <span>To: <span class="name"><%= room.reservation.project.title %></span></span>
+        </div>
+        <div class="chat-container">
+          <ul class="chat-box overflow-auto">
+            <% messages.each do |message| %>
+              <% if current_user == message.user %>
+                <li class="chat-right">
+                  <div>
+                    <div class="chat-text"><%= parse_url(message.content).html_safe %></div>
+                    <small><%= message.created_at.strftime('%m/%d %H:%M') %></small>
+                  </div>
+                  <div class="chat-avatar">
+                    <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+                    <div class="chat-name"><%= message.user.username %></div>
+                  </div>
+                </li>
+              <% else %>
+                <li class="chat-left">
+                  <div class="chat-avatar">
+                    <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+                    <div class="chat-name"><%= message.user.username %></div>
+                  </div>
+                  <div> 
+                    <div class="chat-text"><%= parse_url(message.content).html_safe %></div>
+                    <small class="chat-hour"><%= message.created_at.strftime('%m/%d %H:%M') %></small>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>     
+          </ul>
+          <div class="form-group mt-3 mb-0">
+            <%= form_with model: @message, remote: true, class: 'js-form' do |f| %>
+              <div class='message-write'>
+                <%= f.hidden_field :user_id, value: current_user.id %>
+                <%= f.hidden_field :room_id, value: room.id %>
+
+                <%= f.text_area :content, class: 'form-control chat-input', row: '3', placeholder: 'Message' %>
+                <div class='chat-button'>
+                  <button class="btn btn-success chat-btn">Send</button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

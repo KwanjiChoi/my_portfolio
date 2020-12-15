@@ -1,0 +1,23 @@
+<% if current_user == message.user %>
+  <li class="chat-right">
+    <div>
+      <div class="chat-text"><%= message.content %></div>
+      <small><%= message.created_at.strftime('%m/%d %H:%M') %></small>
+    </div>
+    <div class="chat-avatar">
+      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+      <div class="chat-name"><%= message.user.username %></div>
+    </div>
+  </li>
+<% else %>
+  <li class="chat-left">
+    <div class="chat-avatar">
+      <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
+      <div class="chat-name"><%= message.user.username %></div>
+    </div>
+    <div> 
+      <div class="chat-text"><%= message.content %></div>
+      <small class="chat-hour"><%= message.created_at.strftime('%m/%d %H:%M') %></small>
+    </div>
+  </li>
+<% end %>

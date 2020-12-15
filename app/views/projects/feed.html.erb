@@ -3,3 +3,16 @@
 <% else %>
   <%= render 'shared/not_sign_in_sidenav' %>
 <% end %>
+
+<div class="container">
+  <div class="jumbotron">
+
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class='heading'><span><%= @category.name %></span></h2>
+      </div>
+      <%= render 'feed', projects: @projects, detail: true %>
+    </div>
+  </div>
+
+</div>

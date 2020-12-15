@@ -1,0 +1,44 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <%= render 'shared/notification' %>
+
+    <h2 class='heading'><span>Teacher ダッシュボード</span></h2>
+
+    <div class="col-10 mx-auto">
+
+      <div class="mt-5 checked-projects">
+        <h2> 未承認のReservation </h2>
+        <% if unchecked_passive_reservations(current_user).present? %>
+          <small>詳細が決まり次第、承認してください</small>
+          <%= render 'reservations/passive_feed', reservations: unchecked_passive_reservations(current_user) %>
+        <% else %>
+          <p>未承認のReservationはございません</p>
+        <% end %>
+      </div>
+
+      <div class="mt-5 checked-projects">
+        <h2> 実行待ちのReservation </h2>
+        <% if checked_passive_reservations(current_user).present? %>
+          <small>日時をお間違えないよう、お願いします</small>
+          <%= render 'reservations/passive_feed', reservations: checked_passive_reservations(current_user) %>
+        <% else %>
+          <p>実行待ちのReservationはございません</p>
+        <% end %>
+      </div>
+
+      <div class="mt-5 checked-projects">
+        <h2> 終了したReservation </h2>
+        <% if finished_passive_reservations(current_user).present? %>
+          <small>30日後に自動削除されます</small>
+          <%= render 'reservations/passive_feed', reservations: finished_passive_reservations(current_user) %>
+        <% else %>
+          <p>終了したReservationはございません</p>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+</div>

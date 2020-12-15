@@ -81,6 +81,7 @@ RSpec.describe "Projects", type: :request do
     let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'Sample Title',
+                               location_attributes: attributes_for(:project_location),
                                main_image: Rack::Test::UploadedFile.new(
                                  File.join(Rails.root, 'spec/fixtures/test.jpg')
                                ),
@@ -141,10 +142,11 @@ RSpec.describe "Projects", type: :request do
 
   describe 'GET #feed' do
     it 'whoever can get Project#feed' do
-      get feed_projects_path
+      get feed_projects_path(category_id: project.project_category_id)
       expect(response).to have_http_status(:success)
 
       sign_in user
+      get feed_projects_path(category_id: project.project_category_id)
       expect(response).to have_http_status(:success)
     end
   end

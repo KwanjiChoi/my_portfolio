@@ -56,4 +56,15 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(302)
     end
   end
+
+  describe 'GET #projects' do
+    it 'whoever can get User#projects' do
+      get projects_user_path(user)
+      expect(response).to have_http_status(:success)
+
+      sign_in user
+      get projects_user_path(other_user)
+      expect(response).to have_http_status(:success)
+    end
+  end
 end

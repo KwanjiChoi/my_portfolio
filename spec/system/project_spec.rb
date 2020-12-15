@@ -9,11 +9,12 @@ RSpec.describe "Project", type: :system, js: true do
 
     include_examples 'sign in with teacher account'
 
-    scenario 'user post projects' do
-      visit dashboard_path
+    scenario 'post projects' do
+      visit projects_path
       click_link  'new project'
       fill_in     'Title',     with: 'sample title'
       select      'category1', from: 'カテゴリー'
+      select      '兵庫県', from: '都道府県'
       attach_file "project[main_image]", "#{Rails.root}/spec/fixtures/test.jpg"
       fill_in_rich_text_area 'project_content', with: 'a' * 101
       click_on 'create project'
@@ -28,7 +29,7 @@ RSpec.describe "Project", type: :system, js: true do
     end
   end
 
-  describe 'not sign in user', focus: true do
+  describe 'not sign in user' do
     file = File.open 'spec/fixtures/sample_content.txt'
     content = file.read
 
