@@ -1,0 +1,35 @@
+<section class='comment-container'>
+  <h3 class="text-center">コメント</h3>
+
+    <% if comments.present? %>
+      <div class="card mt-5">
+        <% comments.each do |comment| %>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
+                <p class="text-secondary text-center mt-1"><%= comment.created_at.strftime('%m月%d日') %></p>
+              </div>
+              <div class="col-md-10">
+                <p>
+                  <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong><%= comment.commenter.username %></strong></a>
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                  <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                </p>
+                <div class="clearfix"></div>
+                <p class='mt-3'><%= comment.comment %></p>
+                <p>
+                  <a class="float-right btn btn-outline-primary ml-2"> <i class="fa fa-reply"></i> Reply</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <h4 class='text-center mt-5'>コメントはございません</h4>
+    <% end %>
+</section>

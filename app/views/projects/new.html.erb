@@ -5,59 +5,7 @@
     <section id="project-form" class="padding-top-bottom">
       <div class="container">
         <div class="row">
-          <%= form_with model: @project, local: true, class: 'col-10 mx-auto' do |f| %>
-            
-            <%= render 'shared/error_messages', resource: @project %>
-
-            <div class="form-group">
-              <%= f.label :title, 'Title', class: 'control-label' %>
-              <div class="controls">
-                <%= f.text_field :title, class: 'form-control', placeholder: 'Title' %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :project_category_id, 'カテゴリー', class: 'control-label'%>
-              <div class="controls">
-                <%= f.collection_select :project_category_id, ProjectCategory.all, :id, :name,
-                                                     :include_blank => "カテゴリを選択してください" %>
-              </div>
-            </div>
-
-            <%= f.fields_for :location do |ff| %>
-              <div calss="form-group">
-                <%= ff.label :prefecture_id, '都道府県', class: 'control-label'%>
-                <div class="controls">
-                  <%=  ff.collection_select :prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"}, {class: ""} %>
-                </div>
-              </div>
-            <% end %>
-
-            <div class="form-group">
-              <%= f.label :main_image, 'サムネイル画像', class: 'control-label'%>
-              <div class="controls">
-                <%= f.file_field :main_image %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :phone_reservation, '電話予約を許可しますか？', class: 'control-label'%>
-              <div class="controls">
-                <%= f.check_box :phone_reservation %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="field">
-                <%= f.label :content %>
-                <%= f.rich_text_area :content %>
-              </div>
-            </div>
-
-            <p><%= f.submit 'create project', class: 'btn btn-info btn-block' %></p>
-            	
-          <% end %>
-          
+          <%= render 'form', project: @project %>
         </div>	
       </div>	
     </section>

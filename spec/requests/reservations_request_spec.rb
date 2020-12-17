@@ -137,7 +137,7 @@ RSpec.describe "Reservations", type: :request do
     end
   end
 
-  describe '#PUT confirm', focus: true do
+  describe '#PUT confirm' do
     it 'does not confirm reservation when user does not sign in' do
       put confirm_project_reservation_path(project, reservation)
       expect(reservation.reload.status).to eq 'unchecked'

@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:detail, :feed]
   before_action :correct_project_supplier, only: [:edit, :update, :destroy, :show]
   before_action :authenticate_teacher_account!, except: [:detail, :feed]
-  before_action :set_project, only: [:show, :destroy, :detail]
+  before_action :set_project, only: [:show, :destroy, :detail, :edit, :update]
 
   def index
     @projects = current_user.projects.includes(:rich_text_content)
@@ -26,7 +26,13 @@ class ProjectsController < ApplicationController
 
   def edit; end
 
-  def update; end
+  def update
+    if @project.update(project_params)
+      redirect_to project_path(@project), notice: 'Projectを更新しました'
+    else
+      render :edit
+    end
+  end
 
   def destroy
     project = Project.find(params[:id])
@@ -37,7 +43,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def detail; end
+  def detail
+    @comments = @project.comments.all
+  end
 
   def feed
     @category = ProjectCategory.find(params[:category_id])

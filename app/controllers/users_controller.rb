@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
+    @comments = @user.comments.all
   end
 
   def dashboard

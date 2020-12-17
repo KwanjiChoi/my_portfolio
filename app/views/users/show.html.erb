@@ -1,5 +1,14 @@
 <%= render 'shared/sidenav' %>
 
 
-<p class='sample-class'> こんにちは　<%= current_user.username %></p>
+<div class="container">
+  <div class="jumbotron">
+
+    <h2 class='heading'><span>プロフィール</span></h2>
+
+    <p class='sample-class'> こんにちは　<%= @user.username %></p>
+    
+    <%= render 'comments/index', comments: @comments %>
+  </div>
+</div>
 

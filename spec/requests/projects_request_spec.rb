@@ -113,8 +113,32 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'PUT #update' do
-    it do
-      expect(1 + 1).to eq 2
+    let!(:category) { create(:project_category) }
+    let(:project_params) do
+      attributes_for(:project, title: 'edit project',
+                               location_attributes: attributes_for(:project_location),
+                               main_image: Rack::Test::UploadedFile.new(
+                                 File.join(Rails.root, 'spec/fixtures/test.jpg')
+                               ),
+                               content: 'a' * 101,
+                               user: user,
+                               project_category_id: category.id)
+    end
+    it 'edit project' do
+      sign_in user
+      put project_path(project), params: { project: project_params }
+      expect(project.reload.title).to eq 'edit project'
+    end
+
+    it 'does not edit project when user not sign in' do
+      put project_path(project), params: { project: project_params }
+      expect(project.reload.title).not_to eq 'edit project'
+    end
+  
+    it 'does not edit project when other user' do
+      sign_in other_user
+      put project_path(project), params: { project: project_params }
+      expect(project.reload.title).not_to eq 'edit project'
     end
   end
 

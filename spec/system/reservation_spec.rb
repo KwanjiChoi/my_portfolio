@@ -37,7 +37,7 @@ RSpec.describe "Reservation", type: :system do
     reservation_count(unchecked: 0, checked: 0, finished: 1)
   end
 
-  scenario 'supplier confirm resevation', focus: true do
+  scenario 'supplier confirm resevation' do
     sign_in requester
     visit teacher_user_path(requester)
   end
