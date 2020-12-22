@@ -1,0 +1,15 @@
+<section class='comment-form mt-1'>
+  <%= form_with model: [commentable, new_comment],  local: true do |f| %>
+
+    <%= render 'shared/error_messages', resource: new_comment %>
+
+    <div class='form-group'>
+      <%= f.text_area :comment, class: 'form-control', placeholder: 'Add a comment' %>
+    </div>
+
+    <div>
+      <%=  f.select :score, Comment::SCORE_VALUES, {include_blank: "選択してください"}, {class: ""} %>
+    </div>
+    <%= f.submit class:'btn btn-primary' %>
+  <% end %>
+</section>

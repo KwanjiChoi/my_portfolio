@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       get 'apply_teacher'
     end
 
-    resources :comments, only: [:create], controller: 'user/comments'
+    resources :comments, only: [:create], module: :users
   end
 
   resources :projects do
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :comments, only: [:create], controller: 'project/comments'
+    resources :comments, only: [:create], module: :projects
   end
 
   get '/projects/:project_id/reservations/:id',

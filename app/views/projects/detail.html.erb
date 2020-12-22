@@ -7,18 +7,23 @@
 <div class="container">
   <div class="jumbotron">
     <%= render 'shared/notification' %>
-    <section id="project-show" class="padding-top-bottom">
-      <h1> <%= @project.title%> </h1>
-      <p> <%= link_to @project.category_name, '#' %> </p>
+    <section id="project-show" class="padding-top-bottom mx-auto">
+      <h1 class='text-center'> <%= @project.title%> </h1>
+      <p> カテゴリー：<%= link_to @project.category_name, '#' %> </p>
       <p> project by <%= link_to @project.owner, user_path(@project.user) %></p>
-      <%= image_tag @project.main_image.show_thumb.url %>
-      <%= @project.content %>
+      <div>
+        <%= image_tag @project.main_image.show_thumb.url, class: 'd-block mx-auto' %>
+      </div>
+      <div class='col-md-10 mt-5 mx-auto'>
+        <%= @project.content %>
+        <button class="btn btn-info btn-lg mt-3 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
+      </div>
 
-      <button class="btn btn-info btn-lg" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
-      <%= render 'modal', project: @project %>
+      <%= render 'projects/modal', project: @project %>
 
     </section>
 
-    <%= render 'comments/index', comments: @comments %>
+    <%= render 'comments/index', commentable: @project %>
+    <%= render 'comments/form',  commentable: @project %>
   </div>
 </div>

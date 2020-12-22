@@ -43,9 +43,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def detail
-    @comments = @project.comments.all
-  end
+  def detail; end
 
   def feed
     @category = ProjectCategory.find(params[:category_id])

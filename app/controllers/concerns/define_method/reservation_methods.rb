@@ -1,16 +1,8 @@
 module DefineMethod::ReservationMethods
   extend ActiveSupport::Concern
 
-  included do
-    METHODS = DefineMethod::ReservationMethods.instance_methods.freeze
-
-    METHODS.each do |method|
-      helper_method method
-    end
-  end
 
   STATUS = Reservation.statuses.keys.freeze # ['unchecked', 'checked', 'finished', 'canceled']
-
   STATUS.each do |status|
     method_name = "#{status}_active_reservations"
     define_method method_name do |user|

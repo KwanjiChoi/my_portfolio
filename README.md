@@ -24,6 +24,8 @@
   - AWS S3
   - heroku
 
+  - チャレンジ AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
+
 ## 反省点
   - それぞれが違ったロジックで認可をしているため、correct_userが複数のcontrollerに点在する
     - ルーティングが後付けでめちゃくちゃ、共通のパターンを意識しないとダメ

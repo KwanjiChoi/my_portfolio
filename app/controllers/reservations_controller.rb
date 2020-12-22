@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
   include DefineMethod::ReservationMethods
-
+ 
+  before_action :define_helper_methods
   before_action :authenticate_user!
   before_action :correct_requester, only: [:show_active]
   before_action :correct_supplier,  only: [:show_passive, :confirm]
@@ -9,7 +10,7 @@ class ReservationsController < ApplicationController
   before_action :authenticate_only_requester_and_supplier, only: [:edit, :update, :destroy]
   before_action :authenticate_teacher_account!, only: [:teacher_index]
 
-  # get actions
+ # get actions
 
   def new;           end
 

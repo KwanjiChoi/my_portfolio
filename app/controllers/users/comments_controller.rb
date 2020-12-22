@@ -1,14 +1,20 @@
 class Users::CommentsController < CommentsController
-  def create
-    user = User.find(params[:user_id])
-    user.comment.create(user_comment_params)
-    redirect_to user_path(user), notice: 'コメントを投稿しました'
-  end
+  before_action :set_commentable
 
+  def create
+    @comment = @commentable.comments.create(comment_params)
+    @comment.commenter = current_user
+    @user = @commentable
+    if @comment.save
+        redirect_to @commentable, notice: 'Your comment was successfully posted!'
+    else
+      render 'users/show'
+    end
+  end
   private
 
-  def user_comment_params
-    params.require(:comment).permit(:comment, :commenter_id)
+  def set_commentable
+    @commentable = User.find(params[:user_id])
   end
 
 end

@@ -5,7 +5,7 @@ class Project < ApplicationRecord
   belongs_to :project_category
 
   has_many :passive_reservations, class_name: 'Reservation', dependent: :destroy
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   mount_uploader :main_image, ImageUploader
 

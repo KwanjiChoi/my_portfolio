@@ -19,12 +19,15 @@ class User < ApplicationRecord
   has_many :active_reservations,  class_name: 'Reservation',
                                   foreign_key: 'requester_id',
                                   dependent: :destroy
+
   has_many :passive_reservations, through: :projects, foreign_key: 'project_id', dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :entries,  dependent: :destroy
 
-  has_many :comments, as: :commentable 
-  has_many :active_comments, class_name: 'Comment', foreign_key: 'commenter_id', dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :active_comments, class_name: 'Comment', 
+                             foreign_key: 'commenter_id', 
+                             dependent: :destroy
 
 
   def available_addresses

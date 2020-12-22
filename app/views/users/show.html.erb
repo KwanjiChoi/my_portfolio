@@ -3,12 +3,14 @@
 
 <div class="container">
   <div class="jumbotron">
+    <%= render 'shared/notification' %>
 
     <h2 class='heading'><span>プロフィール</span></h2>
 
     <p class='sample-class'> こんにちは　<%= @user.username %></p>
     
-    <%= render 'comments/index', comments: @comments %>
+    <%= render 'comments/index', commentable: @user %>
+    <%= render 'comments/form',  commentable: @user %>
   </div>
 </div>
 

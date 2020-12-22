@@ -5,7 +5,7 @@
   <div class="jumbotron">
     <%= render 'shared/notification' %>
     <section id="project-show" class="padding-top-bottom">
-      <h1> <%= @project.title%> </h1>
+      <h1><%= @project.title%> </h1>
       <p> <%= link_to @project.category_name, '#' %> </p>
       <p> project by <%= link_to @project.owner, user_path(@project.user) %></p>
       <%= image_tag @project.main_image.show_thumb.url %>
