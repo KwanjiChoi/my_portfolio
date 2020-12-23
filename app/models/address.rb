@@ -8,20 +8,13 @@ class Address < ApplicationRecord
 
   after_validation :geocode, if: :address_changed?
   after_validation :check_correct_address
-  validates        :address, presence: true, length: { maximum: 75 }
-  validate         :check_number_of_addresses
+  validates        :address, presence: true, length: { maximum: 75 }, max_count: { belongs_to: 'User', count: MAX_LENGTH }
 
   scope :show_index, -> {
     order(id: :desc).limit(SHOW_INDEX_LENGTH)
   }
 
   private
-
-  def check_number_of_addresses
-    if user && user.addresses.count >= MAX_LENGTH
-      errors.add(:address, "の登録は最大5件までです")
-    end
-  end
 
   def check_correct_address
     if latitude.nil? || longitude.nil?
