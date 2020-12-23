@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   include Lettable
 
+  # if you want to define helper methods at first, use this code
+  # 初めに全てのhelper methodを読み込みたい場合は以下を使う
+  #
   # Dir.glob(File.join(Rails.root, 'app/controllers/concerns/define_method', '*.rb')).each do |file|
   #   file = File.basename(file, '.rb')
   #   current_module = "DefineMethod::#{file.camelize}".constantize
@@ -9,9 +12,11 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
+
   def define_helper_methods
     define_module = "DefineMethod::#{controller_name.camelize.singularize}Methods".constantize
     define_module.instance_methods.each do |method|
+      #helper_methodはextendしたクラスメソッド
       ApplicationController.helper_method method
     end
   end

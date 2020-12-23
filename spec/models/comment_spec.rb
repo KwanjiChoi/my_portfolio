@@ -17,7 +17,7 @@ RSpec.describe Comment, type: :model do
       end
     end
 
-    describe 'score', focus: true do
+    describe 'score' do
       it 'is not valid when score is blank' do
         user_comment.score = nil
         user_comment.valid?
