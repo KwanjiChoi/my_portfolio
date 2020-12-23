@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_22_082811) do
+ActiveRecord::Schema.define(version: 2020_12_23_113332) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -105,7 +105,6 @@ ActiveRecord::Schema.define(version: 2020_12_22_082811) do
     t.string "main_image", null: false
     t.bigint "project_category_id"
     t.boolean "phone_reservation", default: false
-    t.string "prefecture_id"
     t.index ["project_category_id"], name: "index_projects_on_project_category_id"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
