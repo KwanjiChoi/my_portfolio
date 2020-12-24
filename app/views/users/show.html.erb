@@ -8,9 +8,21 @@
     <h2 class='heading'><span>プロフィール</span></h2>
 
     <p class='sample-class'> こんにちは　<%= @user.username %></p>
+
+    <div class="mb-5 row">
+      <div class='col-md-6 text-center mt-3'>
+        <p>総予約実績</p>
+        <h4>50件</h4>
+
+      </div>
+      <div class='col-md-6 text-center mt-3'>
+      <p class='text-center'>ユーザー評価</p>
+        <%= render 'shared/star_ave', rate: 2.3 %>
+        <p class='mt-2'>2.3点</p>
+      </div>
+    </div>
     
     <%= render 'comments/index', commentable: @user %>
     <%= render 'comments/form',  commentable: @user %>
   </div>
 </div>
-

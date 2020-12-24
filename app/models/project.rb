@@ -32,6 +32,10 @@ class Project < ApplicationRecord
     project_category.name
   end
 
+  def location_name
+    location&.prefecture&.name
+  end
+
   def owner
     user.username
   end

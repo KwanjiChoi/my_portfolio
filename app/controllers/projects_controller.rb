@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :destroy, :detail, :edit, :update]
 
   def index
-    @projects = current_user.projects.includes(:rich_text_content)
+    @projects = current_user.projects.includes([:rich_text_content, :location])
   end
 
   def new
@@ -50,7 +50,7 @@ class ProjectsController < ApplicationController
     if @category.present?
       @projects = Project.where(
         project_category_id: @category.id
-      ).includes([:rich_text_content, :user])
+      ).includes([:rich_text_content, :user, :location])
     else
       @projects = Project.all.includes([:rich_text_content, :user])
     end
