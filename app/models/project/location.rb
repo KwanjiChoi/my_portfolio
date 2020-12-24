@@ -1,7 +1,4 @@
 class Project::Location < ApplicationRecord
-  extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to_active_hash :prefecture
+  belongs_to :prefecture, foreign_key: "prefecture_id"
   belongs_to :project
-
-  validates :prefecture_id, presence: true
 end

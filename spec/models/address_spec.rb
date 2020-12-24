@@ -27,7 +27,7 @@ RSpec.describe 'Address model', type: :model do
     expect(@address).to be_valid
   end
 
-  describe 'validation', focus: true do
+  describe 'validation' do
     context 'address' do
       it 'is invalid without address' do
         @address.address = nil
