@@ -12,11 +12,10 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-
   def define_helper_methods
     define_module = "DefineMethod::#{controller_name.camelize.singularize}Methods".constantize
     define_module.instance_methods.each do |method|
-      #helper_methodはextendしたクラスメソッド
+      # helper_methodはextendしたクラスメソッド
       ApplicationController.helper_method method
     end
   end

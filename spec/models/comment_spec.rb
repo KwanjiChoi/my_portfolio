@@ -4,6 +4,7 @@ RSpec.describe Comment, type: :model do
   describe 'validation' do
     let(:user_comment)    { build(:user_comment) }
     let(:project_comment) { build(:project_comment) }
+
     it 'has valid factories' do
       expect(user_comment).to be_valid
       expect(project_comment).to be_valid
@@ -42,26 +43,32 @@ RSpec.describe Comment, type: :model do
     end
   end
 
-
   describe 'association' do
     describe 'dependent destroy' do
       let!(:commenter)       { create(:user) }
       let!(:user)            { create(:user) }
       let!(:project)         { create(:project) }
-      let!(:user_comment)    { create(:user_comment, commenter: commenter, commentable: user) }
-      let!(:project_comment) { create(:project_comment, commenter: commenter, commentable: project) }
+      let!(:user_comment)    do
+        create(:user_comment,
+               commenter: commenter,
+               commentable: user)
+      end
+      let!(:project_comment) do
+        create(:project_comment,
+               commenter: commenter,
+               commentable: project)
+      end
+
       it 'destroys when user was deleted' do
         expect { user.destroy }.to change(Comment, :count)
       end
 
       it 'destroys when project was deleted' do
-        
       end
 
       it 'destroys when commenter was deleted' do
         expect { commenter.destroy }.to change(Comment, :count)
       end
-
     end
   end
 end

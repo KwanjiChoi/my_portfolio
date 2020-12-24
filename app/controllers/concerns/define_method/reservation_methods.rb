@@ -1,7 +1,6 @@
 module DefineMethod::ReservationMethods
   extend ActiveSupport::Concern
 
-
   STATUS = Reservation.statuses.keys.freeze # ['unchecked', 'checked', 'finished', 'canceled']
   STATUS.each do |status|
     method_name = "#{status}_active_reservations"

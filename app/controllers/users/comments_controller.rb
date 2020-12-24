@@ -6,15 +6,15 @@ class Users::CommentsController < CommentsController
     @comment.commenter = current_user
     @user = @commentable
     if @comment.save
-        redirect_to @commentable, notice: 'Your comment was successfully posted!'
+      redirect_to @commentable, notice: 'Your comment was successfully posted!'
     else
       render 'users/show'
     end
   end
+
   private
 
   def set_commentable
     @commentable = User.find(params[:user_id])
   end
-
 end

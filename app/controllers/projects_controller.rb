@@ -16,6 +16,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if @project.save
+      @project.create_performance
       redirect_to project_path(@project), notice: 'created successfully'
     else
       render :new

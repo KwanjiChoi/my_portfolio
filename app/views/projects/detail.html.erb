@@ -15,7 +15,7 @@
         <%= image_tag @project.main_image.show_thumb.url, class: 'd-block mx-auto' %>
       </div>
       <div class='col-md-10 mt-5 mx-auto'>
-        <%= render 'shared/performance_bar', record: 50, rate: 3.5 %>
+        <%= render 'shared/performance_bar', record: @project.performance&.total_record, rate: @project.performance&.average_score %>
         <%= @project.content %>
         <button class="btn btn-info btn-lg mt-3 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
       </div>

@@ -124,6 +124,7 @@ RSpec.describe "Projects", type: :request do
                                user: user,
                                project_category_id: category.id)
     end
+
     it 'edit project' do
       sign_in user
       put project_path(project), params: { project: project_params }
@@ -134,7 +135,7 @@ RSpec.describe "Projects", type: :request do
       put project_path(project), params: { project: project_params }
       expect(project.reload.title).not_to eq 'edit project'
     end
-  
+
     it 'does not edit project when other user' do
       sign_in other_user
       put project_path(project), params: { project: project_params }

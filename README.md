@@ -26,6 +26,13 @@
 
   - チャレンジ AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
 
+## 見ていただきたい点
+  - reservations controllerでのメタプログラミング
+  - パフォーマンスチューニング
+    - N+1問題の解消
+    - STI ポリモーフィック関連の活用 (微々たるものですが無駄なテーブルを削減)
+  - 
+
 ## 反省点
   - それぞれが違ったロジックで認可をしているため、correct_userが複数のcontrollerに点在する
     - ルーティングが後付けでめちゃくちゃ、共通のパターンを意識しないとダメ
@@ -33,7 +40,9 @@
   - Comment model に関して
      - 命名をReview modelにすれば良かった。
      - 評価の平均点をとる処理に関して、毎回aveで集計する実装は間違っている。
-      - 解決策としては、user projetそれぞれにscore_aveカラムを持たせて定期jobで平均を集計しupdateしてあげれば良い
+      - ~~解決策としては、user projetそれぞれにscore_aveカラムを持たせて定期jobで平均を集計しupdateしてあげれば良い~~
+      ↓
+      - performances table(実績テーブル)を作成し解決
 
 
 ## 自分用
@@ -51,6 +60,10 @@
     1. describe どのリクエストに対してのテストなのか
     2.  context どの権限からのテストなのか
     3. it どのように振舞うのか
+
+- その他テストに関して
+  - メソッドのテスト
+    - argがnil, blank, emptyなど様々な角度でテストすべし
     
 
 - controllerの処理

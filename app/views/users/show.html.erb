@@ -9,9 +9,10 @@
 
     <p class='sample-class'> こんにちは　<%= @user.username %></p>
 
-    <%= render 'shared/performance_bar', record: 50, rate: 0 %>
-
-    <%= render 'comments/index', commentable: @user %>
-    <%= render 'comments/form',  commentable: @user %>
+    <% if @user.teacher? %>
+      <%= render 'shared/performance_bar', record: @user.performance&.total_record, rate: @user.performance&.average_score %>
+      <%= render 'comments/index', commentable: @user %>
+      <%= render 'comments/form',  commentable: @user %>
+    <% end %>
   </div>
 </div>

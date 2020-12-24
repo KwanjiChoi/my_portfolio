@@ -16,6 +16,7 @@ class Project < ApplicationRecord
 
   has_one :location, class_name: 'Project::Location',
                      dependent: :destroy
+  has_one :performance, as: :performancable, dependent: :destroy
 
   accepts_nested_attributes_for :location, allow_destroy: true
 

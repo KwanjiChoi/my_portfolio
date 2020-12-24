@@ -25,10 +25,11 @@ class User < ApplicationRecord
   has_many :entries,  dependent: :destroy
 
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :active_comments, class_name: 'Comment', 
-                             foreign_key: 'commenter_id', 
+  has_many :active_comments, class_name: 'Comment',
+                             foreign_key: 'commenter_id',
                              dependent: :destroy
 
+  has_one :performance, as: :performancable, dependent: :destroy
 
   def available_addresses
     5 - addresses.count

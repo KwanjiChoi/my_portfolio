@@ -5,10 +5,11 @@
   </div>
   <div class='col-md-6 text-center mt-3'>
     <p class='text-center'>平均評価</p>
-    <div class="stars" style="--rating: <%= rate %>;" aria-label="Rating of this product is 2.3 out of 5."></div>
-    <% if rate.zero? %>
+    <% if rate.nil? %>
+      <div class="stars" style="--rating: 0;"></div>
       <p class='mt-2'>まだ評価はございません</p>
     <% else %>
+      <div class="stars" style="--rating: <%= rate %>;"></div>
       <p class='mt-2'><%= rate %>点</p>
     <% end %>
   </div>

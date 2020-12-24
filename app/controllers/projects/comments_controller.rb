@@ -17,5 +17,4 @@ class Projects::CommentsController < CommentsController
   def set_commentable
     @commentable = Project.find(params[:project_id])
   end
-
 end

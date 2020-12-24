@@ -12,7 +12,6 @@ module ApplicationHelper
   end
 
   def new_comment
-    @comment ||= Comment.new
+    Comment.new
   end
-
 end

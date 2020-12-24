@@ -8,7 +8,9 @@ class Address < ApplicationRecord
 
   after_validation :geocode, if: :address_changed?
   after_validation :check_correct_address
-  validates        :address, presence: true, length: { maximum: 75 }, max_count: { belongs_to: 'User', count: MAX_LENGTH }
+  validates        :address, presence: true,
+                             length: { maximum: 75 },
+                             max_count: { belongs_to: 'User', count: MAX_LENGTH }
 
   scope :show_index, -> {
     order(id: :desc).limit(SHOW_INDEX_LENGTH)
