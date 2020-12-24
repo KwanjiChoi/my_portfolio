@@ -15,17 +15,7 @@
         <%= image_tag @project.main_image.show_thumb.url, class: 'd-block mx-auto' %>
       </div>
       <div class='col-md-10 mt-5 mx-auto'>
-        <div class="mb-5 row">
-          <div class='col-md-6 text-center mt-3'>
-            <p>予約実績</p>
-            <h4>50件</h4>
-          </div>
-          <div class='col-md-6 text-center mt-3'>
-            <p class='text-center'>平均評価</p>
-            <%= render 'shared/star_ave', rate: 0 %>
-            <p class='mt-2'>まだ評価はございません</p>
-          </div>
-        </div>
+        <%= render 'shared/performance_bar', record: 50, rate: 3.5 %>
         <%= @project.content %>
         <button class="btn btn-info btn-lg mt-3 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
       </div>
