@@ -1,12 +1,9 @@
 ## 実装予定
 
-- ツリー構造のカテゴリ(隣接リストモデルかな) *SQLアンチパターン参照
+- ツリー構造のカテゴリ(隣接リストモデルかな)
 - 支払い機能
 - teacher accountをactivateする際のチェック機能
-- リアルタイムチャット
 - treacherのスケジュール共有
-- いいね
-- follow
 - 通知機能
 - 友達紹介
 - オンラインレッスン
@@ -24,12 +21,14 @@
   - AWS S3
   - heroku
 
-  - チャレンジ AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
+  チャレンジ 
+  - AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
+  - health checkによるjob監視
 
 ## 見ていただきたい点
-  - reservations controllerでのメタプログラミング
+  - reservations controllerでのメタプログラミング *@ハックを参照してください
   - パフォーマンスチューニング
-    - N+1問題の解消 *@ハックを参照してください
+    - N+1問題の解消
     - STI ポリモーフィック関連の活用 (微々たるものですが無駄なテーブルを削減)
 
 
