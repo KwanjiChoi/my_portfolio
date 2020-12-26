@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
   def dashboard
@@ -23,7 +23,8 @@ class UsersController < ApplicationController
     if user == current_user
       ActivateMailer.apply_teacher_account(user).deliver_now
       ActivateTeacherJob.set(wait: 30.seconds).perform_later user
-      flash[:notice] = 'teacheraccountの申請を受け付けました、メールをご確認ください'
+      user.create_performance
+      flash[:notice] = 'teacher accountの申請を受け付けました、メールをご確認ください'
       redirect_to root_path, status: 200
     else
       redirect_to root_path

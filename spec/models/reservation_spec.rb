@@ -11,7 +11,7 @@ RSpec.describe Reservation, type: :model do
     context 'requester_id' do
       it 'is invalid when requester_id is nil' do
         reservation.requester = nil
-        puts reservation.valid?
+        reservation.valid?
         expect(reservation.errors[:requester]).to include 'must exist'
       end
     end
@@ -19,7 +19,7 @@ RSpec.describe Reservation, type: :model do
     context 'project_id' do
       it 'is invalid when project_id is nil' do
         reservation.project = nil
-        puts reservation.valid?
+        reservation.valid?
         expect(reservation.errors[:project]).to include 'must exist'
       end
     end

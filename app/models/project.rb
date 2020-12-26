@@ -5,6 +5,7 @@ class Project < ApplicationRecord
   belongs_to :project_category
 
   has_many :passive_reservations, class_name: 'Reservation', dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   mount_uploader :main_image, ImageUploader
 
@@ -15,6 +16,7 @@ class Project < ApplicationRecord
 
   has_one :location, class_name: 'Project::Location',
                      dependent: :destroy
+  has_one :performance, as: :performancable, dependent: :destroy
 
   accepts_nested_attributes_for :location, allow_destroy: true
 
@@ -29,6 +31,10 @@ class Project < ApplicationRecord
 
   def category_name
     project_category.name
+  end
+
+  def location_name
+    location&.prefecture&.name
   end
 
   def owner

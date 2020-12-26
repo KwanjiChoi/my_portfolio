@@ -1,12 +1,9 @@
 ## 実装予定
 
-- ツリー構造のカテゴリ(隣接リストモデルかな) *SQLアンチパターン参照
+- ツリー構造のカテゴリ(隣接リストモデルかな)
 - 支払い機能
 - teacher accountをactivateする際のチェック機能
-- リアルタイムチャット
 - treacherのスケジュール共有
-- いいね
-- follow
 - 通知機能
 - 友達紹介
 - オンラインレッスン
@@ -24,29 +21,27 @@
   - AWS S3
   - heroku
 
+  チャレンジ 
+  - AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
+  - health checkによるjob監視
+
+## 見ていただきたい点
+  - reservations controllerでのメタプログラミング *@ハックを参照してください
+  - パフォーマンスチューニング
+    - N+1問題の解消
+    - STI ポリモーフィック関連の活用 (微々たるものですが無駄なテーブルを削減)
+
+
 ## 反省点
   - それぞれが違ったロジックで認可をしているため、correct_userが複数のcontrollerに点在する
     - ルーティングが後付けでめちゃくちゃ、共通のパターンを意識しないとダメ
 
-
-## 自分用
-
-- systemテストについて
-  - 粒度を意識しよう！
-    - 個別の部品についてテスト
-      - 各セクションに必要なテキストはあるか
-      - jsの動きは正しいか
-    - その後ページ全体のロジックをテスト
-      - ビジネスロジックに沿ってデータの変更は適正にできているか
-
-- controllerの処理
-  - ビジネスロジックは書くべきではない
-  - メタプログラミングを意識しすぎると可読性が下がる
-  - helperとの共存,model操作はhelperに書くべきではない(できるけど)
-
-- STIはサブクラスが増える可能性のあるmodelに適用しようね！(2週間ハマることになるよ)
-
-
+  - Comment model に関して
+     - 命名をReview modelにすれば良かった。
+     - 評価の平均点をとる処理に関して、毎回aveで集計する実装は間違っている。
+      - ~~解決策としては、user projetそれぞれにscore_aveカラムを持たせて定期jobで平均を集計しupdateしてあげれば良い~~
+      ↓
+      - performances table(実績テーブル)を作成し解決
 
 ## ワンポイント
 
@@ -108,5 +103,99 @@ viewでは
 
 - デメリット
   - controllerをみてぱっと見何をやっているのか把握しづらい
-  - インスタンスに入っていないためメソッドを呼び出すたびに都度DBへのアクセスが必要(define_methodの戻り値をメモ化する方法ってあるのかな？)
+  - どのviewでなんの変数を使っているのかconntrollerからは把握できない(viewを見て確認するしかない)
+  - インスタンスに入っていないためメソッドを呼び出すたびに都度DBへのアクセスが必要(define_methodの戻り値をメモ化する方法を模索中)
+
+
+### @ハックのすゝめ
+
+concernsのディレクトリ構成
+
+```
+controller
+└── concerns
+  　└── define_method
+       └── **_mehthods.rb
+```
+
+
+controller/concerns/define_method/**_methods.rb
+
+```
+
+module DefineMethod::**Methods
+  extend ActiveSupport::Concern
+
+  def any_method
+  end
+end
+
+```
+
+controller/application_controller.rb
+
+```
+def define_helper_methods
+  define_module = "DefineMethod::#{controller_name.camelize.singularize}Methods".constantize
+  define_module.instance_methods.each do |method|
+    ApplicationController.helper_method method
+  end
+end
+```
+上記メソッドを定義
+
+controller配下の**s_controller.rbにて
+
+```
+include DefineMethod::ReservationMethods
+
+before_action :define_helper_method
+```
+
+をしてあげると
+**_methods.rbにて定義したメソッドはcontroller内でも、viewでも使える。
+
+これでcontrollerがスッキリしました！
+
+対応するコントローラのビュー以外でメソッドを使ってしまうとバグの原因になるので
+
+```
+config.action_controller.include_all_helpers = false
+```
+を設定してあげるのが良さそうです。
+
+
+
+## 自分用小言
+
+- systemテストについて
+  - 粒度を意識しよう！
+    - 個別の部品についてテスト
+      - 各セクションに必要なテキストはあるか
+      - jsの動きは正しいか
+    - その後ページ全体のロジックをテスト
+      - ビジネスロジックに沿ってデータの変更は適正にできているか
+
+- requestテストについて
+  - 粒度を意識しよう　→　describeとcontextをうまく使い適性に場合分してテストする
+    1. describe どのリクエストに対してのテストなのか
+    2.  context どの権限からのテストなのか
+    3. it どのように振舞うのか
+
+- その他テストに関して
+  - メソッドのテスト
+    - argがnil, blank, emptyなど様々な角度でテストすべし
+    
+
+- controllerの処理
+  - ビジネスロジックは書くべきではない
+  - メタプログラミングを意識しすぎると可読性が下がる
+  - helperとの共存,model操作はhelperに書くべきではない(できるけど)
+
+- STIはサブクラスが増える可能性のあるmodelに適用しよう
+
+
+
+
+
 

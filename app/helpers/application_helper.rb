@@ -10,4 +10,8 @@ module ApplicationHelper
   def unconfirmed?(user)
     user.unconfirmed_email.present?
   end
+
+  def new_comment
+    Comment.new
+  end
 end

@@ -42,5 +42,6 @@ module MyPortfolio
     config.active_job.queue_adapter = :sidekiq
 
     config.time_zone = 'Tokyo'
+    config.action_controller.include_all_helpers = false
   end
 end

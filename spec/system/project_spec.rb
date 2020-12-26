@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Project", type: :system, js: true do
   describe 'sign in user' do
-    let!(:category2) { create(:project_category, name: 'category2') }
-    let!(:category1) { create(:project_category, name: 'category1') }
-    let!(:project_1) { create(:project, title: 'project_1', user: user) }
-    let!(:project_2) { create(:project, title: 'project_2', user: user) }
+    let!(:prefecture) { create(:prefecture, name: '兵庫県') }
+    let!(:category2)  { create(:project_category, name: 'category2') }
+    let!(:category1)  { create(:project_category, name: 'category1') }
+    let!(:project_1)  { create(:project, title: 'project_1', user: user) }
+    let!(:project_2)  { create(:project, title: 'project_2', user: user) }
 
     include_examples 'sign in with teacher account'
 

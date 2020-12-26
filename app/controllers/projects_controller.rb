@@ -2,10 +2,10 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!, except: [:detail, :feed]
   before_action :correct_project_supplier, only: [:edit, :update, :destroy, :show]
   before_action :authenticate_teacher_account!, except: [:detail, :feed]
-  before_action :set_project, only: [:show, :destroy, :detail]
+  before_action :set_project, only: [:show, :destroy, :detail, :edit, :update]
 
   def index
-    @projects = current_user.projects.includes(:rich_text_content)
+    @projects = current_user.projects.includes([:rich_text_content, :location])
   end
 
   def new
@@ -16,6 +16,7 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.build(project_params)
     if @project.save
+      @project.create_performance
       redirect_to project_path(@project), notice: 'created successfully'
     else
       render :new
@@ -26,7 +27,13 @@ class ProjectsController < ApplicationController
 
   def edit; end
 
-  def update; end
+  def update
+    if @project.update(project_params)
+      redirect_to project_path(@project), notice: 'Projectを更新しました'
+    else
+      render :edit
+    end
+  end
 
   def destroy
     project = Project.find(params[:id])
@@ -44,7 +51,7 @@ class ProjectsController < ApplicationController
     if @category.present?
       @projects = Project.where(
         project_category_id: @category.id
-      ).includes([:rich_text_content, :user])
+      ).includes([:rich_text_content, :user, :location])
     else
       @projects = Project.all.includes([:rich_text_content, :user])
     end

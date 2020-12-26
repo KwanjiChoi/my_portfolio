@@ -16,7 +16,7 @@
             <h3 class="h5"><%= link_to "#{project.title}", project_path(project) %></h3>
           <% end %>
           <div class="mb-4">
-            <span class="small lh-120"><i class="fas fa-map-marker-alt mr-2"></i>Los-Angeles, Hollywood, USA</span>
+            <span class="small lh-120"><i class="fas fa-map-marker-alt mr-2"></i><%= project.location_name%></span>
           </div>
           <p class="display-30"><%= project.short_content %></p>
         </div>

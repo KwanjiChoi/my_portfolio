@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     collection do
       get 'apply_teacher'
     end
+
+    resources :comments, only: [:create], module: :users
   end
 
   resources :projects do
@@ -39,6 +41,8 @@ Rails.application.routes.draw do
         put 'confirm'
       end
     end
+
+    resources :comments, only: [:create], module: :projects
   end
 
   get '/projects/:project_id/reservations/:id',

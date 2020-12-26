@@ -131,3 +131,22 @@ bgc2, .vLine, .hLine {
   }
 }
 
+
+.stars{
+  --percent: calc(var(--rating) / 5 * 100%);
+  
+  font-size: 200%;
+  font-family: Times;
+  line-height: 1;
+  width: 100%;
+  margin: auto;
+  
+  &::before {
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fc0 var(--percent), #fff var(--percent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
