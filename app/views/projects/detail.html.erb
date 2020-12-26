@@ -25,6 +25,8 @@
     </section>
 
     <%= render 'comments/index', commentable: @project %>
-    <%= render 'comments/form',  commentable: @project %>
+    <% if current_user %>
+      <%= render 'comments/form',  commentable: @project %>
+    <% end %>
   </div>
 </div>

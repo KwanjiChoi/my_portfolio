@@ -12,7 +12,9 @@
     <% if @user.teacher? %>
       <%= render 'shared/performance_bar', record: @user.performance&.total_record, rate: @user.performance&.average_score %>
       <%= render 'comments/index', commentable: @user %>
-      <%= render 'comments/form',  commentable: @user %>
+      <% if current_user %>
+        <%= render 'comments/form',  commentable: @user %>
+      <% end %>
     <% end %>
   </div>
 </div>
