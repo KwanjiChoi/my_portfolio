@@ -70,6 +70,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'sidekiq'
+gem 'sidekiq-scheduler'
 gem 'sinatra', require: false
 gem 'redis'
 gem 'redis-namespace'

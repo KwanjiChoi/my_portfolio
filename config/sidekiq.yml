@@ -3,3 +3,11 @@
 :queues:
   - task
   - default
+
+
+
+
+:schedule:
+  HelloSidekiqJob:
+    every: 1h
+    args: "Hello sidekiq-scheduler!!"
