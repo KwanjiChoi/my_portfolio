@@ -50,7 +50,7 @@
       <% @recent_projects.each do |project| %>
         <div class="col-sm-6 col-lg-4 mb-3 recent-project-box recent-project-<%= project.id %>">
 
-            <%= image_tag project.main_image.index_thumb.url, class: 'rounded-top img-thumbnail' %>
+          <%= image_tag project.main_image.index_thumb.url, class: 'rounded-top img-thumbnail' %>
 
           <h6 class="recent-project-title"><%= project.title %></h6>
           <small class="text-muted"> projected by <%= project.owner %></small>

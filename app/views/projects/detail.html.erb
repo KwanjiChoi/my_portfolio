@@ -9,15 +9,17 @@
     <%= render 'shared/notification' %>
     <section id="project-show" class="padding-top-bottom mx-auto">
       <h1 class='text-center'> <%= @project.title%> </h1>
-      <p> カテゴリー：<%= link_to @project.category_name, '#' %> </p>
-      <p> project by <%= link_to @project.owner, user_path(@project.user) %></p>
-      <div>
-        <%= image_tag @project.main_image.show_thumb.url, class: 'd-block mx-auto' %>
+      <div class='col-md-11 mt-5 mx-auto'>
+        <p> カテゴリー：<%= link_to @project.category_name, feed_projects_path(category_id: @project.project_category) %> </p>
+        <p> project by <%= link_to @project.owner, user_path(@project.user) %></p>
       </div>
-      <div class='col-md-10 mt-5 mx-auto'>
+      
+      <%= image_tag @project.main_image.to_s, class: 'img-fluid d-block mx-auto mt-5' %>
+      
+      <div class='col-md-11 mt-5 mx-auto'>
         <%= render 'shared/performance_bar', record: @project.performance&.total_record, rate: @project.performance&.average_score %>
         <%= @project.content %>
-        <button class="btn btn-info btn-lg mt-3 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
+        <button class="btn btn-info btn-lg mt-5 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
       </div>
 
       <%= render 'projects/modal', project: @project %>
