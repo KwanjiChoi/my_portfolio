@@ -20,6 +20,10 @@ FactoryBot.define do
       username  { 'SampleUser' }
       email     { 'sample@example.com' }
       teacher   { true }
+
+      after(:create) do |user|
+        create(:user_performance, performancable: user)
+      end
     end
   end
 end

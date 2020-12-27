@@ -1,5 +1,10 @@
 class User < ApplicationRecord
+  include Calculator
   VALID_PHONE_REGEX = /\A\d{10}$|^\d{11}\z/.freeze
+
+  scope :teacher_accounts, -> {
+    where(teacher: true)
+  }
 
   devise :database_authenticatable,   :registerable,
          :recoverable, :rememberable, :validatable,
@@ -20,7 +25,11 @@ class User < ApplicationRecord
                                   foreign_key: 'requester_id',
                                   dependent: :destroy
 
-  has_many :passive_reservations, through: :projects, foreign_key: 'project_id', dependent: :destroy
+  has_many :passive_reservations, through: :projects,
+                                  foreign_key: 'project_id',
+                                  source: :reservations,
+                                  dependent: :destroy
+
   has_many :messages, dependent: :destroy
   has_many :entries,  dependent: :destroy
 
@@ -74,5 +83,9 @@ class User < ApplicationRecord
     unless phone_number.match VALID_PHONE_REGEX
       errors.add(:phone_number, 'type correct phone number')
     end
+  end
+
+  def get_finished_record
+    Reservation.sort_reservations_by_status(self, supplier: true, status: 'finished').size
   end
 end

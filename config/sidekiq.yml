@@ -8,6 +8,5 @@
 
 
 :schedule:
-  HelloSidekiqJob:
-    every: 1h
-    args: "Hello sidekiq-scheduler!!"
+  UpdatePerformanceJob:
+    every: 6h
