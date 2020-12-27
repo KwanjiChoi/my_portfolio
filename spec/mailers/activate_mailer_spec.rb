@@ -9,7 +9,7 @@ RSpec.describe ActivateMailer, type: :mailer do
     end
 
     context 'when send_mail' do
-      it { expect(mail.from).to include 'mk09210416@gmail.com' }
+      it { expect(mail.from).to include 'no-reply@example.com' }
       it { expect(mail.to).to include user.email }
       it { expect(mail.subject).to eq 'teacherアカウントの申請を受け付けました' }
       it { expect(mail.body).to match /Mailer Tester/ }
@@ -22,7 +22,7 @@ RSpec.describe ActivateMailer, type: :mailer do
     end
 
     context 'when send_mail' do
-      it { expect(mail.from).to include 'mk09210416@gmail.com' }
+      it { expect(mail.from).to include 'no-reply@example.com' }
       it { expect(mail.to).to include user.email }
       it { expect(mail.subject).to eq 'teacher機能をアクティベートしました' }
       it { expect(mail.body).to match /Mailer Tester/ }
