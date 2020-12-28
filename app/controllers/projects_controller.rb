@@ -65,7 +65,10 @@ class ProjectsController < ApplicationController
                                     :main_image,
                                     :project_category_id,
                                     :phone_reservation,
-                                    location_attributes: [:prefecture_id, :id])
+                                    location_attributes: [:prefecture_id,
+                                                          :id,
+                                                          :address,
+                                                          :station])
   end
 
   def correct_project_supplier

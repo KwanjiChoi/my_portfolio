@@ -24,9 +24,30 @@
         <%=  ff.collection_select :prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"}, {class: ""} %>
       </div>
     </div>
+
+    <div calss="form-group">
+      <%= ff.label :address, 'ロケーション情報', class: 'control-label mt-3'%>
+      <div class="controls">
+        <%=  ff.text_field :address, class: 'form-control', placeholder: '希望場所情報' %>
+      </div>
+    </div>
+
+    <div calss="form-group mt-3">
+      <div class='row'>
+        <div class='col-12'>
+          <%= ff.label :station, '最寄り駅', class: 'control-label mt-3'%> <small class='ml-2'>※任意</small>
+        </div>
+        <div class="col-7">
+          <div class="controls">
+            <%=  ff.text_field :station, class: 'form-control', placeholder: '〇〇駅' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <% end %>
 
-  <div class="form-group">
+  <div class="form-group mt-4">
     <%= f.label :main_image, 'サムネイル画像', class: 'control-label'%>
     <div class="controls">
       <%= f.file_field :main_image %>

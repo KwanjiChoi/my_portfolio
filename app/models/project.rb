@@ -19,8 +19,7 @@ class Project < ApplicationRecord
   validates :content,       presence: true, length: { in: 100..2000 }
   validate  :check_phone_reservation
 
-  has_one :location, class_name: 'Project::Location',
-                     dependent: :destroy
+  has_one :location, class_name: 'Project::Location', dependent: :destroy
   has_one :performance, as: :performancable, dependent: :destroy
 
   accepts_nested_attributes_for :location, allow_destroy: true
@@ -35,7 +34,7 @@ class Project < ApplicationRecord
   end
 
   def location_name
-    location&.prefecture&.name
+    "#{location&.prefecture&.name} #{location&.address}"
   end
 
   def owner
