@@ -111,7 +111,7 @@ RSpec.describe Project, type: :model do
     end
   end
 
-  describe 'private method', focus: true do
+  describe 'private method' do
     let!(:project) { create(:project) }
     let!(:reservation) do
       create(:reservation, project: project, status: 2)

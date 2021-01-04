@@ -56,6 +56,8 @@ group :development do
   gem 'bullet'
   gem 'dotenv-rails'
   gem 'letter_opener_web'
+  gem 'brakeman'
+  gem 'bundler-audit'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

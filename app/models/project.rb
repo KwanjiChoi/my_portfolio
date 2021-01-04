@@ -51,7 +51,6 @@ class Project < ApplicationRecord
   end
 
 
-
   private
 
   def check_phone_reservation

@@ -106,7 +106,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '', focus: true do
+    describe '' do
       let!(:user)      { create(:user, :teacher_account) }
       let!(:comment_1) { create(:user_comment, commentable: user, score: 1) }
       let!(:comment_2) { create(:user_comment, commentable: user, score: 5) }
