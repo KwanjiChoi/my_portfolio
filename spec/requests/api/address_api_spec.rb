@@ -20,6 +20,8 @@ describe 'AddressApi', type: :request do
     )
   end
 
+  after { WebMock.disable! }
+
   context 'get_cities' do
     it 'returns Array' do
       expect(AddressApi.get_cities('兵庫県').class).to eq Array
