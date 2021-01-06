@@ -50,7 +50,6 @@ class Project < ApplicationRecord
     strip_tags(content.to_s).gsub(/[\n]/, "").strip[0..75] + '...'
   end
 
-
   private
 
   def check_phone_reservation

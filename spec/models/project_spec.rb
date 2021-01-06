@@ -116,15 +116,18 @@ RSpec.describe Project, type: :model do
     let!(:reservation) do
       create(:reservation, project: project, status: 2)
     end
-    let!(:comments) { create_list(:project_comment, 10,commentable: project, score: 4) }
+    let!(:comments) { create_list(:project_comment, 10, commentable: project, score: 4) }
     let!(:comment)  { create(:project_comment, commentable: project, score: 1) }
+
     context 'calculate_average_score' do
       subject { project.send(:calculate_average_score) }
+
       it      { is_expected.to eq 3.72 }
     end
 
     context 'get_finished_record' do
       subject { project.send(:get_finished_record) }
+
       it      { is_expected.to eq 1 }
     end
   end

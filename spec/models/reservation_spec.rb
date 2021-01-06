@@ -105,10 +105,6 @@ RSpec.describe Reservation, type: :model do
         end
       end
     end
-
-    context '' do
-
-    end
   end
 
   describe 'instance method' do

@@ -30,5 +30,4 @@ module ReservationsHelper
   def progress_bar_color(reservation)
     reservation.status == 'canceled' ? 'bg-danger' : 'bg-success'
   end
-
 end

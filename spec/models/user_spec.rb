@@ -117,11 +117,13 @@ RSpec.describe User, type: :model do
 
       context 'calculate_average_score' do
         subject { user.send(:calculate_average_score) }
+
         it      { is_expected.to eq 3 }
       end
 
       context 'get_finished_record' do
         subject { user.send(:get_finished_record) }
+
         it      { is_expected.to eq 10 }
       end
     end

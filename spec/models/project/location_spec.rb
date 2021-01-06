@@ -19,7 +19,7 @@ RSpec.describe Project::Location, type: :model do
         location.address = ' '
         expect(location).not_to be_valid
       end
-      
+
       it 'is invalid when address is too short' do
         location.address = 'あ'
         expect(location).not_to be_valid

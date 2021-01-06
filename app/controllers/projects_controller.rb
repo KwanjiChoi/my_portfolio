@@ -5,7 +5,11 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :destroy, :detail, :edit, :update]
 
   def index
-    @projects = current_user.projects.includes([:project_category, :rich_text_content, location: :prefecture])
+    @projects = current_user.projects.includes([
+      :project_category,
+      :rich_text_content,
+      location: :prefecture,
+    ])
   end
 
   def new
@@ -72,10 +76,12 @@ class ProjectsController < ApplicationController
                                     :main_image,
                                     :project_category_id,
                                     :phone_reservation,
-                                    location_attributes: [:prefecture_id,
-                                                          :id,
-                                                          :address,
-                                                          :station])
+                                    location_attributes: [
+                                      :prefecture_id,
+                                      :id,
+                                      :address,
+                                      :station,
+                                    ])
   end
 
   def correct_project_supplier

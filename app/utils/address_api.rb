@@ -1,18 +1,15 @@
 class AddressApi
-  BASE_URL = 'http://geoapi.heartrails.com/api/json'
+  BASE_URL = 'http://geoapi.heartrails.com/api/json'.freeze
 
   def self.cities(pre)
-    self.get_cities(pre).map{ |city| city['city'] }
+    get_cities(pre).map { |city| city['city'] }
   end
-
-
-  private
 
   def self.get_cities(pre)
     uri = URI.parse(BASE_URL)
     params = {
       method: 'getCities',
-      prefecture: pre
+      prefecture: pre,
     }
     uri.query = URI.encode_www_form(params)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -20,5 +17,4 @@ class AddressApi
     response = http.get(uri.request_uri)
     JSON.parse(response.body)['response']['location']
   end
-
 end

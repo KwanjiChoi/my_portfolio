@@ -2,20 +2,22 @@ require "rails_helper"
 
 describe 'AddressApi', type: :request do
   let(:response_body) do
-     { "response": { "location": [ 
-          { "city": "西宮市", "city_kana": "にしのみやし" }, 
-          { "city": "尼崎市", "city_kana": "あまがさきし" }
-      ]}}
+    { "response": { "location": [
+      { "city": "西宮市", "city_kana": "にしのみやし" },
+      { "city": "尼崎市", "city_kana": "あまがさきし" },
+    ] } }
   end
+
   before do
     WebMock.enable!
 
     uri = URI.encode("http://geoapi.heartrails.com/api/json?method=getCities&prefecture=兵庫県")
     WebMock.stub_request(
-        :get, uri
-      ).to_return(
+      :get, uri
+    ).to_return(
       body: response_body.to_json,
-      status: 200)
+      status: 200
+    )
   end
 
   context 'get_cities' do
