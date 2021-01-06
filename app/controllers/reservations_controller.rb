@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
   # post put delete actions
 
   def create
-    reservation = project.passive_reservations.build(reservation_params)
+    reservation = project.reservations.build(reservation_params)
     if reservation.save
       reservation.create_chat_room
       redirect_to active_reservation_path(current_user, reservation), notice: '予約が完了いたしました'

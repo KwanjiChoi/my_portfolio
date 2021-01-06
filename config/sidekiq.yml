@@ -3,3 +3,10 @@
 :queues:
   - task
   - default
+
+
+
+
+:schedule:
+  UpdatePerformanceJob:
+    every: 6h

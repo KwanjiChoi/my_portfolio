@@ -97,11 +97,35 @@ RSpec.describe User, type: :model do
   end
 
   describe 'instance method' do
-    include_examples 'googlemap api'
-    it 'returns available number of addresses registrations' do
-      expect(@user.available_addresses).to eq 5
-      create_list(:address, 3, user: @user)
-      expect(@user.available_addresses).to eq 2
+    context 'google map api methods' do
+      include_examples 'googlemap api'
+      it 'returns available number of addresses registrations' do
+        expect(@user.available_addresses).to eq 5
+        create_list(:address, 3, user: @user)
+        expect(@user.available_addresses).to eq 2
+      end
+    end
+
+    describe '' do
+      let!(:user)      { create(:user, :teacher_account) }
+      let!(:comment_1) { create(:user_comment, commentable: user, score: 1) }
+      let!(:comment_2) { create(:user_comment, commentable: user, score: 5) }
+      let!(:project)   { create(:project, user: user) }
+      let!(:reservations) do
+        create_list(:reservation, 10, project: project, status: 'finished')
+      end
+
+      context 'calculate_average_score' do
+        subject { user.send(:calculate_average_score) }
+
+        it      { is_expected.to eq 3 }
+      end
+
+      context 'get_finished_record' do
+        subject { user.send(:get_finished_record) }
+
+        it      { is_expected.to eq 10 }
+      end
     end
   end
 end

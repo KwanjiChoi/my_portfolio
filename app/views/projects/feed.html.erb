@@ -8,10 +8,28 @@
   <div class="jumbotron">
 
     <div class="container">
-      <div class="text-center mb-5">
-        <h2 class='heading'><span><%= @category.name %></span></h2>
+      <% if @prefecture %>
+        <h3>エリア</h3>
+        <% AddressApi.cities(@prefecture.name).each do |city| %>
+          <span> <%= city %> </span>
+        <% end %>
+      <% else %>
+        <div>
+          <h3>都道府県</h3>
+          <% 1.upto(5) do |n| %>
+            <div class='mt-1'>
+              <% Prefecture.send("area_#{n}").each do |prefecture| %>
+                <%= link_to prefecture.name, feed_projects_path(prefecture: prefecture.name) %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class='mt-5'>
+        <%= render 'feed', projects: @projects, detail: true %>
       </div>
-      <%= render 'feed', projects: @projects, detail: true %>
+
     </div>
   </div>
 

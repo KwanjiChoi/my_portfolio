@@ -1,4 +1,4 @@
-RSpec.describe "Comment", type: :system, focus: true do
+RSpec.describe "Comment", type: :system do
   let!(:user)    { create(:user) }
   let!(:project) { create(:project) }
 

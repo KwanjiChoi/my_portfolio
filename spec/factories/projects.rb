@@ -5,5 +5,9 @@ FactoryBot.define do
     content       { "a" * 101 }
     association   :user
     association   :project_category
+
+    after(:create) do |project|
+      create(:project_performance, performancable: project)
+    end
   end
 end

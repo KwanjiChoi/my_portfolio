@@ -1,5 +1,5 @@
 Devise.setup do |config|
-  config.mailer_sender = 'mk09210416@gmail.com'
+  config.mailer_sender = 'no-reply@example.com'
 
   require 'devise/orm/active_record'
 

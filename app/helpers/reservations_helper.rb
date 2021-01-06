@@ -13,7 +13,21 @@ module ReservationsHelper
     end
   end
 
-  def show_minutes(sec)
-    (sec / 60).to_i
+  def show_progress(reservation)
+    case reservation.status
+
+    when 'unchecked'
+      '33'
+    when 'checked'
+      '66'
+    when 'finished'
+      '100'
+    when 'canceled'
+      '100'
+    end
+  end
+
+  def progress_bar_color(reservation)
+    reservation.status == 'canceled' ? 'bg-danger' : 'bg-success'
   end
 end

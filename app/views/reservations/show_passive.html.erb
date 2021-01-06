@@ -7,14 +7,14 @@
     <div class="row">
       <div class="col-lg-10 mx-auto">
         <div class="card m-b-30">
-          <div class="card-body py-5">
+          <div class="card-body m-5">
             <div class="row">
               <div class="col-lg-3 text-center">
                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid mb-3" alt="user" />
               </div>
-              <div class="col-lg-9">
+              <div class="col-lg-9 mt-4">
                 <h4> <%= link_to reservation.project.title, detail_project_path(reservation.project) %> </h4>
-                <p>reserved by <%= requester.username %></p>
+                <p>projected by <%= link_to supplier.username, user_path(supplier) %></p>
                 <div class="button-list mt-4 mb-3">
                   <h4> Reservation message</h4>
                   <p>
@@ -33,21 +33,29 @@
                         <td class="p-1"><%= reservation.address %></td>
                       </tr>
                       <tr>
-                        <th scope="row" class="p-1">状態 :</th>
+                        <th scope="row" class="p-1">状態</th>
                         <td class="p-1"><%= show_status(reservation) %></td>
                       </tr>
                     </tbody>
                   </table>
+                  <div class="progress mt-3" style="height: 25px;">
+                    <%# ナンセンスなコードなので後ほど改善します %>
+                    <div class="progress-bar progress-bar-striped <%= progress_bar_color(reservation) %>" role="progressbar" style="width: <%= show_progress(reservation) %>%" aria-valuenow=<%= show_progress(reservation) %> aria-valuemin="0" aria-valuemax="100"><%= show_status(reservation) %></div>
+                  </div>
                 </div>
-                <div class="button-list mt-4 mb-3">
+                <div class="button-list mt-5 mb-3">
                   <%= link_to room_path(message_room) do %>
                     <button type="button" class="btn btn-primary">Message</button>
                   <% end %>
-                  <%= link_to edit_project_reservation_path(project, reservation) do %>
+
+                  <%= link_to edit_project_reservation_path(reservation.project, reservation) do %>
                     <button type="button" class="btn btn-secondary">Edit Reservation</button>
                   <% end %>
-                  <%= link_to confirm_project_reservation_path(project, reservation), method: :put do %>
-                    <button type="button" class="btn btn-success">Confirm</button>
+
+                  <% if reservation.status == 'unchecked' %>
+                    <%= link_to confirm_project_reservation_path(project, reservation), method: :put do %>
+                      <button type="button" class="btn btn-success">Confirm</button>
+                    <% end %>
                   <% end %>
                 </div>
 

@@ -1,10 +1,15 @@
 class Project < ApplicationRecord
+  include Calculator
   RECENT_COUNT = 6
 
   belongs_to :user
   belongs_to :project_category
 
-  has_many :passive_reservations, class_name: 'Reservation', dependent: :destroy
+  scope :recent_projects, -> {
+    order(id: :desc).limit(RECENT_COUNT)
+  }
+
+  has_many :reservations, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 
   mount_uploader :main_image, ImageUploader
@@ -14,17 +19,12 @@ class Project < ApplicationRecord
   validates :content,       presence: true, length: { in: 100..2000 }
   validate  :check_phone_reservation
 
-  has_one :location, class_name: 'Project::Location',
-                     dependent: :destroy
+  has_one :location, class_name: 'Project::Location', dependent: :destroy
   has_one :performance, as: :performancable, dependent: :destroy
 
   accepts_nested_attributes_for :location, allow_destroy: true
 
   has_rich_text :content
-
-  scope :recent_projects, -> {
-    order(id: :desc).limit(RECENT_COUNT)
-  }
 
   # https://qiita.com/QUANON/items/ae47ae23c572d498050d
   delegate :strip_tags, to: 'ApplicationController.helpers'
@@ -34,7 +34,7 @@ class Project < ApplicationRecord
   end
 
   def location_name
-    location&.prefecture&.name
+    "#{location&.prefecture&.name} #{location&.address}"
   end
 
   def owner
@@ -56,5 +56,9 @@ class Project < ApplicationRecord
     if phone_reservation == true
       errors.add(:phone_reservation, "電話予約を設定するには電話番号の登録が必要です") if user.phone_number.nil?
     end
+  end
+
+  def get_finished_record
+    reservations.where(status: 'finished').size
   end
 end

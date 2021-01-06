@@ -56,6 +56,8 @@ group :development do
   gem 'bullet'
   gem 'dotenv-rails'
   gem 'letter_opener_web'
+  gem 'brakeman'
+  gem 'bundler-audit'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -70,6 +72,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'sidekiq'
+gem 'sidekiq-scheduler'
 gem 'sinatra', require: false
 gem 'redis'
 gem 'redis-namespace'
