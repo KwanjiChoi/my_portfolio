@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Projects", type: :request do
+RSpec.describe "Projects", type: :request, focus: true do
   let!(:user)          { create(:user, teacher: true) }
   let!(:project)       { create(:project, user: user) }
   let!(:other_user)    { create(:user) }
@@ -78,10 +78,12 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'POST #create' do
+    let!(:prefecture) { create(:prefecture) }
     let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'Sample Title',
-                               location_attributes: attributes_for(:project_location),
+                               location_attributes: attributes_for(:project_location,
+                                                                   prefecture_id: prefecture.id),
                                main_image: Rack::Test::UploadedFile.new(
                                  File.join(Rails.root, 'spec/fixtures/test.jpg')
                                ),
@@ -113,10 +115,12 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'PUT #update' do
+    let!(:prefecture) { create(:prefecture) }
     let!(:category) { create(:project_category) }
     let(:project_params) do
       attributes_for(:project, title: 'edit project',
-                               location_attributes: attributes_for(:project_location),
+                               location_attributes: attributes_for(:project_location,
+                                                                   prefecture_id: prefecture.id),
                                main_image: Rack::Test::UploadedFile.new(
                                  File.join(Rails.root, 'spec/fixtures/test.jpg')
                                ),

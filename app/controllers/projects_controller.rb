@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :destroy, :detail, :edit, :update]
 
   def index
-    @projects = current_user.projects.includes([:rich_text_content, :location])
+    @projects = current_user.projects.includes([:project_category, :rich_text_content, location: :prefecture])
   end
 
   def new
@@ -47,13 +47,20 @@ class ProjectsController < ApplicationController
   def detail; end
 
   def feed
-    @category = ProjectCategory.find(params[:category_id])
-    if @category.present?
+    @category = ProjectCategory.find(params[:category_id]) if params[:category_id]
+    @prefecture = Prefecture.find_by(name: params[:prefecture]) if params[:prefecture]
+    if @category
       @projects = Project.where(
-        project_category_id: @category.id
-      ).includes([:rich_text_content, :user, :location])
+        'project_category_id = ?', @category.id
+      ).includes([:project_category, :rich_text_content, :user, location: :prefecture])
     else
-      @projects = Project.all.includes([:rich_text_content, :user])
+      if @prefecture
+        @projects = Project.joins(:location).where(
+          'prefecture_id = ?', @prefecture.id
+        ).includes([:project_category, :rich_text_content, :user, location: :prefecture])
+      else
+        @projects = Project.all.includes([:rich_text_content, :user, location: :prefecture])
+      end
     end
   end
 

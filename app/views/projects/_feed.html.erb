@@ -1,6 +1,8 @@
 <div class="row">
   <% unless projects.any? %>
-    募集中のプロジェクトはありません
+    <div class='col-12'>
+      募集中のプロジェクトはありません
+    </div>
   <% end %>
   <% projects.each do |project| %>
     <div class="col-lg-6 col-md-6 product-box">
@@ -11,11 +13,12 @@
         </div>
         <div class="card-body">
           <% if detail == true %>
-            <h3 class="h5"><%= link_to "#{project.title}", detail_project_path(project) %></h3>
+            <h2 class="h4"><%= link_to "#{project.title}", detail_project_path(project) %></h3>
           <% else %>
             <h3 class="h5"><%= link_to "#{project.title}", project_path(project) %></h3>
           <% end %>
           <div class="mb-4">
+            <span class="small lh-120"> カテゴリー： <%= link_to project.category_name, feed_projects_path(category_id: project.project_category) %> </span><br>
             <span class="small lh-120"><i class="fas fa-map-marker-alt mr-2"></i><%= project.location_name%></span>
           </div>
           <p class="display-30"><%= project.short_content %></p>

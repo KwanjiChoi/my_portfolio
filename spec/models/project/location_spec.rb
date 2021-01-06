@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Project::Location, type: :model, focus: true do
+RSpec.describe Project::Location, type: :model do
   describe 'validation' do
     let!(:project) { build(:project) }
     let!(:location) { build(:project_location) }

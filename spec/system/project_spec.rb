@@ -15,7 +15,8 @@ RSpec.describe "Project", type: :system, js: true do
       click_link  'new project'
       fill_in     'Title',     with: 'sample title'
       select      'category1', from: 'カテゴリー'
-      select      '兵庫県', from: '都道府県'
+      select      '兵庫県',     from: '都道府県'
+      fill_in     'ロケーション情報',  with: '甲子園球場周辺'
       attach_file "project[main_image]", "#{Rails.root}/spec/fixtures/test.jpg"
       fill_in_rich_text_area 'project_content', with: 'a' * 101
       click_on 'create project'
