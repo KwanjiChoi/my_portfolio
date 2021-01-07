@@ -193,6 +193,8 @@ config.action_controller.include_all_helpers = false
   - helperとの共存,model操作はhelperに書くべきではない(できるけど)
 
 - STIはサブクラスが増える可能性のあるmodelに適用しよう
+- ポリモーフィック関連を活用して関連先が増えてもテーブルをいじらないで済む
+  - nitifications tableをポリモーフィックにしたことで新たな通知modelが出てきても簡単に実装できる
 
 
 

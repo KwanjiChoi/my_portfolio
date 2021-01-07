@@ -11,6 +11,7 @@ class Project < ApplicationRecord
 
   has_many :reservations, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :notifications, as: :notificatable, dependent: :destroy
 
   mount_uploader :main_image, ImageUploader
 
