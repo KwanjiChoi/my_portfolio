@@ -1,17 +1,13 @@
 FactoryBot.define do
-  factory :user_comment, class: 'Comment' do
-    association :commenter,   factory: :user
-    association :commentable, factory: :user
-    commentable_type { 'User' }
-    comment          { 'Sample Comment' }
-    score            { 5 }
-  end
+  Comment_Type = [:user, :project].freeze
 
-  factory :project_comment, class: 'Comment' do
-    association :commenter,   factory: :user
-    association :commentable, factory: :project
-    commentable_type { 'Project' }
-    comment          { 'Sample Comment' }
-    score            { 5 }
+  Comment_Type.each do |type|
+    factory :"#{type}_comment", class: 'Comment' do
+      association :commenter,   factory: :user
+      association :commentable, factory: type
+      commentable_type { type.to_s.camelize }
+      comment          { 'Sample Comment' }
+      score            { 5 }
+    end
   end
 end
