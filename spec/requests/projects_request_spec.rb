@@ -1,10 +1,26 @@
 require 'rails_helper'
 
-RSpec.describe "Projects", type: :request, focus: true do
-  let!(:user)          { create(:user, teacher: true) }
+RSpec.describe "Projects", type: :request do
+  let(:user)           { create(:user, teacher: true) }
   let!(:project)       { create(:project, user: user) }
-  let!(:other_user)    { create(:user) }
+  let(:other_user)     { create(:user) }
   let!(:other_project) { create(:project, user: other_user) }
+
+  let(:prefecture) { create(:prefecture) }
+  let(:category)   { create(:project_category) }
+  let(:city)       { create(:city, prefecture: prefecture) }
+  let(:project_params) do
+    attributes_for(:project, title: 'edit project',
+                             location_attributes: attributes_for(:project_location,
+                                                                 prefecture_id: prefecture.id,
+                                                                 city_id: city.id),
+                             main_image: Rack::Test::UploadedFile.new(
+                               File.join(Rails.root, 'spec/fixtures/test.jpg')
+                             ),
+                             content: 'a' * 101,
+                             user: user,
+                             project_category_id: category.id)
+  end
 
   describe "GET #index" do
     it "returns http success with sign in user" do
@@ -78,20 +94,6 @@ RSpec.describe "Projects", type: :request, focus: true do
   end
 
   describe 'POST #create' do
-    let!(:prefecture) { create(:prefecture) }
-    let!(:category) { create(:project_category) }
-    let(:project_params) do
-      attributes_for(:project, title: 'Sample Title',
-                               location_attributes: attributes_for(:project_location,
-                                                                   prefecture_id: prefecture.id),
-                               main_image: Rack::Test::UploadedFile.new(
-                                 File.join(Rails.root, 'spec/fixtures/test.jpg')
-                               ),
-                               content: 'a' * 101,
-                               user: user,
-                               project_category_id: category.id)
-    end
-
     it 'adds a project' do
       sign_in user
       expect do
@@ -115,19 +117,6 @@ RSpec.describe "Projects", type: :request, focus: true do
   end
 
   describe 'PUT #update' do
-    let!(:prefecture) { create(:prefecture) }
-    let!(:category) { create(:project_category) }
-    let(:project_params) do
-      attributes_for(:project, title: 'edit project',
-                               location_attributes: attributes_for(:project_location,
-                                                                   prefecture_id: prefecture.id),
-                               main_image: Rack::Test::UploadedFile.new(
-                                 File.join(Rails.root, 'spec/fixtures/test.jpg')
-                               ),
-                               content: 'a' * 101,
-                               user: user,
-                               project_category_id: category.id)
-    end
 
     it 'edit project' do
       sign_in user

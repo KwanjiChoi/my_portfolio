@@ -9,27 +9,20 @@ RSpec.describe Project::Location, type: :model do
       expect(location).to be_valid
     end
 
-    context 'address' do
-      it 'is invalid when address in nil' do
-        location.address = nil
-        expect(location).not_to be_valid
-      end
-
-      it 'is invalid when address in blank' do
-        location.address = ' '
-        expect(location).not_to be_valid
-      end
-
-      it 'is invalid when address is too short' do
-        location.address = 'あ'
-        expect(location).not_to be_valid
-      end
-
-      it 'is invalid when address is too long' do
-        location.address = 'あ' * 51
+    context 'prefecture' do
+      it 'is invalid when prefecture in nil' do
+        location.prefecture = nil
         expect(location).not_to be_valid
       end
     end
+
+    context 'city' do
+      it 'is invalid when city in nil' do
+        location.city = nil
+        expect(location).not_to be_valid
+      end
+    end
+
   end
 
   describe 'relation' do

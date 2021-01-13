@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_07_175417) do
+ActiveRecord::Schema.define(version: 2021_01_13_100130) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -51,6 +51,14 @@ ActiveRecord::Schema.define(version: 2021_01_07_175417) do
     t.decimal "latitude", precision: 9, scale: 3
     t.decimal "longitude", precision: 9, scale: 3
     t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "prefecture_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["prefecture_id"], name: "index_cities_on_prefecture_id"
   end
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -117,13 +125,12 @@ ActiveRecord::Schema.define(version: 2021_01_07_175417) do
   end
 
   create_table "project_locations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "prefecture_id"
+    t.string "prefecture_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "project_id", null: false
-    t.string "address", null: false
     t.string "station"
-    t.index ["address"], name: "index_project_locations_on_address"
+    t.integer "city_id", null: false
     t.index ["project_id"], name: "index_project_locations_on_project_id"
   end
 
@@ -184,6 +191,7 @@ ActiveRecord::Schema.define(version: 2021_01_07_175417) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
+  add_foreign_key "cities", "prefectures"
   add_foreign_key "entries", "rooms"
   add_foreign_key "entries", "users"
   add_foreign_key "messages", "rooms"

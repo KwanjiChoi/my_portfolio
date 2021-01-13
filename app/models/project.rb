@@ -35,7 +35,7 @@ class Project < ApplicationRecord
   end
 
   def location_name
-    "#{location&.prefecture&.name} #{location&.address}"
+    "#{location&.prefecture&.name} #{location&.city&.name}"
   end
 
   def owner

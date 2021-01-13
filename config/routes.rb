@@ -53,6 +53,12 @@ Rails.application.routes.draw do
   resources :messages, only: [:create]
   resources :rooms,    only: [:show, :index]
 
+  resource :prefecture, only: [] do
+    collection do
+      get 'cities'
+    end
+  end
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
