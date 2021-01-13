@@ -1,5 +1,6 @@
 class Users::CommentsController < CommentsController
   before_action :set_commentable
+  before_action :correct_commenter
 
   def create
     @comment = @commentable.comments.create(comment_params)
@@ -13,6 +14,10 @@ class Users::CommentsController < CommentsController
   end
 
   private
+
+  def correct_commenter
+    redirect_to user_path(@commentable) if current_user == @commentable
+  end
 
   def set_commentable
     @commentable = User.find(params[:user_id])

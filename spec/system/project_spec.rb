@@ -11,7 +11,7 @@ RSpec.describe "Project", type: :system, js: true do
 
     include_examples 'sign in with teacher account'
 
-    scenario 'post projects', focus: true do
+    scenario 'post projects' do
       visit projects_path
       click_link  'new project'
       fill_in     'Title',     with: 'sample title'
