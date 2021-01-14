@@ -19,7 +19,9 @@
       <div class='col-md-11 mt-5 mx-auto'>
         <%= render 'shared/performance_bar', record: @project.performance&.total_record, rate: @project.performance&.average_score %>
         <%= @project.content %>
-        <button class="btn btn-info btn-lg mt-5 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
+        <% if current_user != @project.user %>
+          <button class="btn btn-info btn-lg mt-5 pull-right" data-toggle="modal" data-target="#exampleModal">reservation now!!</button>
+        <% end %>
       </div>
 
       <%= render 'projects/modal', project: @project %>
@@ -27,7 +29,7 @@
     </section>
 
     <%= render 'comments/index', commentable: @project %>
-    <% if current_user %>
+    <% if current_user && current_user != @project.user %>
       <%= render 'comments/form',  commentable: @project %>
     <% end %>
   </div>

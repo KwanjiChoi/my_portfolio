@@ -24,6 +24,7 @@
   チャレンジ 
   - AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
   - health checkによるjob監視
+  - マルチDBにしてレプリケーション・負荷分散
 
 ## 見ていただきたい点
   - reservations controllerでのメタプログラミング *@ハックを参照してください
