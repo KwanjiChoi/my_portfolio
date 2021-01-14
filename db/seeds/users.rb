@@ -1,8 +1,8 @@
 puts 'Creating users'
 
 user = User.new(
-  username:     'kwanjiman',
-  email:        'kwanji@example.com',
+  username:     'testuser',
+  email:        'test@example.com',
   password:     'password',
   confirmed_at: Time.now
 )

@@ -17,6 +17,9 @@ class User < ApplicationRecord
   validates :phone_number, uniqueness: { case_sensitive: :false },
                            allow_nil: true
 
+  validates :introduction, length: { maximum: 255 },
+                           allow_nil: true
+
   after_validation :check_correct_number
 
   has_many :projects,  dependent: :destroy
@@ -87,7 +90,7 @@ class User < ApplicationRecord
   private
 
   def check_correct_number
-    return if phone_number.nil?
+    return if phone_number.blank?
     unless phone_number.match VALID_PHONE_REGEX
       errors.add(:phone_number, 'type correct phone number')
     end

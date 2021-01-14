@@ -39,10 +39,18 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'User情報を更新しました'
+    else
+      render :edit
+    end
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:username, :image, :phone_number, :introduction)
+  end
 
   def authenticate_nonteacher
     redirect_to root_path if current_user.teacher?

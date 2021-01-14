@@ -68,27 +68,51 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-   describe 'GET #edit', focus: true do
-     it 'returns returns response code 200 when correct user' do
-       sign_in user
-       get edit_user_path(user)
-       expect(response).to have_http_status(:success)
-     end
+  describe 'GET #edit', focus: true do
+    it 'returns response code 200 when correct user' do
+      sign_in user
+      get edit_user_path(user)
+      expect(response).to have_http_status(:success)
+    end
 
-     it 'returns returns response code 302 when incorrect user' do
-       sign_in other_user
-       get edit_user_path(user)
-       expect(response).to have_http_status(302)
-     end
+    it 'returns response code 302 when incorrect user' do
+      sign_in other_user
+      get edit_user_path(user)
+      expect(response).to have_http_status(302)
+    end
 
-     it 'returns returns response code 302 when incorrect user' do
-       get edit_user_path(user)
-       expect(response).to have_http_status(302)
-     end
-   end
+    it 'returns response code 302 when user does not sign in' do
+      get edit_user_path(user)
+      expect(response).to have_http_status(302)
+    end
+  end
 
-   describe 'POST #update' do
-     
-   end
+  describe 'PUT #update' do
+    let(:user_params) do
+      {
+        username: 'Username',
+        phone_number: '09000000000',
+        introduction: 'よろしくー',
+      }
+    end
 
+    it 'updates successfully' do
+      sign_in user
+      put user_path(user), params: { user: user_params }
+      expect(user.reload.username).to eq 'Username'
+    end
+
+    it 'does not update when other user' do
+      name = user.username
+      sign_in other_user
+      put user_path(user), params: { user: user_params }
+      expect(user.reload.username).to eq name
+    end
+
+    it 'does not update when user does not sign in' do
+      name = user.username
+      put user_path(user), params: { user: user_params }
+      expect(user.reload.username).to eq name
+    end
+  end
 end

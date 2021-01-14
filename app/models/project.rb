@@ -55,7 +55,7 @@ class Project < ApplicationRecord
 
   def check_phone_reservation
     if phone_reservation == true
-      errors.add(:phone_reservation, "電話予約を設定するには電話番号の登録が必要です") if user.phone_number.nil?
+      errors.add(:phone_reservation, "電話予約を設定するには電話番号の登録が必要です") if user.phone_number.blank?
     end
   end
 
