@@ -1,7 +1,7 @@
 FactoryBot.define do
-  Comment_Type = [:user, :project].freeze
+  comment_type = [:user, :project]
 
-  Comment_Type.each do |type|
+  comment_type.each do |type|
     factory :"#{type}_comment", class: 'Comment' do
       association :commenter,   factory: :user
       association :commentable, factory: type

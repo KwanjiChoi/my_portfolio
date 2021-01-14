@@ -1,5 +1,4 @@
 module UsersHelper
-
   def user_image(user)
     return image_tag(user.image), class: '' if user.image
     gravatar_for(user)

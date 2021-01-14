@@ -117,7 +117,6 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'PUT #update' do
-
     it 'edit project' do
       sign_in user
       put project_path(project), params: { project: project_params }

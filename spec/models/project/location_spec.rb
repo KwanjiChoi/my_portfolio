@@ -22,7 +22,6 @@ RSpec.describe Project::Location, type: :model do
         expect(location).not_to be_valid
       end
     end
-
   end
 
   describe 'relation' do

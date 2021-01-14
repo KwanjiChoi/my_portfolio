@@ -16,15 +16,16 @@ RSpec.describe "Comments", type: :request do
           end.to change(Comment, :count).by(1)
         end
 
-        it 'should not create comment by himself' do
+        it 'does not create comment by himself' do
           sign_in commenter
           expect do
-            post user_comments_path(commenter), 
-              params: { comment: attributes_for(:user_comment, commentable: commenter, commenter: commenter) }
+            post user_comments_path(commenter),
+                 params: { comment: attributes_for(:user_comment,
+                                                   commentable: commenter,
+                                                   commenter: commenter) }
           end.not_to change(Comment, :count)
         end
       end
-
 
       context 'as an unauthorized user' do
         it 'does not create user_comment' do
@@ -33,7 +34,6 @@ RSpec.describe "Comments", type: :request do
           end.not_to change(Comment, :count)
         end
       end
-
     end
   end
 
@@ -48,12 +48,12 @@ RSpec.describe "Comments", type: :request do
           end.to change(Comment, :count).by(1)
         end
 
-        it 'should not create comment for sign in user`s project', focus: true do
+        it 'does not create comment for sign in user`s project', focus: true do
           sign_in commenter
           expect do
             post project_comments_path(commenter_project),
-                 params: { comment: attributes_for(:project_comment, 
-                                                   commentable: commenter_project, 
+                 params: { comment: attributes_for(:project_comment,
+                                                   commentable: commenter_project,
                                                    commenter: commenter) }
           end.not_to change(Comment, :count)
         end

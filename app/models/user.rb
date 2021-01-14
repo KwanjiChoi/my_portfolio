@@ -39,12 +39,12 @@ class User < ApplicationRecord
                              dependent: :destroy
 
   has_many :passive_notifications, class_name: 'Notification',
-                                  foreign_key: 'visited_id',
-                                  dependent: :destroy
-  
+                                   foreign_key: 'visited_id',
+                                   dependent: :destroy
+
   has_many :active_notifications, class_name: 'Notification',
-                                 foreign_key: 'visitor_id',
-                                 dependent: :destroy
+                                  foreign_key: 'visitor_id',
+                                  dependent: :destroy
 
   has_one :performance, as: :performancable, dependent: :destroy
 

@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
     @projects = current_user.projects.includes([
       :project_category,
       :rich_text_content,
-      location: [:prefecture, :city]
+      location: [:prefecture, :city],
     ])
   end
 
@@ -56,14 +56,28 @@ class ProjectsController < ApplicationController
     if @category
       @projects = Project.where(
         'project_category_id = ?', @category.id
-      ).includes([:project_category, :rich_text_content, :user, location: [:prefecture, :city]])
+      ).includes([
+        :project_category,
+        :rich_text_content,
+        :user,
+        location: [:prefecture, :city],
+      ])
     else
       if @prefecture
         @projects = Project.joins(:location).where(
           'prefecture_id = ?', @prefecture.id
-        ).includes([:project_category, :rich_text_content, :user, location: [:prefecture, :city]])
+        ).includes([
+          :project_category,
+          :rich_text_content,
+          :user,
+          location: [:prefecture, :city],
+        ])
       else
-        @projects = Project.all.includes([:rich_text_content, :user, location: [:prefecture, :city]])
+        @projects = Project.all.includes([
+          :rich_text_content,
+          :user,
+          location: [:prefecture, :city],
+        ])
       end
     end
   end

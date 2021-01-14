@@ -1,6 +1,4 @@
 FactoryBot.define do
-
-
   factory :project_notification, class: 'Notification' do
     association :notificatable, factory: :project, strategy: :build
     notificatable_type { 'Project' }
@@ -16,5 +14,4 @@ FactoryBot.define do
     association :visited, factory: :user, strategy: :build
     association :visitor, factory: :user, strategy: :build
   end
-
 end
