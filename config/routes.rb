@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/dashboard',                       to: 'users#dashboard',          as: :dashboard
   get '/users/:user_id/reservations/:id', to: 'reservations#show_active', as: :active_reservation
 
-  resources :users, only: [:show] do
+  resources :users, only: [:show, :edit, :update] do
     resources :addresses,    only: [:index, :create, :destroy]
     resources :reservations, only: [:index]
 

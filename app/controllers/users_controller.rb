@@ -2,9 +2,9 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:projects]
   before_action :authenticate_nonteacher, only: [:apply_teacher, :activate_teacher]
   before_action :unconfirmed?, only: :activate_teacher
+  before_action :correct_user, only: [:edit, :update]
 
-  def index
-  end
+  def index; end
 
   def show
     @user = User.find(params[:id])
@@ -36,6 +36,12 @@ class UsersController < ApplicationController
     @projects = @user.projects.includes(:rich_text_content)
   end
 
+  def edit; end
+
+  def update
+
+  end
+
   private
 
   def authenticate_nonteacher
@@ -44,5 +50,10 @@ class UsersController < ApplicationController
 
   def unconfirmed?
     redirect_to root_path if current_user.unconfirmed_email.present?
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to root_path unless @user == current_user
   end
 end

@@ -67,4 +67,28 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
+
+   describe 'GET #edit', focus: true do
+     it 'returns returns response code 200 when correct user' do
+       sign_in user
+       get edit_user_path(user)
+       expect(response).to have_http_status(:success)
+     end
+
+     it 'returns returns response code 302 when incorrect user' do
+       sign_in other_user
+       get edit_user_path(user)
+       expect(response).to have_http_status(302)
+     end
+
+     it 'returns returns response code 302 when incorrect user' do
+       get edit_user_path(user)
+       expect(response).to have_http_status(302)
+     end
+   end
+
+   describe 'POST #update' do
+     
+   end
+
 end
