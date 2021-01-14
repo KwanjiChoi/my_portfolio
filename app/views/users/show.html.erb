@@ -43,8 +43,8 @@
 
 <div class="container pt-5 pb-5 my-page-container">
   <div class="row">
-    <%= render 'shared/notification' %>
     <div class='col-10 mx-auto'>
+       <%= render 'shared/notification' %>
       <% if @user.teacher? %>
         <%= render 'shared/performance_bar', record: @user.performance&.total_record, rate: @user.performance&.average_score %>
         <%= render 'comments/index', commentable: @user %>

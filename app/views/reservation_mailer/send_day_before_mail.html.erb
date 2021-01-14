@@ -1,0 +1,8 @@
+<h2><%= @reservation.requester.username %> 様</h2>
+
+<p>明日<%= @reservation.start_at.strftime('%m月%d日 %H時%m分') %>より<br>
+予約があります！</p>
+
+リンクから最終確認をしましょう！ <br>
+
+<%= link_to '確認する！', active_reservation_url(@reservation.requester, @reservation) %>
