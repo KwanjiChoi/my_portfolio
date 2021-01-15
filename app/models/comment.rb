@@ -12,4 +12,15 @@ class Comment < ApplicationRecord
     greater_than_or_equal_to: 1,
     less_than_or_equal_to: 5,
   }
+
+  def create_notification
+    case commentable_type
+    when 'User'
+      notifications.create(visitor: commenter,
+                           visited: commentable)
+    when 'Project'
+      notifications.create(visitor: commenter,
+                           visited: commentable.user)
+    end
+  end
 end

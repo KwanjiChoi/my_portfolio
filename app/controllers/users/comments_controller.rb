@@ -5,8 +5,8 @@ class Users::CommentsController < CommentsController
   def create
     @comment = @commentable.comments.create(comment_params)
     @comment.commenter = current_user
-    @user = @commentable
     if @comment.save
+      @comment.create_notification
       redirect_to @commentable, notice: 'Your comment was successfully posted!'
     else
       render 'users/show'

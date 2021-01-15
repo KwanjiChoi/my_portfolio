@@ -55,7 +55,7 @@ class ProjectsController < ApplicationController
     @prefecture = Prefecture.find_by(name: params[:prefecture]) if params[:prefecture]
     if @category
       @projects = Project.where(
-        'project_category_id = ?', @category.id
+        "project_category_id = ?", @category.id
       ).includes([
         :project_category,
         :rich_text_content,

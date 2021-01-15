@@ -125,4 +125,50 @@ RSpec.describe Notification, type: :model do
       end
     end
   end
+
+  describe 'create notification', focus: true do
+    let(:visited)      { create(:user) }
+    let(:visitor)      { create(:user) }
+
+    # commentable type
+    let(:project)         { create(:project, user: visited) }
+    let(:user_comment)    { create(:user_comment, commentable: visited, commenter: visitor) }
+    let(:project_comment) { create(:project_comment, commentable: project, commenter: visitor) }
+    let(:message)         { create(:message) }
+
+    context 'to comment' do
+      it 'for user' do
+        expect do
+          notification = user_comment.create_notification
+
+          expect(notification.visitor).to eq visitor
+          expect(notification.visited).to eq visited
+        end.to change(Notification, :count).by(1)
+      end
+
+      it 'for project' do
+        expect do
+          notification = project_comment.create_notification
+
+          expect(notification.visitor).to eq visitor
+          expect(notification.visited).to eq visited
+        end.to change(Notification, :count).by(1)
+      end
+    end
+
+    context 'to message' do
+      it 'successfully' do
+        expect do
+          message.create_notification
+        end.to change(Notification, :count).by(1)
+      end
+
+      it 'unsuccessfully' do
+        message.create_notification
+        expect do
+          message.create_notification
+        end.not_to change(Notification, :count)
+      end
+    end
+  end
 end
