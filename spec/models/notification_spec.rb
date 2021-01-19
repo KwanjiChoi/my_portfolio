@@ -40,7 +40,7 @@ RSpec.describe Notification, type: :model do
   # comment-user comment-projectをポリモーフィックに関連させているため
   # 少々ややこしいfactory構成になっている　要改善
 
-  context 'comment fotification' do
+  context 'comment notification' do
     context 'comment for user' do
       let(:comment) { create(:user_comment) }
       let(:comment_notification) do
@@ -126,7 +126,7 @@ RSpec.describe Notification, type: :model do
     end
   end
 
-  describe 'create notification', focus: true do
+  describe 'create notification' do
     let(:visited)      { create(:user) }
     let(:visitor)      { create(:user) }
 
@@ -135,6 +135,7 @@ RSpec.describe Notification, type: :model do
     let(:user_comment)    { create(:user_comment, commentable: visited, commenter: visitor) }
     let(:project_comment) { create(:project_comment, commentable: project, commenter: visitor) }
     let(:message)         { create(:message) }
+    let(:reservation)     { create(:reservation, project: project, requester: visitor) }
 
     context 'to comment' do
       it 'for user' do
@@ -168,6 +169,14 @@ RSpec.describe Notification, type: :model do
         expect do
           message.create_notification
         end.not_to change(Notification, :count)
+      end
+    end
+
+    context 'to reservation' do
+      it 'successfully' do
+        expect do
+          reservation.create_notification
+        end.to change(Notification, :count).by(1)
       end
     end
   end

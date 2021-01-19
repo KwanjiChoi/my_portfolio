@@ -7,6 +7,7 @@ class Reservation < ApplicationRecord
   belongs_to :project
 
   has_many :rooms, dependent: :destroy
+  has_many :notifications, as: :notificatable, dependent: :destroy
 
   delegate :supplier, to: :project
 
@@ -50,6 +51,13 @@ class Reservation < ApplicationRecord
 
   def update_status(status)
     update_attribute(:status, status)
+  end
+
+  def create_notification
+    notifications.create(
+      visited: supplier,
+      visitor: requester
+    )
   end
 
   private

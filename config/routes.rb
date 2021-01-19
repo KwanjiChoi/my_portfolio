@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
 
     resources :comments, only: [:create], module: :users
+    resources :notifications, only: [:index]
   end
 
   resources :projects do
@@ -58,6 +59,7 @@ Rails.application.routes.draw do
       get 'cities'
     end
   end
+
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"

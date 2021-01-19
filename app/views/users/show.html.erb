@@ -1,57 +1,9 @@
 <%= render 'shared/sidenav' %>
 
-<div class="bg-container">
-  <div class="container">
-    <div class="text-center py-5">
-      <%= user_image(@user) %>
-      <div class="col-md-8 col-lg-6 col-xl-5 p-0 mx-auto">
-        <h4 class="font-weight-bold my-4 text-white"><%= @user.username %></h4>
-        <div class="text-muted mb-4">
-          <%= @user.introduction %>
-        </div>
-      </div>
 
-      <div class="text-center">
-        <a href="#" class="d-inline-block text-dark">
-          <span class="text-muted"><%= link_to "#{@user.projects.size} projects", projects_user_path(@user), class: 'text-dark' %></span>
-        </a>
-        <a href="#" class="d-inline-block text-dark ml-5">
-          <strong class="text-white">111</strong>
-          <span class="text-muted">likes</span>
-        </a>
-      </div>
-    </div>
-  </div>
-  <hr class="m-0">
+<% if @user.teacher? %>
+  <%= render 'show_teacher_account', user: @user %>
+<% else %>
+  <%= render 'show_user' , user: @user %>
+<% end %>
 
-  <ul class="nav nav-tabs bg-tabs-content tabs-alt justify-content-center">
-    <li class="nav-item">
-      <a class="nav-link py-4 text-secondary" href="#">Posts</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link py-4 text-secondary" href="#">Likes</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link py-4 text-secondary" href="#">Followers</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link py-4 text-secondary" href="#">Following</a>
-    </li>
-  </ul>
-
-</div>
-
-<div class="container pt-5 pb-5 my-page-container">
-  <div class="row">
-    <div class='col-10 mx-auto'>
-       <%= render 'shared/notification' %>
-      <% if @user.teacher? %>
-        <%= render 'shared/performance_bar', record: @user.performance&.total_record, rate: @user.performance&.average_score %>
-        <%= render 'comments/index', commentable: @user %>
-        <% if current_user && current_user != @user %>
-          <%= render 'comments/form',  commentable: @user %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-</div>

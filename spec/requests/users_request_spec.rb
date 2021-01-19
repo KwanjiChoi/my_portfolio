@@ -68,7 +68,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe 'GET #edit', focus: true do
+  describe 'GET #edit' do
     it 'returns response code 200 when correct user' do
       sign_in user
       get edit_user_path(user)

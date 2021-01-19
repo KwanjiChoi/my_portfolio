@@ -48,7 +48,7 @@ RSpec.describe "Comments", type: :request do
           end.to change(Comment, :count).by(1)
         end
 
-        it 'does not create comment for sign in user`s project', focus: true do
+        it 'does not create comment for sign in user`s project' do
           sign_in commenter
           expect do
             post project_comments_path(commenter_project),

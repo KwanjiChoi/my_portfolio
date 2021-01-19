@@ -29,6 +29,7 @@ class ReservationsController < ApplicationController
   def create
     reservation = project.reservations.build(reservation_params)
     if reservation.save
+      reservation.create_notification
       reservation.create_chat_room
       redirect_to active_reservation_path(current_user, reservation), notice: '予約が完了いたしました'
     else

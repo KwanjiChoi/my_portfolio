@@ -1,0 +1,16 @@
+<%= render 'shared/sidenav' %>
+
+<div class="container">
+  <div class="jumbotron">
+    <h2 class='heading'><span>通知</span></h2>
+
+    <div class='container'>
+      <div class='row'>
+        <div class='col-10 mx-auto'>
+          <%= render 'feed', notifications: @notifications%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,17 @@
+<% @notifications.each do |notification| %>
+  <% case notification.notificatable_type
+  when 'Reservation' then %>
+    <%= notification.visitor.username %>
+    <%= notification.notificatable_type %>
+    <%= link_to '', room_path(notification.notificatable) %>
+  <% when 'Comment' then %>
+    <%= notification.visitor.username %>
+    <%= notification.notificatable_type %>
+    <%= link_to '', room_path(notification.notificatable) %>
+  <% when 'Room' then %>
+    <%= notification.visitor.username %>
+    <%= notification.notificatable_type %>
+    <%= link_to 'room', room_path(notification.notificatable) %>
+  <% end %>
+
+<% end %>
