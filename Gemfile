@@ -79,3 +79,5 @@ gem 'redis-namespace'
 gem 'faker'
 gem 'active_hash'
 gem 'rack-mini-profiler', require: false
+gem 'draper'
+gem 'pundit'
