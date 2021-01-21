@@ -7,6 +7,7 @@ class Reservation < ApplicationRecord
   belongs_to :project
 
   has_many :rooms, dependent: :destroy
+  has_many :notifications, as: :notificatable, dependent: :destroy
 
   delegate :supplier, to: :project
 
@@ -19,10 +20,12 @@ class Reservation < ApplicationRecord
 
   scope :sort_reservations_by_status, -> (user, requester: false, supplier: false, status:) {
     if requester == true
-      order(created_at: :asc).where(requester_id: user.id, status: status).includes(project: :user)
+      order(created_at: :asc).
+        where(requester_id: user.id, status: status).
+        includes(project: :user).decorate
     elsif supplier == true
       user.passive_reservations.order(created_at: :asc).
-        where(status: status).includes([:requester, :project])
+        where(status: status).includes([:requester, :project]).decorate
     end
   }
 
@@ -33,14 +36,6 @@ class Reservation < ApplicationRecord
     canceled: 3,
   }
 
-  def owner_name
-    project.owner
-  end
-
-  def show_reserve_time
-    "#{((end_at - start_at) / 60).to_i}分"
-  end
-
   def create_chat_room
     room = rooms.create
     room.entries.create(user: requester)
@@ -50,6 +45,13 @@ class Reservation < ApplicationRecord
 
   def update_status(status)
     update_attribute(:status, status)
+  end
+
+  def create_notification
+    notifications.create(
+      visited: supplier,
+      visitor: requester
+    )
   end
 
   private

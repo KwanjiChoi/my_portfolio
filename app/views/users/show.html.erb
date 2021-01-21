@@ -1,20 +1,9 @@
 <%= render 'shared/sidenav' %>
 
 
-<div class="container">
-  <div class="jumbotron">
-    <%= render 'shared/notification' %>
+<% if @user.teacher? %>
+  <%= render 'show_teacher_account', user: @user %>
+<% else %>
+  <%= render 'show_user' , user: @user %>
+<% end %>
 
-    <h2 class='heading'><span>プロフィール</span></h2>
-
-    <p class='sample-class'> こんにちは　<%= @user.username %></p>
-
-    <% if @user.teacher? %>
-      <%= render 'shared/performance_bar', record: @user.performance&.total_record, rate: @user.performance&.average_score %>
-      <%= render 'comments/index', commentable: @user %>
-      <% if current_user %>
-        <%= render 'comments/form',  commentable: @user %>
-      <% end %>
-    <% end %>
-  </div>
-</div>

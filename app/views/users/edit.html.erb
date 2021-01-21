@@ -1,2 +1,70 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<%= render 'shared/sidenav' %>
+
+<div class='container'>
+
+  <div class='jumbotron'>
+
+    <h2 class='heading'><span>ユーザー設定</span></h2>
+
+    <div class='row'>
+
+      <div class='edit-form col-9 mx-auto pt-5'>
+
+        <%= form_with model: @user, local: true, class: 'mx-auto' do |f| %>
+          <%= render 'shared/error_messages', resource: @user %>
+
+          <div class="form-group">
+            <%= f.label :username, 'Username', class: 'control-label' %>
+            <div class="controls">
+              <%= f.text_field :username, class: 'form-control col-10', placeholder: 'username' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :phone_number, 'Phone number', class: 'control-label' %> <small class='ml-3'>※ No hyphen</small>
+            <div class="controls">
+              <%= f.text_field :phone_number, class: 'form-control col-5' %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :introduction, 'Introduction Text', class: 'control-label' %> <small class='ml-3'>※ Within 255 characters</small>
+            <div class="controls">
+              <%= f.text_area :introduction, class: 'form-control col-7', rows: 5 %>
+              <div class='pt-2'>
+                <span class="count"><%= 255 - @user.introduction.size %></span> characters left
+              </div>
+            </div>
+          </div>
+
+          <%= f.submit "Update", class: 'btn btn-primary mt-3' %>
+
+        <% end %>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(function(){
+    var countMax = 255;
+    $('textarea').bind('keydown keyup keypress change',function(){
+      var thisValueLength = $(this).val().length;
+      var countDown = (countMax)-(thisValueLength);
+      $('.count').html(countDown);
+
+      if(countDown < 0){
+        $('.count').css({color:'#ff0000',fontWeight:'bold'});
+      } else {
+        $('.count').css({color:'#000000',fontWeight:'normal'});
+      }
+    });
+    $(window).load(function(){
+      $('.count').html(countMax);
+    });
+  });
+</script>

@@ -1,5 +1,6 @@
 class Prefecture < ApplicationRecord
   has_many :project_locations
+  has_many :cities
 
   scope :area_1, -> { where(id: [1..7]) }
   scope :area_2, -> { where(id: [8..20]) }

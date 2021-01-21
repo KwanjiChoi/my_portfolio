@@ -106,15 +106,4 @@ RSpec.describe Reservation, type: :model do
       end
     end
   end
-
-  describe 'instance method' do
-    start = Time.now.tomorrow
-    let!(:reservation) { create(:reservation, start_at: start, reserve_time: 30) }
-
-    context 'show_reserve_time' do
-      it 'returns reserve time' do
-        expect(reservation.show_reserve_time).to eq '30分'
-      end
-    end
-  end
 end

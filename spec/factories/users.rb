@@ -6,6 +6,7 @@ FactoryBot.define do
     phone_number        { "0#{rand(0..9)}0#{rand(1_000_000..99_999_999)}" }
     # https://qiita.com/xusaku_/items/018cf2cb9caae8b5fb8b
     confirmed_at        { Date.today }
+    introduction        { 'こんにちは、よろしくお願いいたします！' }
 
     trait :sample_user do
       email { 'tester@example.com' }

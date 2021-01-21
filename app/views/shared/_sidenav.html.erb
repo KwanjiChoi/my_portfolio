@@ -45,13 +45,13 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">account</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item">アカウント設定</a>
+          <%= link_to 'セキュリティ設定', edit_user_registration_path, class: 'dropdown-item' %>
+          <%= link_to 'アカウント設定', edit_user_path(current_user), class: 'dropdown-item' %>
           <% if current_user.teacher? %>
             <%= link_to 'ワークスペース登録', user_addresses_path(current_user), class: 'dropdown-item' %>
           <% end %>
-          <a class="dropdown-item">支払い方法</a>
-          <a class="dropdown-item">履歴</a>
-          <a class="dropdown-item">通知</a>
+          <a class="dropdown-item">支払い方法 <small>※準備中</small></a>
+          <%= link_to '通知', user_notifications_path(current_user), class: 'dropdown-item' %>
           <div class="dropdown-divider"></div>
           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
         </div>

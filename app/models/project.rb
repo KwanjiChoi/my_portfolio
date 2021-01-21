@@ -9,8 +9,9 @@ class Project < ApplicationRecord
     order(id: :desc).limit(RECENT_COUNT)
   }
 
-  has_many :reservations, dependent: :destroy
-  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :reservations,  dependent: :destroy
+  has_many :comments,      as: :commentable,   dependent: :destroy
+  has_many :notifications, as: :notificatable, dependent: :destroy
 
   mount_uploader :main_image, ImageUploader
 
@@ -28,21 +29,17 @@ class Project < ApplicationRecord
 
   # https://qiita.com/QUANON/items/ae47ae23c572d498050d
   delegate :strip_tags, to: 'ApplicationController.helpers'
+  delegate :username,   to: :user
+
+  alias_method :owner,    :username
+  alias_method :supplier, :user
 
   def category_name
     project_category.name
   end
 
   def location_name
-    "#{location&.prefecture&.name} #{location&.address}"
-  end
-
-  def owner
-    user.username
-  end
-
-  def supplier
-    user
+    "#{location&.prefecture&.name} #{location&.city&.name}"
   end
 
   def short_content
@@ -54,7 +51,7 @@ class Project < ApplicationRecord
 
   def check_phone_reservation
     if phone_reservation == true
-      errors.add(:phone_reservation, "電話予約を設定するには電話番号の登録が必要です") if user.phone_number.nil?
+      errors.add(:phone_reservation, "電話予約を設定するには電話番号の登録が必要です") if user.phone_number.blank?
     end
   end
 

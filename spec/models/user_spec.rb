@@ -67,10 +67,9 @@ RSpec.describe User, type: :model do
         @user.phone_number = nil
         expect(@user).to be_valid
       end
-      it 'is invalid when blank' do
+      it 'is valid when blank' do
         @user.phone_number = '  '
-        @user.valid?
-        expect(@user.errors[:phone_number]).to include("type correct phone number")
+        expect(@user).to be_valid
       end
       it 'is invalid when not integer' do
         @user.phone_number = 'notinteger'
@@ -92,6 +91,24 @@ RSpec.describe User, type: :model do
         @user.phone_number = '09077777777'
         @user.valid?
         expect(@user.errors[:phone_number]).to include('has already been taken')
+      end
+    end
+
+    context 'introduction' do
+      it 'is valid when nil' do
+        @user.introduction = nil
+        expect(@user).to be_valid
+      end
+
+      it 'is valid when blank' do
+        @user.introduction = ' '
+        expect(@user).to be_valid
+      end
+
+      it 'is invalid when length is over 255 characters' do
+        @user.introduction = 'a' * 256
+        @user.valid?
+        expect(@user.errors[:introduction]).to include("is too long (maximum is 255 characters)")
       end
     end
   end

@@ -10,32 +10,44 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :project_category_id, 'カテゴリー', class: 'control-label'%>
-    <div class="controls">
-      <%= f.collection_select :project_category_id, ProjectCategory.all, :id, :name,
-                                            :include_blank => "カテゴリを選択してください" %>
+    <div class='row'>
+      <div class='col-12'>
+        <%= f.label :project_category_id, 'カテゴリー', class: 'control-label'%>
+      </div>
+      <div class="col-6">
+        <%= f.collection_select :project_category_id, ProjectCategory.all, :id, :name,
+                                              { include_blank: "カテゴリを選択してください" }, { class: 'form-control' } %>
+      </div>
     </div>
   </div>
 
   <%= f.fields_for :location do |ff| %>
     <div calss="form-group">
-      <%= ff.label :prefecture_id, '都道府県', class: 'control-label'%>
-      <div class="controls">
-        <%=  ff.collection_select :prefecture_id, Prefecture.all, :id, :name, {include_blank: "---"}, {class: ""} %>
+      <div class='row'>
+        <div class='col-12'>
+          <%= ff.label :prefecture_id, '都道府県', class: 'control-label mt-1'%>
+        </div>
+        <div class="col-5">
+          <%=  ff.collection_select :prefecture_id, Prefecture.all, :id, :name, { include_blank: "---" }, { class: "form-control ChoseTemplate", onchange: "changeTemplate($(this).val())" } %>
+        </div>
       </div>
     </div>
 
     <div calss="form-group">
-      <%= ff.label :address, 'ロケーション情報', class: 'control-label mt-3'%>
-      <div class="controls">
-        <%=  ff.text_field :address, class: 'form-control', placeholder: '希望場所情報' %>
+      <div class='row'>
+        <div class='col-12'>
+          <%= ff.label :city_id, '市区町村', class: 'control-label mt-4'%>
+        </div>
+        <div class="col-5 city_select_box">
+          <%= ff.collection_select :city_id, [], :id, :name, { include_blank: "---" }, { class: "form-control cities_select_box" } %>
+        </div>
       </div>
     </div>
 
     <div calss="form-group mt-3">
       <div class='row'>
         <div class='col-12'>
-          <%= ff.label :station, '最寄り駅', class: 'control-label mt-3'%> <small class='ml-2'>※任意</small>
+          <%= ff.label :station, '最寄り駅', class: 'control-label mt-4'%> <small class='ml-2'>※任意</small>
         </div>
         <div class="col-7">
           <div class="controls">
@@ -68,6 +80,31 @@
     </div>
   </div>
 
-  <p><%= f.submit 'create project', class: 'btn btn-info btn-block' %></p>
-    
+  <p><%= f.submit 'create project', class: 'btn btn-info btn-block' %></p>  
 <% end %>
+
+
+<script>
+  function changeTemplate(val){
+    var prefecture_id = val;
+    $.ajax({
+      url: "/prefecture/cities",
+      type: "GET",
+      data: {
+        prefecture_id: prefecture_id
+      },
+      dataType: "json"
+    })
+    .done(function(cities){
+
+      $('.cities_select_box > option').remove();
+      $('.cities_select_box').append(
+          `<option value> --- </option>`
+        );
+      $(cities).each(function(i, city) {
+        $('.cities_select_box').append($("<option>").val(`${city.id}`).text(`${city.name}`));
+      });
+    })
+    console.log(prefecture_id)
+  }
+</script>

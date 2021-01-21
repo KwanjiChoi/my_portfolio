@@ -1,0 +1,33 @@
+<div class="list-group pt-5">
+  <% @notifications.each do |notification| %>
+    <% case notification.notificatable_type
+      when 'Reservation' then %>
+
+      <%= link_to passive_reservation_path(notification.notificatable.project, notification.notificatable), class: "list-group-item list-group-item-action flex-column align-items-start" do %>
+        <small class='text-right'><%= notification.created_at %> ago</small>
+        <p class="mb-1"><%= notification.visitor_name %>があなたのプロジェクト「<%= notification.project_title %>」を予約しました。</p>
+      <% end %>
+
+    <% when 'Comment' then %>
+      <% if notification.notificatable.commentable_type == 'User' %>
+        <%= link_to user_path(notification.visited), class: "list-group-item list-group-item-action flex-column align-items-start" do %>
+          <small><%= notification.created_at %> ago</small>
+          <p class="mb-1"><%= notification.visitor_name %>があなたに評価をつけました。</p>
+        <% end %>
+      <% else %>
+        <%= link_to detail_project_path(notification.notificatable), class: "list-group-item list-group-item-action flex-column align-items-start" do %>
+          <small><%= notification.created_at %> ago</small>
+          <p class="mb-1"><%= notification.visitor_name %>があなたのプロジェクト「<%= notification.commentable_project_title %>」に評価をつけました。</p>
+        <% end %>
+      <% end %>
+
+    <% when 'Room' then %>
+
+      <%= link_to room_path(notification.notificatable), class: "list-group-item list-group-item-action flex-column align-items-start" do %>
+        <small><%= notification.created_at %> ago</small>
+        <p class="mb-1"><%= notification.visitor_name %>から予約メッセージが届きました。</p>
+      <% end %>
+
+    <% end %>
+  <% end %>
+</div>

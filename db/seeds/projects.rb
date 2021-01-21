@@ -6,7 +6,7 @@ users.each do |user|
   user.create_performance
   user.update_attribute(:phone_number, "0900000#{rand(10000).to_s}") if user.id.even?
   prefecture = Prefecture.find(rand(1..47))
-  city = AddressApi.cities(prefecture.name).sample
+  city = prefecture.cities.sample
   3.times do |n|
     project_category = ProjectCategory.all.sample
     project = user.projects.new(
@@ -17,7 +17,7 @@ users.each do |user|
     )
     project.save!
     project.create_performance
-    project.create_location(prefecture: prefecture, address: city)
+    project.create_location(prefecture: prefecture, city: city)
     project.update_attribute(:phone_reservation, true) unless project.user.phone_number.nil?
   end
 end

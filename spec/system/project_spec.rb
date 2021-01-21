@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "Project", type: :system, js: true do
   describe 'sign in user' do
     let!(:prefecture) { create(:prefecture, name: '兵庫県') }
+    let!(:city)       { create(:city, prefecture: prefecture, name: '西宮市') }
     let!(:category2)  { create(:project_category, name: 'category2') }
     let!(:category1)  { create(:project_category, name: 'category1') }
     let!(:project_1)  { create(:project, title: 'project_1', user: user) }
@@ -15,8 +16,8 @@ RSpec.describe "Project", type: :system, js: true do
       click_link  'new project'
       fill_in     'Title',     with: 'sample title'
       select      'category1', from: 'カテゴリー'
-      select      '兵庫県', from: '都道府県'
-      fill_in     'ロケーション情報', with: '甲子園球場周辺'
+      select      '兵庫県',     from: '都道府県'
+      select      '西宮市',     from: '市区町村'
       attach_file "project[main_image]", "#{Rails.root}/spec/fixtures/test.jpg"
       fill_in_rich_text_area 'project_content', with: 'a' * 101
       click_on 'create project'

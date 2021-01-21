@@ -5,6 +5,7 @@ class MessagesController < ApplicationController
     @message = Message.create(message_params)
     respond_to do |format|
       if @message.save
+        @message.create_notification
         format.js
       else
         room = @message.room

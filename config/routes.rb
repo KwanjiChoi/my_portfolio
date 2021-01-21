@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/dashboard',                       to: 'users#dashboard',          as: :dashboard
   get '/users/:user_id/reservations/:id', to: 'reservations#show_active', as: :active_reservation
 
-  resources :users, only: [:show] do
+  resources :users, only: [:show, :edit, :update] do
     resources :addresses,    only: [:index, :create, :destroy]
     resources :reservations, only: [:index]
 
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
 
     resources :comments, only: [:create], module: :users
+    resources :notifications, only: [:index]
   end
 
   resources :projects do
@@ -52,6 +53,12 @@ Rails.application.routes.draw do
 
   resources :messages, only: [:create]
   resources :rooms,    only: [:show, :index]
+
+  resource :prefecture, only: [] do
+    collection do
+      get 'cities'
+    end
+  end
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
