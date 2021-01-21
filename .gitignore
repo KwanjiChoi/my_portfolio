@@ -37,3 +37,4 @@ yarn-debug.log*
 /public/uploads
 .env
 .vscode
+.DS_Store
