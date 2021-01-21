@@ -1,8 +1,9 @@
 module DefineMethod::ReservationMethods
   extend ActiveSupport::Concern
 
-  STATUS = Reservation.statuses.keys.freeze # ['unchecked', 'checked', 'finished', 'canceled']
-  STATUS.each do |status|
+  RESERVATION_STATUS = Reservation.statuses.keys.freeze
+  # ['unchecked', 'checked', 'finished', 'canceled']
+  RESERVATION_STATUS.each do |status|
     method_name = "#{status}_active_reservations"
     define_method method_name do |user|
       instance_variable_set("@#{method_name}",
@@ -11,7 +12,7 @@ module DefineMethod::ReservationMethods
     end
   end
 
-  STATUS.each do |status|
+  RESERVATION_STATUS.each do |status|
     method_name = "#{status}_passive_reservations"
     define_method method_name do |user|
       instance_variable_set("@#{method_name}",
@@ -22,7 +23,7 @@ module DefineMethod::ReservationMethods
 
   def reservation
     return nil if params[:id].blank?
-    @reservation ||= Reservation.find(params[:id])
+    @reservation ||= Reservation.find(params[:id]).decorate
   end
 
   def requester

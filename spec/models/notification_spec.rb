@@ -126,6 +126,14 @@ RSpec.describe Notification, type: :model do
     end
   end
 
+  context 'reservation notification', focus: true do
+    let(:reservation_notification) { build(:reservation_notification) }
+
+    it 'has valid factory' do
+      expect(reservation_notification).to be_valid
+    end
+  end
+
   describe 'create notification' do
     let(:visited)      { create(:user) }
     let(:visitor)      { create(:user) }

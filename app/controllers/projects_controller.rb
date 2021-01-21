@@ -48,7 +48,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def detail; end
+  def detail
+    @comments = @project.comments.includes([:commenter]).decorate
+  end
 
   def feed
     @category = ProjectCategory.find(params[:category_id]) if params[:category_id]

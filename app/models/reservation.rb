@@ -20,10 +20,12 @@ class Reservation < ApplicationRecord
 
   scope :sort_reservations_by_status, -> (user, requester: false, supplier: false, status:) {
     if requester == true
-      order(created_at: :asc).where(requester_id: user.id, status: status).includes(project: :user)
+      order(created_at: :asc).
+        where(requester_id: user.id, status: status).
+        includes(project: :user).decorate
     elsif supplier == true
       user.passive_reservations.order(created_at: :asc).
-        where(status: status).includes([:requester, :project])
+        where(status: status).includes([:requester, :project]).decorate
     end
   }
 
@@ -33,14 +35,6 @@ class Reservation < ApplicationRecord
     finished: 2,
     canceled: 3,
   }
-
-  def owner_name
-    project.owner
-  end
-
-  def show_reserve_time
-    "#{((end_at - start_at) / 60).to_i}分"
-  end
 
   def create_chat_room
     room = rooms.create

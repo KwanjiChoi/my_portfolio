@@ -45,7 +45,7 @@
        <%= render 'shared/notification' %>
       <% if user.teacher? %>
         <%= render 'shared/performance_bar', record: user.performance&.total_record, rate: user.performance&.average_score %>
-        <%= render 'comments/index', commentable: user %>
+        <%= render 'comments/index', comments: @comments %>
         <% if current_user && current_user != user %>
           <%= render 'comments/form',  commentable: user %>
         <% end %>

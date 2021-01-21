@@ -28,7 +28,7 @@
 
     </section>
 
-    <%= render 'comments/index', commentable: @project %>
+    <%= render 'comments/index', comments: @comments %>
     <% if current_user && current_user != @project.user %>
       <%= render 'comments/form',  commentable: @project %>
     <% end %>

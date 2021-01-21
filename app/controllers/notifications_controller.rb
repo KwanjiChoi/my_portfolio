@@ -3,7 +3,12 @@ class NotificationsController < ApplicationController
   before_action :correct_user
 
   def index
-    @notifications = current_user.passive_notifications
+    current_user.passive_notifications.
+      where(checked: false).update_all(checked: true)
+
+    @notifications = current_user.
+      passive_notifications.preload(:notificatable, :visitor, :visited).
+      order(created_at: 'DESC').decorate
   end
 
   private
@@ -11,5 +16,4 @@ class NotificationsController < ApplicationController
   def correct_user
     redirect_to root_path unless current_user == User.find(params[:user_id])
   end
-
 end

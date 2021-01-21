@@ -9,8 +9,8 @@ class Project < ApplicationRecord
     order(id: :desc).limit(RECENT_COUNT)
   }
 
-  has_many :reservations, dependent: :destroy
-  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :reservations,  dependent: :destroy
+  has_many :comments,      as: :commentable,   dependent: :destroy
   has_many :notifications, as: :notificatable, dependent: :destroy
 
   mount_uploader :main_image, ImageUploader
@@ -29,6 +29,10 @@ class Project < ApplicationRecord
 
   # https://qiita.com/QUANON/items/ae47ae23c572d498050d
   delegate :strip_tags, to: 'ApplicationController.helpers'
+  delegate :username,   to: :user
+
+  alias_method :owner,    :username
+  alias_method :supplier, :user
 
   def category_name
     project_category.name
@@ -36,14 +40,6 @@ class Project < ApplicationRecord
 
   def location_name
     "#{location&.prefecture&.name} #{location&.city&.name}"
-  end
-
-  def owner
-    user.username
-  end
-
-  def supplier
-    user
   end
 
   def short_content

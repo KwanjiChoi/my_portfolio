@@ -7,6 +7,13 @@
     <h2 class='heading'><span>ダッシュボード</span></h2>
 
     <div class="col-10 mx-auto">
+      <% if current_user.decorate.has_unchecked_notifications? %>
+        <div class='pt-4'>
+          <div class="alert alert-primary" role="alert">
+            You got <%= current_user.decorate.unchecked_notifications_count %> notifications. check <%= link_to 'here', user_notifications_path(current_user) %>
+          </div>
+        </div>
+      <% end %>
 
       <div class="mt-5 checked-projects">
         <h2> 実行予定のProject </h2>

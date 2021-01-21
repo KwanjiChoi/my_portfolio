@@ -14,4 +14,8 @@ module ApplicationHelper
   def new_comment
     Comment.new
   end
+
+  def category_list
+    ProjectCategory.all
+  end
 end
