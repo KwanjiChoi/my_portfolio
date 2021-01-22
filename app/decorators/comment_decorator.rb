@@ -1,4 +1,4 @@
-class CommentDecorator < Draper::Decorator
+class CommentDecorator < ApplicationDecorator
   delegate_all
 
   def created_at

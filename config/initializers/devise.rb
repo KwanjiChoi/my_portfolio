@@ -1,5 +1,4 @@
 Devise.setup do |config|
-  config.mailer_sender = 'no-reply@example.com'
 
   require 'devise/orm/active_record'
 
@@ -25,5 +24,7 @@ Devise.setup do |config|
 
   config.omniauth :facebook, ENV['FACEBOOK_ID'], ENV['FACEBOOK_SECRET_KEY']
   config.omniauth :twitter,  ENV['TWITTER_API_KEY'], ENV['TWITTER_API_SECRET']
+
+  config.mailer_sender = 'no-reply@example.com'
 
 end

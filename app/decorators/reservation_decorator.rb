@@ -1,4 +1,4 @@
-class ReservationDecorator < Draper::Decorator
+class ReservationDecorator < ApplicationDecorator
   delegate_all
 
   def start_at
