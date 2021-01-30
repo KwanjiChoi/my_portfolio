@@ -2,12 +2,18 @@ class Project < ApplicationRecord
   include Calculator
   RECENT_COUNT = 6
 
-  belongs_to :user
-  belongs_to :project_category
-
   scope :recent_projects, -> {
     order(id: :desc).limit(RECENT_COUNT)
   }
+
+  scope :popular_projects, -> {
+    find(Reservation.group(:project_id).
+          order('count(project_id) desc').limit(3).
+            pluck(:project_id))
+  }
+
+  belongs_to :user
+  belongs_to :project_category
 
   has_many :reservations,  dependent: :destroy
   has_many :comments,      as: :commentable,   dependent: :destroy

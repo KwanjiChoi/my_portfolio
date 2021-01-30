@@ -4,6 +4,13 @@
   <div class="jumbotron">
     <%= render 'shared/notification' %>
 
+    <% if reservation_type == 'phone' && project.phone_reservation? %>
+      <div class='col-8 mx-auto text-center bg-white rounded pt-2 pb-2'>
+        <p>下記番号におかけください</p>
+        <h2><%= project.user.phone_number %></h2>
+      </div>
+    <% end %>
+
     <%= render 'form', project: project, reservation: new_reservation %>
   </div>
 </div>

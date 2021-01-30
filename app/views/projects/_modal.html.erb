@@ -13,7 +13,9 @@
             <button type="button" class="btn btn-primary btn-lg">このまま予約する</button>
           <% end %>
           <% if project.phone_reservation? %>
-            <button type="button" class="btn btn-primary btn-lg">電話で予約する</button>
+            <%= link_to new_project_reservation_path(project, reservation_type: 'phone') do %>
+              <button type="button" class="btn btn-primary btn-lg">電話で予約する</button>
+            <% end %>
           <% else %>
             <button type="button" class="btn btn-secondary btn-lg" style='pointer-events: none;'>このプロジェクトは電話予約できません</button>
           <% end %>
