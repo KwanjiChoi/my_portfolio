@@ -55,7 +55,7 @@ services:
     command: bundle exec sidekiq
     volumes:
       - .:/my_portfolio
-      - /my_portfolio/tmp
+      - /my_portfolio/tmpcd 
 
     
 

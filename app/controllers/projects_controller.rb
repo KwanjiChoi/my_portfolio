@@ -4,12 +4,14 @@ class ProjectsController < ApplicationController
   before_action :authenticate_teacher_account!, except: [:detail, :feed]
   before_action :set_project, only: [:show, :destroy, :detail, :edit, :update]
 
+  PER = 30
+
   def index
     @projects = current_user.projects.includes([
       :project_category,
       :rich_text_content,
       location: [:prefecture, :city],
-    ])
+    ]).page(params[:page]).per(PER)
   end
 
   def new
@@ -63,7 +65,7 @@ class ProjectsController < ApplicationController
         :rich_text_content,
         :user,
         location: [:prefecture, :city],
-      ])
+      ]).page(params[:page]).per(PER)
     else
       if @prefecture
         @projects = Project.joins(:location).where(
@@ -73,13 +75,13 @@ class ProjectsController < ApplicationController
           :rich_text_content,
           :user,
           location: [:prefecture, :city],
-        ])
+        ]).page(params[:page]).per(PER)
       else
         @projects = Project.all.includes([
           :rich_text_content,
           :user,
           location: [:prefecture, :city],
-        ])
+        ]).page(params[:page]).per(PER)
       end
     end
   end

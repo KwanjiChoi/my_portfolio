@@ -15,6 +15,9 @@
 
     <div class="container pt-5">
       <%= render 'feed', projects: @projects, detail: false %>
+      <div class='pt-5'>
+        <%= paginate @projects %>
+      </div>
     </div>
   </div>
 

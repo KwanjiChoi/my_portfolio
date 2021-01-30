@@ -2,7 +2,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-main navbar-light">
-  <a class="navbar-brand text-light h1" href="#">My Portfolio</a>
+  <a class="navbar-brand text-light h1" href="#">My left over</a>
   
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -29,10 +29,10 @@
   <div class="container h-100">
     <div class="row h-100">
       <div class="col-lg-10 align-self-end">
-        <h1 class="text-white font-weight-bold">Your Favorite Source of Free Bootstrap Themes</h1>
+        <h1 class="text-white font-weight-bold">Someone needs your help!</h1>
       </div>
       <div class="col-lg-8">
-        <p class="text-white font-weight-light mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p>
+        <p class="text-white font-weight-light mb-5">手助けが必要・欲しい人同士をつなぎ合わせるプラットフォームです。</p>
         <%= link_to new_user_registration_path do %>
           <button class="btn btn-info btn-lg">Try now!!</button>
         <% end %>
@@ -45,8 +45,7 @@
 <section class="py-5 text-center">
   <div class="container"> 
     <h2 class="text-center">Recent Projects</h2>
-    <p class="text-muted mb-5 text-center">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-    <div class="row">
+    <div class="row pt-4">
       <% @recent_projects.each do |project| %>
         <div class="col-sm-6 col-lg-4 mb-3 recent-project-box recent-project-<%= project.id %>">
 
