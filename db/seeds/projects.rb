@@ -5,7 +5,7 @@ users.each do |user|
   user.update_attribute(:teacher, true)
   user.create_performance
   user.update_attribute(:phone_number, "0900000#{rand(10000).to_s}") if user.id.even?
-  prefecture = Prefecture.find(rand(1..47))
+  prefecture = Prefecture.find([13, 23, 26, 27, 28, 40].sample)
   city = prefecture.cities.sample
   3.times do |n|
     project_category = ProjectCategory.all.sample
