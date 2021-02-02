@@ -45,4 +45,8 @@ module DefineMethod::ReservationMethods
   def message_room
     @message_room ||= Room.find_by(reservation: reservation)
   end
+
+  def reservation_type
+    @reservation_type ||= params[:reservation_type]
+  end
 end

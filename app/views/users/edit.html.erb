@@ -32,7 +32,7 @@
             <div class="controls">
               <%= f.text_area :introduction, class: 'form-control col-7', rows: 5 %>
               <div class='pt-2'>
-                <span class="count"><%= 255 - @user.introduction.size %></span> characters left
+                <span class="count"><%= 255 - (@user.introduction&.size).to_i %></span> characters left
               </div>
             </div>
           </div>
