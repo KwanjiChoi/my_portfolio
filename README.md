@@ -7,6 +7,12 @@
 - オンラインレッスン
 
 
+## テストユーザー
+
+email:    test@example.com
+password: password
+
+
 ## 使用技術
 
   - rails 6.0.3
@@ -18,6 +24,7 @@
   - CercleCI CI/CD
   - AWS S3
   - heroku
+    - Cityのseedデータに関しまして、フルで挿入すると1時間当たりのクエリ発行上限に達するため、東京都,愛知県,京都府,大阪府,兵庫県,福岡県の6都市のみデータを入れております。
 
   チャレンジ 
   - AWS CodeBuildとCodeDeployを使ったEC2へのCI/CD
