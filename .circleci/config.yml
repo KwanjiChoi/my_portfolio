@@ -86,32 +86,23 @@ jobs:
       - build-tools/install-ci-tools
       - jq/install
       - run:
-          name: Identify who I am
-          command: echo 'export MY_EMAIL=`heroku auth:whoami | tail -n 1`' >> $BASH_ENV
+          name: 'Install Heroku CLI, if necessary'
+          command: |
+            if [[ $(command -v heroku) == "" ]]; then
+              curl https://cli-assets.heroku.com/install.sh | sh
+            else
+              echo "Heroku is already installed. No operation was performed."
+            fi
       - run:
-          name: Define Heroku app name to create
-          command: echo "export HEROKU_APP_NAME=im-left-over" >> $BASH_ENV
+          name: heroku maintenance on
+          command: heroku maintenance:on --app ${HEROKU_APP_NAME}
       - run:
-          name: Create fresh Heroku app
-          command: heroku apps:create $HEROKU_APP_NAME --addons=jawsdb:kitefin
-      - run:
-          name: Add heroku redis
-          command: heroku addons:create heroku-redis:hobby-dev
-      - run:
-          name: Deploy
+          name: push
           command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
       - run:
-          name: Create worker dyno
-          command: heroku ps:scale web=1 worker=1
-      - run:
-          name: Run post-deploy tasks
-          command: |
-            heroku config:set AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY S3_BUCKET=$S3_BUCKET S3_REGION=$S3_REGION
-            heroku config:set GOOGLE_MAP_API_KEY=$GOOGLE_MAP_API_KEY
-            heroku config:set FACEBOOK_ID=$FACEBOOK_ID FACEBOOK_SECRET_KEY=$FACEBOOK_SECRET_KEY TWITTER_API_KEY=$TWITTER_API_KEY TWITTER_API_SECRET=$TWITTER_API_SECRET
-            heroku config:set MAIL_ADDRESS=$MAIL_ADDRESS MAIL_PASSWORD=$MAIL_PASSWORD APP_DOMAIN=$HEROKU_APP_NAME.herokuapp.com
-            heroku run bin/rails db:migrate
-            heroku run bin/rails db:seed
+          name: heroku maintenance off
+          command: heroku maintenance:on --app ${HEROKU_APP_NAME}
+
 
 orbs:
   build-tools: circleci/build-tools@2.6.3
