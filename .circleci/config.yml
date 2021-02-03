@@ -86,14 +86,6 @@ jobs:
       - build-tools/install-ci-tools
       - jq/install
       - run:
-          name: 'Install Heroku CLI, if necessary'
-          command: |
-            if [[ $(command -v heroku) == "" ]]; then
-              curl https://cli-assets.heroku.com/install.sh | sh
-            else
-              echo "Heroku is already installed. No operation was performed."
-            fi
-      - run:
           name: heroku maintenance on
           command: heroku maintenance:on --app ${HEROKU_APP_NAME}
       - run:
