@@ -4,9 +4,7 @@ project_categories = [
   'スマホ',
   'パソコン',
   '家電',
-  '初期設定',
-  'データ移行',
-  '購入相談'
+  'スキル'
 ]
 
 project_categories.each do |category|
