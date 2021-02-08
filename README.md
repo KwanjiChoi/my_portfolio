@@ -13,7 +13,7 @@ password: password
     - mysql
     - redis
     - sidekiq
-    - chorme driver(テスト用)
+    - chrome driver(テスト用)
   - CercleCI CI/CD
   - AWS S3
   - heroku
