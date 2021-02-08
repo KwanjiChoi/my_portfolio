@@ -1,10 +1,3 @@
-## 実装予定
-
-- 支払い機能
-- teacher accountをactivateする際のチェック機能
-- treacherのスケジュール共有
-- 通知機能
-- オンラインレッスン
 
 
 ## テストユーザー
@@ -16,7 +9,7 @@ password: password
 ## 使用技術
 
   - rails 6.0.3
-  - docker
+  - docker, docker-compose
     - mysql
     - redis
     - sidekiq
