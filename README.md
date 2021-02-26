@@ -55,6 +55,8 @@ password: password
       ↓
       - performances table(実績テーブル)を作成し解決
 
+  - 足りない機能だらけだが、最低限必要なものを取捨選択し実装するべきである
+
 ## ワンポイント
 
 reservationsコントローラでは@ハックにチャレンジ
